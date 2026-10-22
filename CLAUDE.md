@@ -60,6 +60,12 @@ Before saying a task is done, run tests and lint and report the result.
 - Work on a feature branch, not directly on `main`.
 
 
+## Branching
+
+- `dev` is the default branch and the center of development: feature branches start from `dev` and merge back into `dev`.
+- `main` is only for stable releases: it is updated from `dev` when a version is released, never developed on directly.
+
+
 ## Rules (Lessons learned)
 
 - When you talk to me, use french, when you work on the code, use english only.
