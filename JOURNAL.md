@@ -30,5 +30,8 @@ This project has two purposes:
 
 | Tâche | Temps estimé sans IA | Temps réel avec IA | Erreurs de l'IA / Remarques |
 |-------|----------------------|--------------------|-----------------|
-|Writing the contexte | 20/30 minutes | 10 min | utilisation du grilling pour rédiger une spec efficace et compréhensible par l'IA |
+|Setting up the full project | 1h | ~1h| a peu près le même temps mais beaucoup plus qualitatif que si je n'avais pas utilisé l'IA. L'IA a tendance a être trop verbeuse sur certains fichiers, j'ai peur que ça risque de consommer trop, a tester.|
+|Writing the contexte | 20/30 min | 10 min | utilisation du grilling pour rédiger une spec efficace et compréhensible par l'IA |
+|Finding Feeds | 30 min / 1h | | |
+| | | | |
 | | | | |
