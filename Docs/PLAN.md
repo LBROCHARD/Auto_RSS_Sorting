@@ -4,7 +4,7 @@ Roadmap for implementing [SPEC.md](../SPEC.md). Each phase stays high level on p
 
 ## Current status
 
-Phase 1 is merged into `dev` (PR #2). Phase 2 is in progress on `feature/feed-fetching`.
+Phase 1 is merged into `dev` (PR #2). Phase 2 is done on `feature/feed-fetching`, awaiting its PR into `dev`. Next: plan phase 3.
 
 ## How we work through phases
 
@@ -30,9 +30,9 @@ Dependencies to request: `pydantic`, `PyYAML`.
 
 *Done when:* valid inputs load, and every invalid input has a test checking the failure and its message.
 
-### [ ] Phase 2: Feed fetching and candidates
+### [x] Phase 2: Feed fetching and candidates
 
-Plan: [feed-fetching.md](feed-fetching.md) (in progress)
+Plan: [feed-fetching.md](feed-fetching.md) (done, awaiting merge)
 
 Fetch feeds (`httpx`, 10 s timeout), parse them (`feedparser`), normalize URLs, deduplicate, filter by `max_age_days` (injected "now"), exclude and count articles without a date, log and skip failing feeds. Tests use fixtures in `tests/fixtures/`, no network.
 Dependencies to request: `httpx`, `feedparser`.

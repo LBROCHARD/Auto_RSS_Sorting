@@ -81,11 +81,12 @@ Before saying a task is done, run tests and lint and report the result.
 - When you talk to me, use french, when you work on the code, use english only.
 - JOURNAL.md is a document that belongs to me, you can't touch it.
 - always include my modifications of JOURNAL.md in your commits, it's a file that grows with the project, it should be regularly pushed alongside it.
-- Give me a list of every file you modified/created/deleted after each action
+- After each action, I want you to present the work you did in a comprehensive way : make an ordered list of what you did and why, and list every files modified, created or deleted and what changed in them.
 - If you want to use a Git command, always ask for permission first (commit, push, create branch...)
 - If the work you have to do is more than a fix or a simple command, it must be planned first. You can write plans in the file Docs/ in plain .md files.
 - Each phase of the project must have a plan, with tasks. Never start working on a phase if it's not planned out first.
 - Do not write "Generated with Claude Code" in PR messages, or anywhere else, it's useless
 - Write an adecquate quantity of tests regarding the scope of the project, depending on the use case, maybe we don't need to test everything, try to stay cost efficient in development time in that regard.
+- Do not ask for commit authorization during the work, ask for it in your response to let me the time to go check the notification.
 
 

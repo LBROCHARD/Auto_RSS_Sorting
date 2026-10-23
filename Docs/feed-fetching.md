@@ -1,6 +1,6 @@
 # Phase 2: Feed fetching and candidates
 
-- **Status:** in progress
+- **Status:** done, awaiting merge into `dev`
 - **Branch:** `feature/feed-fetching` (from `dev`)
 - **Global plan:** [PLAN.md](PLAN.md)
 
@@ -48,7 +48,7 @@ Each step is test-first (failing tests shown to you, then implementation) and en
 - [x] **4. `parse_feed`.** Fixtures in `tests/fixtures/`: valid RSS 2.0, valid Atom (one entry with `updated` only), empty feed, invalid XML, entry without any date, entry without description, entry with HTML description, entry without link. Tests: fields extracted; dates in UTC (non-UTC offset in a fixture); `updated` fallback; undated entry excluded and counted; empty feed gives zero articles; invalid XML raises `FeedError`; bozo with entries keeps them.
 - [x] **5. `fetch_feed` / `fetch_all`.** `httpx.MockTransport` serving the fixtures. Tests: 200 returns articles; 404, 500, timeout and connection error each skip the feed and list it in `failed_feeds`; invalid XML through `fetch_all` is skipped too; one failing feed does not stop the others; `undated_count` summed across feeds; failure logged with the feed name (`caplog`); `make_http_client` has a 10 s timeout and follows redirects (checked on the client itself: a redirect served by the mock transport would only test the test client).
 - [x] **6. `collect_candidates`.** Tests (fixed `now`): article older than `max_age_days` excluded; exactly on the boundary kept; future date kept; duplicate across two feeds kept once with the first feed's source; duplicate URL variants (tracking params, trailing slash) deduplicated; order preserved; empty input gives empty output.
-- [ ] **7. Docs.** Tick this plan, mark the phase done in [PLAN.md](PLAN.md).
+- [x] **7. Docs.** Tick this plan, mark the phase done in [PLAN.md](PLAN.md).
 
 ## Tests
 
