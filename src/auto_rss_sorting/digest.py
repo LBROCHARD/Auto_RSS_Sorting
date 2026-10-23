@@ -4,6 +4,7 @@ import re
 from dataclasses import dataclass
 from datetime import date
 from pathlib import Path
+from urllib.parse import quote
 
 from auto_rss_sorting.feeds import Article
 from auto_rss_sorting.llm import LLMScore
@@ -17,6 +18,8 @@ from auto_rss_sorting.state import (
 # Characters that could turn untrusted text into a heading, a link, emphasis
 # or HTML once rendered.
 MARKDOWN_SPECIAL = re.compile(r"([\\`*_\[\]<>#])")
+# Characters that would close the <...> autolink or break the list item.
+LINK_UNSAFE = re.compile(r"[<>\s]")
 
 
 @dataclass(frozen=True)
@@ -41,7 +44,7 @@ def render_digest(
             "\n"
             f"- **Source:** {article.source}\n"
             f"- **Score:** {score.score}/10\n"
-            f"- **Link:** <{article.url}>\n"
+            f"- **Link:** <{_link(article.url)}>\n"
             "\n"
             f"**Summary:** {_inline(score.summary)}\n"
             "\n"
@@ -64,6 +67,11 @@ def render_digest(
 def _inline(text: str) -> str:
     """Untrusted text on a single line, with Markdown characters escaped."""
     return MARKDOWN_SPECIAL.sub(r"\\\1", " ".join(text.split()))
+
+
+def _link(url: str) -> str:
+    """Untrusted URL, percent-encoded where it could break out of the autolink."""
+    return LINK_UNSAFE.sub(lambda match: quote(match.group()), url)
 
 
 def digest_path(digests_dir: Path, today: date) -> Path:

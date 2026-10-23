@@ -61,6 +61,7 @@ Two new modules (`digest.py`, `state.py`) and one function added to `ranking.py`
   - failed feeds listed by name, `none` if empty;
   - article text and LLM output are untrusted data: the title, summary and reason are escaped for Markdown (`\`, `` ` ``, `*`, `_`, `[`, `]`, `<`, `>`, `#`) so they cannot break the heading or inject a link (the LLM output can carry an injection from the article), and line breaks in the title, summary and reason are collapsed so they cannot create new headings or sections;
   - the link is the original `article.url` (always works), not the normalized id (removing a trailing slash can break some sites), between `<...>`.
+  - the link is untrusted too: `<`, `>` and whitespace are percent-encoded (added after the pre-merge review), so a hostile feed URL cannot close the `<...>` and inject a link, nor break the list item;
 - **`already_published(digests_dir: Path, today: date) -> bool`**: today's digest exists. Phase 6 calls it first and exits without changes unless `--force`.
 - **`publish(digests_dir, state_path, today, ranked, report, entries) -> None`**: writes the digest (atomic), **then** the state with today's entries added (atomic). If the digest write fails, the state is not touched. With `--force`, the existing digest is simply overwritten.
 

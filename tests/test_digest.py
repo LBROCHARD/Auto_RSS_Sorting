@@ -201,3 +201,14 @@ def test_force_rerun_overwrites_the_digest_without_duplicate_entries(
     text = (digests_dir / "2026-01-15.md").read_text(encoding="utf-8")
     assert "## 2. Second" in text
     assert [e.id for e in load_state(state_path)] == ["https://a.com", "https://b.com"]
+
+
+def test_link_cannot_close_the_autolink() -> None:
+    article = make_article(url="https://x.com/a> [free](https://evil.com) <b\nc")
+
+    text = render_digest(TODAY, [(article, make_score())], NO_PROBLEM)
+
+    assert (
+        "- **Link:** <https://x.com/a%3E%20[free](https://evil.com)%20%3Cb%0Ac>\n"
+        in text
+    )
