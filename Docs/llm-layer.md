@@ -48,7 +48,7 @@ Two modules: `llm.py` (everything provider-agnostic) and `providers.py` (the reg
 
 Each step is test-first (failing tests shown to you, then implementation) and ends with one commit.
 
-- [ ] **1. `LLMScore` and `parse_response`.** Tests: valid JSON; JSON in a code fence; invalid JSON; score out of range (`11`, `-1`); non-integer score (`7.5`, `"7"`); empty or whitespace-only summary / reason; missing field; extra field ignored.
+- [x] **1. `LLMScore` and `parse_response`.** Tests: valid JSON; JSON in a code fence; invalid JSON; score out of range (`11`, `-1`); non-integer score (`7.5`, `"7"`); empty or whitespace-only summary / reason; missing field; extra field ignored.
 - [ ] **2. `build_prompt`.** Tests: the profile is in `system`; the article is only in `user`, as valid JSON; the description is truncated to `max_description_chars`; an article containing quotes, newlines or "ignore previous instructions" stays inside its JSON value; `system` contains the data-not-instructions rule.
 - [ ] **3. Provider interface, fake provider, `score_article`.** Tests: valid on first try (1 call); invalid then valid → scored (2 calls); invalid twice → skipped as invalid; transient twice then valid → scored, sleeps `[2, 4]`; transient three times → skipped as transient; independent counters (invalid, transient, transient, valid → scored); fatal error → raised on the first call, no retry.
 - [ ] **4. `score_articles`.** Tests: scores kept in input order with skip counts; all articles skipped → `ScoringFailedError`; empty input → empty result, no error; a fatal error on the second article stops the run.
