@@ -81,7 +81,7 @@ Decided with the project owner: the budget is at most 1 € per month, so the fi
 
 Limits read in the project owner's console (2026-10-23, "Completion rate limits per model", no monthly limit shown):
 
-- `ministral-14b-2512`: 937,500 tokens/min, 0.5 request/s. A run (about 50 calls of about 1,500 tokens) fits easily; an occasional 429 from the 0.5 request/s limit is absorbed by the 2 s transient backoff.
+- `ministral-14b-2512`: 937,500 tokens/min, 0.5 request/s. A run (about 50 calls of about 1,500 tokens) fits easily. The adapter spaces calls by at least 2 s to stay under 0.5 request/s (see the pacing rule below).
 - `mistral-small-2603` (Mistral Small 4) was the first idea but only allows 20,000 tokens/min: a run would hit 429s and skip articles. It is a candidate for the phase 7 benchmark, with `ministral-8b-2512` (625,000 tokens/min, 3.13 requests/s). Rejected for now: Groq (8,000 tokens/min would cause 429s on a 50-article run), Gemini (unstable free quotas), OpenRouter free (50 requests/day, no room for retries). The exact limits are read in the Mistral console before step 6.
 
 Mistral API facts for step 5 (from docs.mistral.ai, checked on 2026-10-23):
@@ -105,6 +105,7 @@ Status mapping in the adapter (decided at step 5):
 - 401, 402, 403 and every other 4xx (400, 404 unknown model, 422) → `FatalProviderError`: retrying cannot fix a bad key, an exhausted quota or a bad request, and every following article would fail the same way;
 - a 200 whose body has no `choices[0].message.content` string or no token usage → `InvalidResponseError`, so it gets the same single retry as an invalid JSON answer.
 - Request constants in the adapter, not in `config.yaml` (no unused options): `temperature: 0` (stable scores between runs and for `eval`), `max_tokens: 500` (bounds the answer: a score, a 1-2 sentence summary and a reason), timeout 30 s.
+- Pacing (added after the pre-merge review): the adapter keeps at least `MIN_INTERVAL_SECONDS = 2` between the starts of two calls, retries and failed calls included, so a 50-article run does not hit the 0.5 request/s limit with back-to-back calls (which would burn transient attempts and could skip many articles). A run takes at least about 100 s, fine for a daily job. The clock and `sleep` are injected, so tests never wait.
 
 Constraints any provider must meet:
 

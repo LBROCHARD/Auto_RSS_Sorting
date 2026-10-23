@@ -1,6 +1,7 @@
 """LLM provider adapters and the registry that picks one from config.yaml."""
 
 import os
+import time
 from collections.abc import Callable
 from typing import Annotated
 
@@ -24,6 +25,8 @@ TEMPERATURE = 0
 # A score, a one or two sentence summary and a reason fit well within this.
 MAX_OUTPUT_TOKENS = 500
 ERROR_BODY_MAX_CHARS = 300
+# The free tier allows 0.5 request/s: calls sent back to back would get 429s.
+MIN_INTERVAL_SECONDS = 2.0
 
 
 class _Message(BaseModel):
@@ -48,14 +51,23 @@ class MistralProvider:
     """Mistral chat completions API, called with plain httpx."""
 
     def __init__(
-        self, model: str, api_key: str, client: httpx.Client | None = None
+        self,
+        model: str,
+        api_key: str,
+        client: httpx.Client | None = None,
+        clock: Callable[[], float] = time.monotonic,
+        sleep: Callable[[float], None] = time.sleep,
     ) -> None:
         self.model = model
         # Sent only in the Authorization header, never in the URL: httpx logs URLs.
         self._api_key = api_key
         self._client = client or httpx.Client(timeout=REQUEST_TIMEOUT_SECONDS)
+        self._clock = clock
+        self._sleep = sleep
+        self._last_call: float | None = None
 
     def complete(self, system: str, user: str) -> Completion:
+        self._wait_for_rate_limit()
         try:
             response = self._client.post(
                 MISTRAL_URL,
@@ -92,6 +104,15 @@ class MistralProvider:
             input_tokens=body.usage.prompt_tokens,
             output_tokens=body.usage.completion_tokens,
         )
+
+    def _wait_for_rate_limit(self) -> None:
+        """Keep at least MIN_INTERVAL_SECONDS between the starts of two calls,
+        failed calls included."""
+        if self._last_call is not None:
+            wait = MIN_INTERVAL_SECONDS - (self._clock() - self._last_call)
+            if wait > 0:
+                self._sleep(wait)
+        self._last_call = self._clock()
 
 
 def _describe_error(response: httpx.Response) -> str:

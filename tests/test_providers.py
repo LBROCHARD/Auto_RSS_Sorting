@@ -11,7 +11,12 @@ from auto_rss_sorting.llm import (
     InvalidResponseError,
     TransientProviderError,
 )
-from auto_rss_sorting.providers import MISTRAL_URL, MistralProvider, make_provider
+from auto_rss_sorting.providers import (
+    MIN_INTERVAL_SECONDS,
+    MISTRAL_URL,
+    MistralProvider,
+    make_provider,
+)
 
 FAKE_KEY = "fake-key"
 OK_BODY = {
@@ -20,9 +25,30 @@ OK_BODY = {
 }
 
 
-def make_mistral(handler: Callable[[httpx.Request], httpx.Response]) -> MistralProvider:
+class FakeClock:
+    """A monotonic clock that only moves when told to, or when slept on."""
+
+    def __init__(self) -> None:
+        self.now = 1000.0
+        self.sleeps: list[float] = []
+
+    def __call__(self) -> float:
+        return self.now
+
+    def sleep(self, seconds: float) -> None:
+        self.sleeps.append(seconds)
+        self.now += seconds
+
+
+def make_mistral(
+    handler: Callable[[httpx.Request], httpx.Response],
+    clock: FakeClock | None = None,
+) -> MistralProvider:
+    clock = clock or FakeClock()
     client = httpx.Client(transport=httpx.MockTransport(handler))
-    return MistralProvider("ministral-14b-2512", FAKE_KEY, client=client)
+    return MistralProvider(
+        "ministral-14b-2512", FAKE_KEY, client=client, clock=clock, sleep=clock.sleep
+    )
 
 
 def make_config(provider: str = "mistral") -> Config:
@@ -119,3 +145,29 @@ def test_missing_api_key_names_the_variable(
         monkeypatch.setenv("MISTRAL_API_KEY", value)
     with pytest.raises(InputError, match="MISTRAL_API_KEY"):
         make_provider(make_config())
+
+
+def test_calls_are_spaced_by_the_minimum_interval() -> None:
+    clock = FakeClock()
+    provider = make_mistral(lambda _: httpx.Response(200, json=OK_BODY), clock)
+
+    provider.complete("s", "u")
+    assert clock.sleeps == []
+
+    clock.now += 0.5
+    provider.complete("s", "u")
+    assert clock.sleeps == [pytest.approx(MIN_INTERVAL_SECONDS - 0.5)]
+
+    clock.now += MIN_INTERVAL_SECONDS + 1
+    provider.complete("s", "u")
+    assert len(clock.sleeps) == 1
+
+
+def test_failed_calls_also_count_for_the_interval() -> None:
+    clock = FakeClock()
+    provider = make_mistral(lambda _: httpx.Response(429, json={}), clock)
+    with pytest.raises(TransientProviderError):
+        provider.complete("s", "u")
+    with pytest.raises(TransientProviderError):
+        provider.complete("s", "u")
+    assert clock.sleeps == [pytest.approx(MIN_INTERVAL_SECONDS)]
