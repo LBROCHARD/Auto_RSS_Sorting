@@ -57,7 +57,7 @@ Known limit: PyYAML silently keeps the last value when a key is duplicated in th
 Each step is test-first (failing tests shown to you, then implementation) and ends with one commit.
 
 - [x] **1. Dependencies.** Ask approval, then `uv add pydantic pyyaml`.
-- [ ] **2. `config.yaml`.** Tests: valid config loads; missing file; YAML syntax error; root not a mapping; missing field; unknown field; zero/negative values; negative price; empty provider. Then `Config` + the loading/error-formatting helper. Create `config.yaml` at the repo root.
+- [x] **2. `config.yaml`.** Tests: valid config loads; missing file; YAML syntax error; root not a mapping; missing field; unknown field; zero/negative values; negative price; empty provider. Then `Config` + the loading/error-formatting helper. Create `config.yaml` at the repo root.
 - [ ] **3. `feeds.yaml`.** Tests: valid list loads; empty list; missing name; invalid URL (not http/https); duplicate name; duplicate URL. Then `Feed` + `FeedList`.
 - [ ] **4. `keywords.yaml`.** Tests: valid mapping loads (positive and negative weights); empty mapping; non-integer weight; empty keyword; case-insensitive duplicate. Then `Keywords`. Create `keywords.yaml` from `profile.md` (draft weights, for you to review).
 - [ ] **5. `profile.md` and `load_inputs`.** Tests: missing profile; empty profile; `load_inputs` returns all four inputs; the real files committed at the repo root are valid. Then `load_inputs` and `Inputs`.

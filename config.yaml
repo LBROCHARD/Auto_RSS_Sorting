@@ -1,0 +1,10 @@
+top_n: 10
+max_age_days: 7
+llm_max_articles: 50
+max_description_chars: 2000
+
+# Provisional values: the provider and model are chosen in phase 4.
+provider: undecided
+model: undecided
+price_input_per_mtok: 0
+price_output_per_mtok: 0
