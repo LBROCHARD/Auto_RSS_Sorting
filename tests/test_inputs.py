@@ -355,3 +355,30 @@ def test_load_inputs_fails_on_missing_file(tmp_path: Path, name: str) -> None:
 
 def test_committed_inputs_are_valid() -> None:
     load_inputs(REPO_ROOT)
+
+
+def test_file_not_valid_utf8(tmp_path: Path) -> None:
+    path = tmp_path / "profile.md"
+    path.write_bytes(b"\xff\xfe\x00")
+
+    with pytest.raises(InputError, match=r"profile\.md: cannot read file"):
+        load_profile(path)
+
+
+def test_path_is_a_directory(tmp_path: Path) -> None:
+    path = tmp_path / "config.yaml"
+    path.mkdir()
+
+    with pytest.raises(InputError, match=r"config\.yaml: cannot read file"):
+        load_config(path)
+
+
+@pytest.mark.parametrize(
+    "line", ["price_input_per_mtok: .inf", "price_output_per_mtok: .inf"]
+)
+def test_config_infinite_price(tmp_path: Path, line: str) -> None:
+    key = line.split(":")[0]
+    path = write(tmp_path, "config.yaml", config_with(line))
+
+    with pytest.raises(InputError, match=rf"config\.yaml: {key}: .*finite number"):
+        load_config(path)

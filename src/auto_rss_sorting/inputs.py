@@ -17,7 +17,7 @@ from pydantic import (
 )
 
 NonEmptyStr = Annotated[str, StringConstraints(strip_whitespace=True, min_length=1)]
-NonNegativeFloat = Annotated[float, Field(ge=0)]
+NonNegativeFloat = Annotated[float, Field(ge=0, allow_inf_nan=False)]
 
 
 class InputError(Exception):
@@ -121,6 +121,8 @@ def _read_text(path: Path) -> str:
         return path.read_text(encoding="utf-8")
     except FileNotFoundError as error:
         raise InputError(f"{path.name}: file not found ({path})") from error
+    except (OSError, UnicodeDecodeError) as error:
+        raise InputError(f"{path.name}: cannot read file: {error}") from error
 
 
 def _load_yaml_mapping(path: Path) -> dict[str, Any]:
