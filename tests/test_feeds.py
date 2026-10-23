@@ -1,10 +1,19 @@
 import logging
+from collections.abc import Callable
 from datetime import UTC, datetime
 from pathlib import Path
 
+import httpx
 import pytest
 
-from auto_rss_sorting.feeds import FeedError, html_to_text, parse_feed
+from auto_rss_sorting.feeds import (
+    FeedError,
+    fetch_all,
+    fetch_feed,
+    html_to_text,
+    make_http_client,
+    parse_feed,
+)
 from auto_rss_sorting.inputs import Feed
 
 FIXTURES = Path(__file__).parent / "fixtures"
@@ -150,3 +159,107 @@ def test_title_whitespace_is_collapsed() -> None:
     [article] = parse_feed(FEED, fixture("malformed_with_items.xml")).articles
 
     assert article.title == "Still readable item"
+
+
+Handler = Callable[[httpx.Request], httpx.Response]
+
+
+def make_feed(name: str) -> Feed:
+    return Feed.model_validate({"name": name, "url": f"https://example.com/{name}"})
+
+
+def serve(fixture_name: str) -> Handler:
+    return lambda request: httpx.Response(200, content=fixture(fixture_name))
+
+
+def status(code: int) -> Handler:
+    return lambda request: httpx.Response(code)
+
+
+def raise_error(error: type[httpx.TransportError]) -> Handler:
+    def handler(request: httpx.Request) -> httpx.Response:
+        raise error("simulated", request=request)
+
+    return handler
+
+
+def client_for(handlers: dict[str, Handler]) -> httpx.Client:
+    """An httpx client that answers each feed URL with its handler, no network."""
+    transport = httpx.MockTransport(
+        lambda request: handlers[request.url.path.lstrip("/")](request)
+    )
+    return httpx.Client(transport=transport)
+
+
+def test_http_client_settings() -> None:
+    with make_http_client() as client:
+        assert client.timeout == httpx.Timeout(10)
+        assert client.follow_redirects is True
+        assert client.headers["User-Agent"].startswith("auto-rss-sorting")
+
+
+def test_fetch_feed_returns_content() -> None:
+    with client_for({"good": serve("rss_valid.xml")}) as client:
+        assert fetch_feed(client, make_feed("good")) == fixture("rss_valid.xml")
+
+
+def test_fetch_feed_raises_feed_error_on_http_error() -> None:
+    with (
+        client_for({"missing": status(404)}) as client,
+        pytest.raises(FeedError, match="missing.*404"),
+    ):
+        fetch_feed(client, make_feed("missing"))
+
+
+def test_fetch_all_returns_articles_in_feed_order() -> None:
+    handlers = {"rss": serve("rss_valid.xml"), "atom": serve("atom_valid.xml")}
+    with client_for(handlers) as client:
+        result = fetch_all(client, [make_feed("rss"), make_feed("atom")])
+
+    assert [article.source for article in result.articles] == [
+        "rss",
+        "rss",
+        "atom",
+        "atom",
+    ]
+    assert result.failed_feeds == []
+    assert result.undated_count == 0
+
+
+@pytest.mark.parametrize(
+    "broken",
+    [
+        status(404),
+        status(500),
+        raise_error(httpx.ReadTimeout),
+        raise_error(httpx.ConnectError),
+        serve("invalid.xml"),
+    ],
+    ids=["404", "500", "timeout", "connection-error", "invalid-xml"],
+)
+def test_failing_feed_is_skipped_and_logged(
+    broken: Handler, caplog: pytest.LogCaptureFixture
+) -> None:
+    handlers = {"broken": broken, "good": serve("rss_valid.xml")}
+    with client_for(handlers) as client, caplog.at_level(logging.WARNING):
+        result = fetch_all(client, [make_feed("broken"), make_feed("good")])
+
+    assert result.failed_feeds == ["broken"]
+    assert [article.source for article in result.articles] == ["good", "good"]
+    assert "broken" in caplog.text
+
+
+def test_empty_feed_is_not_a_failure() -> None:
+    with client_for({"empty": serve("empty.xml")}) as client:
+        result = fetch_all(client, [make_feed("empty")])
+
+    assert result.articles == []
+    assert result.failed_feeds == []
+
+
+def test_undated_count_is_summed_across_feeds() -> None:
+    handlers = {"a": serve("missing_fields.xml"), "b": serve("missing_fields.xml")}
+    with client_for(handlers) as client:
+        result = fetch_all(client, [make_feed("a"), make_feed("b")])
+
+    assert result.undated_count == 2

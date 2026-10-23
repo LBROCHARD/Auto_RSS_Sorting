@@ -8,11 +8,15 @@ from time import struct_time
 from typing import Any
 
 import feedparser
+import httpx
 
 from auto_rss_sorting.candidates import normalize_url
 from auto_rss_sorting.inputs import Feed
 
 logger = logging.getLogger(__name__)
+
+FEED_TIMEOUT_SECONDS = 10
+USER_AGENT = "auto-rss-sorting (+https://github.com/LBROCHARD/auto-rss-sorting)"
 
 # Tags that separate blocks of text: a space is inserted around them so that
 # "<p>a</p><p>b</p>" gives "a b". Inline tags (<b>, <a>...) add nothing.
@@ -124,3 +128,48 @@ def _entry_date(entry: Any) -> datetime | None:
     if parsed is None:
         return None
     return datetime(*parsed[:6], tzinfo=UTC)
+
+
+@dataclass(frozen=True)
+class FetchResult:
+    articles: list[Article]
+    failed_feeds: list[str]
+    undated_count: int
+
+
+def make_http_client() -> httpx.Client:
+    """The client used to fetch every feed. httpx does not follow redirects by default."""
+    return httpx.Client(
+        timeout=FEED_TIMEOUT_SECONDS,
+        follow_redirects=True,
+        headers={"User-Agent": USER_AGENT},
+    )
+
+
+def fetch_feed(client: httpx.Client, feed: Feed) -> bytes:
+    """Download a feed. Raw bytes are returned so feedparser handles the encoding."""
+    try:
+        response = client.get(str(feed.url))
+        response.raise_for_status()
+    except httpx.HTTPError as error:
+        raise FeedError(f"{feed.name}: cannot fetch {feed.url}: {error}") from error
+    return response.content
+
+
+def fetch_all(client: httpx.Client, feeds: list[Feed]) -> FetchResult:
+    """Fetch and parse every feed in order. A failing feed is logged and skipped."""
+    articles: list[Article] = []
+    failed_feeds: list[str] = []
+    undated_count = 0
+    for feed in feeds:
+        try:
+            parsed = parse_feed(feed, fetch_feed(client, feed))
+        except FeedError as error:
+            logger.warning("skipping feed: %s", error)
+            failed_feeds.append(feed.name)
+            continue
+        articles.extend(parsed.articles)
+        undated_count += parsed.undated_count
+    return FetchResult(
+        articles=articles, failed_feeds=failed_feeds, undated_count=undated_count
+    )
