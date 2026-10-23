@@ -12,19 +12,15 @@ This project has two purposes:
 - The project succeeds if, for each article, the sorter's score is within ±3 points of mine.
 
 
-# Technologies / Concepts 
+# Technologies, Concepts & Everything I've learned 
 
-- Claude Code
-- Cursor
+- Usage of Claude Code within Cursor
 - Grilling (an interview, where the IA asks questions to precise and refine the SPEC.md)
-- 
-
-
-# Everything I've learned 
-
-- I redact very simples files myself explaining my needs in natural language, and asked claude to refine it, based on a grilling session.
-- change contexte for each tasks helps you save costs, augments speed, and avoid noise or auto-confirmation
-- To keep an good knowledge of the codebase, and efficiently review the AI's work, I want it to give me 
+- To redact very simples files myself explaining my needs in natural language, and ask claude to refine it, based on a grilling session.
+- Usin a  AGENTS.md (or CLAUDE.md in my case) file, as a guideline for development 
+- Changing contexte for each tasks helps you save costs, augments speed, and avoid noise or auto-confirmation
+- To keep an good knowledge of the codebase, and efficiently review the AI's work, I want it to systematically give me a list of every files created/modified/deleted.
+- Agents, and their utility, in my case, I mostly used Claude integrated agents, but I created a special "Spec-Reviewer" agent, to inspect code with a fresh and critical viewpoint. It helped me find CI errors that the writing agent didn't saw (CI launched 2 times both during push and in pull request).
 
 
 # Journal
@@ -34,6 +30,7 @@ This project has two purposes:
 |Setting up the full project | 1h | ~1h| a peu près le même temps mais beaucoup plus qualitatif que si je n'avais pas utilisé l'IA. L'IA a tendance a être trop verbeuse sur certains fichiers, j'ai peur de saturer un peu le contexte, à vérifier.|
 |Writing the contexte | 20 min | 10 min | utilisation du grilling pour rédiger une spec efficace et compréhensible par l'IA |
 |Finding Feeds | 1h | 10 minutes | recherche et tri qui m'aurait pris des heures, peut être un petit peu moins précis qu'un humain, mais faire un mélange des 2 est surement la meilleur solution, j'injecte quelques sources perso dans l'ensemble.|
-|Setting up the CI (Lint, Basic GitHub action...)  | 40 min | 10 min| |
+|Setting up the CI (Lint, Basic GitHub action...)  | 40 min | 10 min| Comme github nous permet efficacement de faire des retours en arrière, j'ai ajouté une règle pour obliger l'IA a me demander avant d'effectuer toute commande Git.|
+| | | | |
 | | | | |
 | | | | |
