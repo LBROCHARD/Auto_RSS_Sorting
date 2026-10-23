@@ -2,7 +2,7 @@ from pathlib import Path
 
 import pytest
 
-from auto_rss_sorting.inputs import Config, InputError, load_config
+from auto_rss_sorting.inputs import Config, InputError, load_config, load_feeds
 
 VALID_CONFIG = """\
 top_n: 10
@@ -144,3 +144,90 @@ def test_config_reports_every_error(tmp_path: Path) -> None:
 
     assert "top_n" in str(error.value)
     assert "model" in str(error.value)
+
+
+VALID_FEEDS = """\
+feeds:
+  - name: First Blog
+    url: https://first.example/feed.xml
+  - name: Second Blog
+    url: http://second.example/rss
+"""
+
+
+def test_valid_feeds_load(tmp_path: Path) -> None:
+    feeds = load_feeds(write(tmp_path, "feeds.yaml", VALID_FEEDS))
+
+    assert [(feed.name, str(feed.url)) for feed in feeds] == [
+        ("First Blog", "https://first.example/feed.xml"),
+        ("Second Blog", "http://second.example/rss"),
+    ]
+
+
+def test_missing_feeds_file(tmp_path: Path) -> None:
+    with pytest.raises(InputError, match=r"feeds\.yaml.*not found"):
+        load_feeds(tmp_path / "feeds.yaml")
+
+
+def test_feeds_key_missing(tmp_path: Path) -> None:
+    path = write(tmp_path, "feeds.yaml", "sources: []\n")
+
+    with pytest.raises(InputError, match=r"feeds\.yaml: feeds: Field required"):
+        load_feeds(path)
+
+
+def test_empty_feed_list(tmp_path: Path) -> None:
+    path = write(tmp_path, "feeds.yaml", "feeds: []\n")
+
+    with pytest.raises(InputError, match=r"feeds\.yaml: feeds: .*at least 1 item"):
+        load_feeds(path)
+
+
+def test_feed_missing_name(tmp_path: Path) -> None:
+    content = "feeds:\n  - url: https://first.example/feed.xml\n"
+    path = write(tmp_path, "feeds.yaml", content)
+
+    with pytest.raises(
+        InputError, match=r"feeds\.yaml: feeds\.0\.name: Field required"
+    ):
+        load_feeds(path)
+
+
+def test_feed_empty_name(tmp_path: Path) -> None:
+    content = 'feeds:\n  - name: "  "\n    url: https://first.example/feed.xml\n'
+    path = write(tmp_path, "feeds.yaml", content)
+
+    with pytest.raises(InputError, match=r"feeds\.yaml: feeds\.0\.name: "):
+        load_feeds(path)
+
+
+@pytest.mark.parametrize("url", ["not a url", "ftp://first.example/feed.xml"])
+def test_feed_invalid_url(tmp_path: Path, url: str) -> None:
+    content = f"feeds:\n  - name: First Blog\n    url: {url}\n"
+    path = write(tmp_path, "feeds.yaml", content)
+
+    with pytest.raises(InputError, match=r"feeds\.yaml: feeds\.0\.url: "):
+        load_feeds(path)
+
+
+def test_duplicate_feed_name(tmp_path: Path) -> None:
+    content = VALID_FEEDS.replace("Second Blog", "First Blog")
+    path = write(tmp_path, "feeds.yaml", content)
+
+    with pytest.raises(
+        InputError, match=r"feeds\.yaml: feeds: .*duplicate feed name.*First Blog"
+    ):
+        load_feeds(path)
+
+
+def test_duplicate_feed_url(tmp_path: Path) -> None:
+    content = VALID_FEEDS.replace(
+        "http://second.example/rss", "https://first.example/feed.xml"
+    )
+    path = write(tmp_path, "feeds.yaml", content)
+
+    with pytest.raises(
+        InputError,
+        match=r"feeds\.yaml: feeds: .*duplicate feed URL.*https://first\.example/feed\.xml",
+    ):
+        load_feeds(path)

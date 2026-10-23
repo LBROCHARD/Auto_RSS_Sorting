@@ -8,9 +8,11 @@ from pydantic import (
     BaseModel,
     ConfigDict,
     Field,
+    HttpUrl,
     PositiveInt,
     StringConstraints,
     ValidationError,
+    field_validator,
 )
 
 NonEmptyStr = Annotated[str, StringConstraints(strip_whitespace=True, min_length=1)]
@@ -34,8 +36,40 @@ class Config(BaseModel):
     price_output_per_mtok: NonNegativeFloat
 
 
+class Feed(BaseModel):
+    model_config = ConfigDict(extra="forbid", strict=True, frozen=True)
+
+    name: NonEmptyStr
+    url: HttpUrl
+
+
+class FeedList(BaseModel):
+    model_config = ConfigDict(extra="forbid", strict=True, frozen=True)
+
+    feeds: Annotated[list[Feed], Field(min_length=1)]
+
+    @field_validator("feeds")
+    @classmethod
+    def names_and_urls_are_unique(cls, feeds: list[Feed]) -> list[Feed]:
+        _reject_duplicates("feed name", [feed.name for feed in feeds])
+        _reject_duplicates("feed URL", [str(feed.url) for feed in feeds])
+        return feeds
+
+
 def load_config(path: Path) -> Config:
     return _validate(Config, _load_yaml_mapping(path), path)
+
+
+def load_feeds(path: Path) -> list[Feed]:
+    return _validate(FeedList, _load_yaml_mapping(path), path).feeds
+
+
+def _reject_duplicates(label: str, values: list[str]) -> None:
+    seen: set[str] = set()
+    for value in values:
+        if value in seen:
+            raise ValueError(f"duplicate {label}: {value!r}")
+        seen.add(value)
 
 
 def _load_yaml_mapping(path: Path) -> dict[str, Any]:
