@@ -6,6 +6,7 @@ import unicodedata
 from dataclasses import dataclass
 
 from auto_rss_sorting.feeds import Article
+from auto_rss_sorting.llm import LLMScore
 
 logger = logging.getLogger(__name__)
 
@@ -72,3 +73,12 @@ def prefilter(
         logger.debug("keyword score %d: %s", score, article.id)
     logger.info("pre-filter kept %d of %d candidates", len(kept), len(scored))
     return [article for _, article in kept]
+
+
+def top_articles(
+    scored: list[tuple[Article, LLMScore]], top_n: int
+) -> list[tuple[Article, LLMScore]]:
+    """Keep the `top_n` articles with the best LLM score (all of them if there
+    are fewer), ties broken by `ranking_key`."""
+    ranked = sorted(scored, key=lambda pair: ranking_key(pair[1].score, pair[0]))
+    return ranked[:top_n]

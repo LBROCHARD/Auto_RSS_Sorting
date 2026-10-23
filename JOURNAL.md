@@ -38,6 +38,6 @@ This project has two purposes:
 |Phase 2: Feed fetching and candidates | 45 min | 20 min | Il écrits une quantitée de tests peut être trop élevé pour le projet pour remplir le plan, cela consomme beaucoup de tokens, j'écris une règle pour se contenter des tests adaptées au scope du projet. |
 |Phase 3: Keyword pre-filter and deterministic ranking | 1h | 10 min | La review qu'il me donne de son travail ne me convient pas tout a fait, et manque de lisibilitée, je crée une règle. Je veux pouvoir tester plus souvent, je lui demande de m'expliquer comment tester ce qu'il fait par moi même. |
 |Phase 4: LLM layer | 3h | 30 min | J'ajoute des règles de sécurité en prévision de l'ajout de clé d'API dans le projet, + un nouvel agent qui s'assure qu'il n'y a pas de fuite de donées senseibles. Selection du premier LLM avec un autre contexte. |
-|Phase 5: Digest and state | 1h | | |
+|Phase 5: Digest and state | 1h | 3min| |
 | | | | |
 | | | | |

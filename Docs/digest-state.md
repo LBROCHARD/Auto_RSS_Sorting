@@ -75,7 +75,7 @@ Two new modules (`digest.py`, `state.py`) and one function added to `ranking.py`
 
 Each step is test-first (failing tests shown to you, then implementation) and ends with one commit.
 
-- [ ] **1. `top_articles`.** Tests: sorted by LLM score desc; ties broken by date then id; same result whatever the input order; keeps `top_n`; fewer than `top_n` keeps them all; empty input gives empty output.
+- [x] **1. `top_articles`.** Tests: sorted by LLM score desc; ties broken by date then id; same result whatever the input order; keeps `top_n`; fewer than `top_n` keeps them all; empty input gives empty output.
 - [ ] **2. `render_digest`.** Tests: one article rendered with every field (rank, title, source, score, link, summary, reason); ranks follow the given order; footer with failed feeds listed and with `none`; skip counts in the footer; zero articles → "no new articles" message and footer; a title with Markdown characters is escaped; line breaks in the summary are collapsed.
 - [ ] **3. State file: `PublishedEntry`, `load_state`, `save_state`, `write_atomic`.** Tests: missing file → empty state; round trip save → load; file written sorted by `(digest_date, id)`; invalid JSON and invalid entry (missing field, naive date) → `StateError` with the file name; atomic write: when the write fails (`os.replace` patched to raise), the original file is unchanged and no temp file is left.
 - [ ] **4. State operations: `purge`, `drop_digest_date`, `exclude_published`, `add_published`.** Tests: entry older than `max_age_days` purged, entry exactly at the limit kept; `drop_digest_date` only removes today's entries; already published candidate excluded, the others kept in order; added entries carry the article id, its publication date and today's date.
