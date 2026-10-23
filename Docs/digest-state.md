@@ -1,6 +1,6 @@
 # Phase 5: Digest and state
 
-- **Status:** in progress
+- **Status:** done, awaiting merge into `dev`
 - **Branch:** `feature/digest-state` (from `dev`)
 - **Global plan:** [PLAN.md](PLAN.md)
 
@@ -81,7 +81,7 @@ Each step is test-first (failing tests shown to you, then implementation) and en
 - [x] **3. State file: `PublishedEntry`, `load_state`, `save_state`, `write_atomic`.** Tests: missing file → empty state; round trip save → load; file written sorted by `(digest_date, id)`; invalid JSON and invalid entry (missing field, naive date) → `StateError` with the file name; atomic write: when the write fails (`os.replace` patched to raise), the original file is unchanged and no temp file is left.
 - [x] **4. State operations: `purge`, `drop_digest_date`, `exclude_published`, `add_published`.** Tests: entry older than `max_age_days` purged, entry exactly at the limit kept; `drop_digest_date` only removes today's entries; already published candidate excluded, the others kept in order; added entries carry the article id, its publication date and today's date.
 - [x] **5. `digest_path`, `already_published`, `publish`.** Tests (in `tmp_path`): digest file name is `YYYY-MM-DD.md`; `already_published` true / false; `publish` writes the digest and the state with today's entries; if the digest write fails, the state file is unchanged; same-day `--force` scenario: state with today's entries → `drop_digest_date` → `publish` again → the digest is overwritten and the state holds today's entries once, not twice.
-- [ ] **6. Docs.** Tick this plan, mark the phase done in [PLAN.md](PLAN.md).
+- [x] **6. Docs.** Tick this plan, mark the phase done in [PLAN.md](PLAN.md).
 
 ## Tests
 
