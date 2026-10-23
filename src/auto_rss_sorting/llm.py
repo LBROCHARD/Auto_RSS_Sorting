@@ -57,6 +57,10 @@ class FatalProviderError(Exception):
     """Authentication or quota error: retrying cannot help, the run fails."""
 
 
+class ScoringFailedError(Exception):
+    """There were articles to score but none could be scored: the run fails."""
+
+
 class SkipReason(Enum):
     INVALID_RESPONSE = "invalid LLM response"
     TRANSIENT_ERROR = "transient LLM error"
@@ -82,6 +86,13 @@ class LLMScore(BaseModel):
     score: Annotated[StrictInt, Field(ge=0, le=10)]
     summary: NonEmptyStr
     reason: NonEmptyStr
+
+
+@dataclass(frozen=True)
+class ScoringResult:
+    scored: list[tuple[Article, LLMScore]]
+    skipped_invalid: int
+    skipped_transient: int
 
 
 def parse_response(text: str) -> LLMScore:
@@ -141,3 +152,32 @@ def score_article(
 def _skip(article: Article, reason: SkipReason, error: Exception) -> SkipReason:
     logger.warning("skipped %s (%s): %s", article.id, reason.value, error)
     return reason
+
+
+def score_articles(
+    provider: Provider,
+    profile: str,
+    articles: list[Article],
+    max_description_chars: int,
+    sleep: Callable[[float], None] = time.sleep,
+) -> ScoringResult:
+    """Score the articles in order. Raises ScoringFailedError if there were
+    articles but none could be scored; no article at all is not a failure."""
+    scored: list[tuple[Article, LLMScore]] = []
+    skipped = {reason: 0 for reason in SkipReason}
+    for article in articles:
+        result = score_article(provider, profile, article, max_description_chars, sleep)
+        if isinstance(result, SkipReason):
+            skipped[result] += 1
+        else:
+            scored.append((article, result))
+    logger.info("LLM scored %d of %d articles", len(scored), len(articles))
+    if articles and not scored:
+        raise ScoringFailedError(
+            f"none of the {len(articles)} articles could be scored, see warnings above"
+        )
+    return ScoringResult(
+        scored=scored,
+        skipped_invalid=skipped[SkipReason.INVALID_RESPONSE],
+        skipped_transient=skipped[SkipReason.TRANSIENT_ERROR],
+    )

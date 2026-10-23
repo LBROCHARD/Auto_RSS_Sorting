@@ -9,11 +9,14 @@ from auto_rss_sorting.llm import (
     FatalProviderError,
     InvalidResponseError,
     LLMScore,
+    ScoringFailedError,
+    ScoringResult,
     SkipReason,
     TransientProviderError,
     build_prompt,
     parse_response,
     score_article,
+    score_articles,
 )
 
 PROFILE = "I like systems programming and databases."
@@ -178,3 +181,42 @@ def test_retry_counters_are_independent() -> None:
 def test_fatal_error_is_raised_without_retry() -> None:
     with pytest.raises(FatalProviderError):
         run_score_article([FatalProviderError("401"), VALID])
+
+
+def run_score_articles(
+    articles: list[Article], responses: list[str | Exception]
+) -> ScoringResult:
+    return score_articles(
+        FakeProvider(responses),
+        PROFILE,
+        articles,
+        max_description_chars=100,
+        sleep=lambda _: None,
+    )
+
+
+def test_scores_articles_in_order_and_counts_skips() -> None:
+    a, b, c, d = (make_article(title=t) for t in "abcd")
+    transient = TransientProviderError("500")
+    responses = [VALID, INVALID, INVALID, transient, transient, transient, VALID]
+    result = run_score_articles([a, b, c, d], responses)
+    assert [article for article, _ in result.scored] == [a, d]
+    assert result.skipped_invalid == 1
+    assert result.skipped_transient == 1
+
+
+def test_no_article_scored_fails_the_run() -> None:
+    with pytest.raises(ScoringFailedError):
+        run_score_articles([make_article()], [INVALID, INVALID])
+
+
+def test_no_candidate_is_not_a_failure() -> None:
+    result = run_score_articles([], [])
+    assert result.scored == []
+    assert (result.skipped_invalid, result.skipped_transient) == (0, 0)
+
+
+def test_fatal_error_stops_the_run() -> None:
+    responses = [VALID, FatalProviderError("quota exhausted"), VALID]
+    with pytest.raises(FatalProviderError):
+        run_score_articles([make_article(), make_article(), make_article()], responses)
