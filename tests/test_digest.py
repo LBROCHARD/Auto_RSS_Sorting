@@ -1,8 +1,23 @@
 from datetime import UTC, date, datetime
+from pathlib import Path
 
-from auto_rss_sorting.digest import RunReport, render_digest
+import pytest
+
+from auto_rss_sorting.digest import (
+    RunReport,
+    already_published,
+    digest_path,
+    publish,
+    render_digest,
+)
 from auto_rss_sorting.feeds import Article
 from auto_rss_sorting.llm import LLMScore
+from auto_rss_sorting.state import (
+    PublishedEntry,
+    drop_digest_date,
+    load_state,
+    save_state,
+)
 
 TODAY = date(2026, 1, 15)
 NO_PROBLEM = RunReport(
@@ -117,3 +132,72 @@ def test_line_breaks_cannot_create_new_sections() -> None:
     assert r"## 1. Title \#\# Injected" in text
     assert r"**Summary:** Line one. \#\# Fake heading" in text
     assert "**Reason:** A B\n" in text
+
+
+def test_digest_path_is_named_after_the_day(tmp_path: Path) -> None:
+    assert digest_path(tmp_path, TODAY) == tmp_path / "2026-01-15.md"
+
+
+def test_already_published_when_today_digest_exists(tmp_path: Path) -> None:
+    assert not already_published(tmp_path, TODAY)
+    (tmp_path / "2026-01-15.md").write_text("digest", encoding="utf-8")
+    assert already_published(tmp_path, TODAY)
+
+
+def test_publish_writes_the_digest_then_the_state(tmp_path: Path) -> None:
+    digests_dir = tmp_path / "digests"
+    state_path = tmp_path / "state" / "published.json"
+    article = make_article()
+
+    publish(digests_dir, state_path, TODAY, [(article, make_score())], NO_PROBLEM, [])
+
+    text = (digests_dir / "2026-01-15.md").read_text(encoding="utf-8")
+    assert text == render_digest(TODAY, [(article, make_score())], NO_PROBLEM)
+    assert load_state(state_path) == [
+        PublishedEntry(
+            id=article.id,
+            article_published_at=article.published_at,
+            digest_date=TODAY,
+        )
+    ]
+
+
+def test_state_is_untouched_when_the_digest_cannot_be_written(
+    tmp_path: Path,
+) -> None:
+    digests_dir = tmp_path / "digests"
+    digests_dir.write_text("a file where the directory should be", encoding="utf-8")
+    state_path = tmp_path / "published.json"
+    save_state(state_path, [])
+    before = state_path.read_text(encoding="utf-8")
+
+    with pytest.raises(OSError):
+        publish(
+            digests_dir,
+            state_path,
+            TODAY,
+            [(make_article(), make_score())],
+            NO_PROBLEM,
+            [],
+        )
+
+    assert state_path.read_text(encoding="utf-8") == before
+
+
+def test_force_rerun_overwrites_the_digest_without_duplicate_entries(
+    tmp_path: Path,
+) -> None:
+    digests_dir = tmp_path / "digests"
+    state_path = tmp_path / "published.json"
+    first = make_article("First", "https://a.com")
+    second = make_article("Second", "https://b.com")
+    publish(digests_dir, state_path, TODAY, [(first, make_score())], NO_PROBLEM, [])
+
+    # --force: today's entries are dropped, so "First" is a candidate again.
+    entries = drop_digest_date(load_state(state_path), TODAY)
+    ranked = [(first, make_score()), (second, make_score())]
+    publish(digests_dir, state_path, TODAY, ranked, NO_PROBLEM, entries)
+
+    text = (digests_dir / "2026-01-15.md").read_text(encoding="utf-8")
+    assert "## 2. Second" in text
+    assert [e.id for e in load_state(state_path)] == ["https://a.com", "https://b.com"]

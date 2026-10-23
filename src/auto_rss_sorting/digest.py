@@ -1,11 +1,18 @@
-"""Render the day's digest as Markdown."""
+"""Render the day's digest as Markdown and publish it with the state."""
 
 import re
 from dataclasses import dataclass
 from datetime import date
+from pathlib import Path
 
 from auto_rss_sorting.feeds import Article
 from auto_rss_sorting.llm import LLMScore
+from auto_rss_sorting.state import (
+    PublishedEntry,
+    add_published,
+    save_state,
+    write_atomic,
+)
 
 # Characters that could turn untrusted text into a heading, a link, emphasis
 # or HTML once rendered.
@@ -57,3 +64,27 @@ def render_digest(
 def _inline(text: str) -> str:
     """Untrusted text on a single line, with Markdown characters escaped."""
     return MARKDOWN_SPECIAL.sub(r"\\\1", " ".join(text.split()))
+
+
+def digest_path(digests_dir: Path, today: date) -> Path:
+    return digests_dir / f"{today.isoformat()}.md"
+
+
+def already_published(digests_dir: Path, today: date) -> bool:
+    """Today's digest exists: a same-day re-run exits without changes."""
+    return digest_path(digests_dir, today).exists()
+
+
+def publish(
+    digests_dir: Path,
+    state_path: Path,
+    today: date,
+    ranked: list[tuple[Article, LLMScore]],
+    report: RunReport,
+    entries: list[PublishedEntry],
+) -> None:
+    """Write the digest, then the state with today's articles added. The state
+    is only written once the digest is, so a failed digest changes nothing."""
+    write_atomic(digest_path(digests_dir, today), render_digest(today, ranked, report))
+    articles = [article for article, _ in ranked]
+    save_state(state_path, add_published(entries, articles, today))
