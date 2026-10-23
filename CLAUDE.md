@@ -85,6 +85,7 @@ Before saying a task is done, run tests and lint and report the result.
 - If you want to use a Git command, always ask for permission first (commit, push, create branch...)
 - If the work you have to do is more than a fix or a simple command, it must be planned first. You can write plans in the file Docs/ in plain .md files.
 - Each phase of the project must have a plan, with tasks. Never start working on a phase if it's not planned out first.
+- Do not write "Generated with Claude Code" in PR messages, or anywhere else, it's useless
 
 
 
