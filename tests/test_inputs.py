@@ -7,7 +7,9 @@ from auto_rss_sorting.inputs import (
     InputError,
     load_config,
     load_feeds,
+    load_inputs,
     load_keywords,
+    load_profile,
 )
 
 VALID_CONFIG = """\
@@ -298,3 +300,58 @@ def test_duplicate_keyword_ignoring_case(tmp_path: Path) -> None:
         InputError, match=r"keywords\.yaml: keywords: .*duplicate keyword.*rust"
     ):
         load_keywords(path)
+
+
+REPO_ROOT = Path(__file__).parent.parent
+
+
+def test_valid_profile_loads(tmp_path: Path) -> None:
+    path = write(tmp_path, "profile.md", "# Reader profile\n\nLikes Rust.\n")
+
+    assert load_profile(path) == "# Reader profile\n\nLikes Rust.\n"
+
+
+def test_missing_profile(tmp_path: Path) -> None:
+    with pytest.raises(InputError, match=r"profile\.md.*not found"):
+        load_profile(tmp_path / "profile.md")
+
+
+@pytest.mark.parametrize("content", ["", "  \n\n"])
+def test_empty_profile(tmp_path: Path, content: str) -> None:
+    path = write(tmp_path, "profile.md", content)
+
+    with pytest.raises(InputError, match=r"profile\.md.*empty"):
+        load_profile(path)
+
+
+def write_all_inputs(tmp_path: Path) -> None:
+    write(tmp_path, "config.yaml", VALID_CONFIG)
+    write(tmp_path, "feeds.yaml", VALID_FEEDS)
+    write(tmp_path, "keywords.yaml", VALID_KEYWORDS)
+    write(tmp_path, "profile.md", "Likes Rust.\n")
+
+
+def test_load_inputs_returns_every_input(tmp_path: Path) -> None:
+    write_all_inputs(tmp_path)
+
+    inputs = load_inputs(tmp_path)
+
+    assert inputs.config.top_n == 10
+    assert [feed.name for feed in inputs.feeds] == ["First Blog", "Second Blog"]
+    assert inputs.keywords == {"rust": 3, "machine learning": 2, "crypto": -5}
+    assert inputs.profile == "Likes Rust.\n"
+
+
+@pytest.mark.parametrize(
+    "name", ["config.yaml", "feeds.yaml", "keywords.yaml", "profile.md"]
+)
+def test_load_inputs_fails_on_missing_file(tmp_path: Path, name: str) -> None:
+    write_all_inputs(tmp_path)
+    (tmp_path / name).unlink()
+
+    with pytest.raises(InputError, match=rf"{name.replace('.', r'\.')}.*not found"):
+        load_inputs(tmp_path)
+
+
+def test_committed_inputs_are_valid() -> None:
+    load_inputs(REPO_ROOT)

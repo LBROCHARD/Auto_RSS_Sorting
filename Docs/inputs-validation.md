@@ -60,7 +60,7 @@ Each step is test-first (failing tests shown to you, then implementation) and en
 - [x] **2. `config.yaml`.** Tests: valid config loads; missing file; YAML syntax error; root not a mapping; missing field; unknown field; zero/negative values; negative price; empty provider. Then `Config` + the loading/error-formatting helper. Create `config.yaml` at the repo root.
 - [x] **3. `feeds.yaml`.** Tests: valid list loads; empty list; missing name; invalid URL (not http/https); duplicate name; duplicate URL. Then `Feed` + `FeedList`.
 - [x] **4. `keywords.yaml`.** Tests: valid mapping loads (positive and negative weights); empty mapping; non-integer weight; empty keyword; case-insensitive duplicate. Then `Keywords`. Create `keywords.yaml` from `profile.md` (draft weights, for you to review).
-- [ ] **5. `profile.md` and `load_inputs`.** Tests: missing profile; empty profile; `load_inputs` returns all four inputs; the real files committed at the repo root are valid. Then `load_inputs` and `Inputs`.
+- [x] **5. `profile.md` and `load_inputs`.** Tests: missing profile; empty profile; `load_inputs` returns all four inputs; the real files committed at the repo root are valid. Then `load_inputs` and `Inputs`.
 - [ ] **6. Docs.** Tick this plan, mark the phase done in [PLAN.md](PLAN.md).
 
 ## Tests

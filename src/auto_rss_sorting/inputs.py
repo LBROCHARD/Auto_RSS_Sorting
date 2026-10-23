@@ -1,5 +1,6 @@
 """Load and validate the input files, failing fast with a clear message."""
 
+from dataclasses import dataclass
 from pathlib import Path
 from typing import Annotated, Any
 
@@ -82,6 +83,31 @@ def load_keywords(path: Path) -> dict[str, int]:
     return _validate(Keywords, _load_yaml_mapping(path), path).keywords
 
 
+def load_profile(path: Path) -> str:
+    text = _read_text(path)
+    if not text.strip():
+        raise InputError(f"{path.name}: file is empty")
+    return text
+
+
+@dataclass(frozen=True)
+class Inputs:
+    config: Config
+    feeds: list[Feed]
+    keywords: dict[str, int]
+    profile: str
+
+
+def load_inputs(base_dir: Path) -> Inputs:
+    """Load every input file from `base_dir`, stopping at the first invalid one."""
+    return Inputs(
+        config=load_config(base_dir / "config.yaml"),
+        feeds=load_feeds(base_dir / "feeds.yaml"),
+        keywords=load_keywords(base_dir / "keywords.yaml"),
+        profile=load_profile(base_dir / "profile.md"),
+    )
+
+
 def _reject_duplicates(label: str, values: list[str]) -> None:
     seen: set[str] = set()
     for value in values:
@@ -90,11 +116,15 @@ def _reject_duplicates(label: str, values: list[str]) -> None:
         seen.add(value)
 
 
-def _load_yaml_mapping(path: Path) -> dict[str, Any]:
+def _read_text(path: Path) -> str:
     try:
-        text = path.read_text(encoding="utf-8")
+        return path.read_text(encoding="utf-8")
     except FileNotFoundError as error:
         raise InputError(f"{path.name}: file not found ({path})") from error
+
+
+def _load_yaml_mapping(path: Path) -> dict[str, Any]:
+    text = _read_text(path)
     try:
         data = yaml.safe_load(text)
     except yaml.YAMLError as error:
