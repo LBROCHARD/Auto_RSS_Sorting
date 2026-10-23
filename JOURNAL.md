@@ -34,7 +34,9 @@ This project has two purposes:
 |Setting up the CI (Lint, Basic GitHub action...)  | 40 min | 10 min| Comme github nous permet efficacement de faire des retours en arrière, j'ai ajouté une règle pour obliger l'IA a me demander avant d'effectuer toute commande Git.|
 |Write a plan for the project | 20 min | 2 min | Pour éviter qu'un prompt essaie de s'ocupper d'une trop grosse part du projet d'un coup, j'ai ajouté des règles initerdisant d'effectuer un travail (conséquent) sans créer un plan auparavant, ou sans suivre un plan qui existe déjà. |
 |Phase 1 : inputs validation | 30 min | 15 min | Une tendance à être à la fois trop verbeux et pas assez compréhensible dans ses réponse, je prévois une règle dans CLAUDE.md pour modifier cela. L'agent Spec-reviewer remonte des petites erreurs que je n'aurais pas vu sinon. |
-|Phase 2: Feed fetching and candidates | 45 min | 20 min | Il écrits une quantitée de tests peut être trop élevé pour le projet pour remplir le plan, cela consomme beaucoup de tokens, j'écris une règle pour se contenter des tests adaptées au scope du projet. La review qu'il me donne de son travail ne me convient pas tout a fait, je crée une règle. |
-| | | | Je veux pouvoir tester plus souvent, je lui demande de m'expliquer comment tester ce qu'il fait par moi même. |
+|Phase 2: Feed fetching and candidates | 45 min | 20 min | Il écrits une quantitée de tests peut être trop élevé pour le projet pour remplir le plan, cela consomme beaucoup de tokens, j'écris une règle pour se contenter des tests adaptées au scope du projet. |
+|Phase 3: Keyword pre-filter and deterministic ranking | 1h | 10 min | La review qu'il me donne de son travail ne me convient pas tout a fait, et manque de lisibilitée, je crée une règle. Je veux pouvoir tester plus souvent, je lui demande de m'expliquer comment tester ce qu'il fait par moi même. |
+| | | | |
+| | | | |
 | | | | |
 | | | | |
