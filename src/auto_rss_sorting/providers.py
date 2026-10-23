@@ -27,6 +27,8 @@ MAX_OUTPUT_TOKENS = 500
 ERROR_BODY_MAX_CHARS = 300
 # The free tier allows 0.5 request/s: calls sent back to back would get 429s.
 MIN_INTERVAL_SECONDS = 2.0
+# 401 bad key, 402 quota exhausted (payment required), 403 no access, 404 unknown model.
+FATAL_STATUSES = {401, 402, 403, 404}
 
 
 class _Message(BaseModel):
@@ -88,10 +90,14 @@ class MistralProvider:
         status = response.status_code
         if status == 429 or status >= 500:
             raise TransientProviderError(_describe_error(response))
-        # 401/403 (key), 402 (quota exhausted), other 4xx (bad request, unknown
-        # model): retrying cannot help, and every following article would fail too.
-        if status >= 400:
+        # Bad key, exhausted quota, no access or unknown model: every following
+        # article would fail the same way, so the run fails.
+        if status in FATAL_STATUSES:
             raise FatalProviderError(_describe_error(response))
+        # Other 4xx (400, 413, 422) may come from this article only: skip it.
+        # If they are systematic, no article is scored and the run fails anyway.
+        if status >= 400:
+            raise InvalidResponseError(_describe_error(response))
 
         try:
             body = _ChatResponse.model_validate_json(response.content)

@@ -46,7 +46,8 @@ Write "summary" and "reason" in the language of the article."""
 
 
 class InvalidResponseError(Exception):
-    """The LLM response is not valid JSON or does not match `LLMScore`."""
+    """The LLM answer cannot be used for this article (invalid JSON, wrong shape,
+    or a request rejected for this article only): retried once, then skipped."""
 
 
 class TransientProviderError(Exception):

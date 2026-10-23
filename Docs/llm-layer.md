@@ -102,7 +102,8 @@ Manual run results (step 6, 2026-10-23, `ministral-14b-2512`, 2 fixture articles
 Status mapping in the adapter (decided at step 5):
 
 - timeout or connection error (`httpx.TransportError`), 429, 5xx → `TransientProviderError`;
-- 401, 402, 403 and every other 4xx (400, 404 unknown model, 422) → `FatalProviderError`: retrying cannot fix a bad key, an exhausted quota or a bad request, and every following article would fail the same way;
+- 401 (bad key), 402 (quota exhausted), 403 (no access), 404 (unknown model) → `FatalProviderError`: retrying cannot fix them, and every following article would fail the same way;
+- every other 4xx (400, 413, 422) → `InvalidResponseError` (changed after the pre-merge review): it may come from one odd article, which is then retried once and skipped instead of killing the digest; if it is systematic, no article is scored and the run fails anyway (`ScoringFailedError`);
 - a 200 whose body has no `choices[0].message.content` string or no token usage → `InvalidResponseError`, so it gets the same single retry as an invalid JSON answer.
 - Request constants in the adapter, not in `config.yaml` (no unused options): `temperature: 0` (stable scores between runs and for `eval`), `max_tokens: 500` (bounds the answer: a score, a 1-2 sentence summary and a reason), timeout 30 s.
 - Pacing (added after the pre-merge review): the adapter keeps at least `MIN_INTERVAL_SECONDS = 2` between the starts of two calls, retries and failed calls included, so a 50-article run does not hit the 0.5 request/s limit with back-to-back calls (which would burn transient attempts and could skip many articles). A run takes at least about 100 s, fine for a daily job. The clock and `sleep` are injected, so tests never wait.

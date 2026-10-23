@@ -104,12 +104,22 @@ def test_timeout_is_transient() -> None:
 
 # 402 is Mistral's "payment required" (quota exhausted); 404 is an unknown model.
 @pytest.mark.parametrize("status", [401, 402, 403, 404])
-def test_auth_quota_and_other_client_errors_are_fatal(status: int) -> None:
+def test_auth_quota_and_unknown_model_errors_are_fatal(status: int) -> None:
     body = {"message": "Unauthorized", "type": "authentication_error"}
     provider = make_mistral(lambda _: httpx.Response(status, json=body))
     with pytest.raises(FatalProviderError, match=str(status)) as error:
         provider.complete("s", "u")
     assert "Unauthorized" in str(error.value)
+    assert FAKE_KEY not in str(error.value)
+
+
+# A request rejected because of one article must skip that article, not fail the run.
+@pytest.mark.parametrize("status", [400, 413, 422])
+def test_other_client_errors_are_invalid_responses(status: int) -> None:
+    body = {"message": "Bad request", "type": "invalid_request_error"}
+    provider = make_mistral(lambda _: httpx.Response(status, json=body))
+    with pytest.raises(InvalidResponseError, match=str(status)) as error:
+        provider.complete("s", "u")
     assert FAKE_KEY not in str(error.value)
 
 
