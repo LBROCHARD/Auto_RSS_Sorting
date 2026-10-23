@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0">
+  <channel>
+    <title>Example RSS</title>
+    <link>https://example.com/</link>
+    <description>An RSS 2.0 fixture</description>
+    <item>
+      <title>Rust 2.0 is out</title>
+      <link>https://Example.com/rust-2/?utm_source=rss</link>
+      <description>&lt;p&gt;Big &lt;b&gt;news&lt;/b&gt; for Rust &amp;amp; friends.&lt;/p&gt;</description>
+      <pubDate>Mon, 19 Oct 2026 10:00:00 +0200</pubDate>
+    </item>
+    <item>
+      <title>Plain post</title>
+      <link>https://example.com/plain</link>
+      <description>Plain text description.</description>
+      <pubDate>Sun, 18 Oct 2026 23:30:00 GMT</pubDate>
+    </item>
+  </channel>
+</rss>

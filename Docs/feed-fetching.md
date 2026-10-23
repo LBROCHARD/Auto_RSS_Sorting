@@ -24,8 +24,8 @@ Two modules, plain functions, no class hierarchy.
   - Invalid XML: `FeedError` only when feedparser reports an error (`bozo`) **and** extracted no entry. Bozo with entries: keep them, log a warning.
   - Empty feed (valid, zero entries): not an error, zero articles.
   - Date: `published`, else `updated`, converted to UTC. Neither: entry excluded and counted in `undated_count`.
-  - Description: `summary`, else the first `content` value, else `""`; converted to plain text.
-  - Missing title: `""`. Missing link: entry skipped and logged (no id possible).
+  - Description: `summary` (feedparser already fills it from `content` when an Atom entry has no `<summary>`), else `""`; converted to plain text.
+  - Title: whitespace collapsed (non-breaking spaces included), not passed through `html_to_text` (feedparser already decodes entities). Missing title: `""`. Missing link: entry skipped and logged (no id possible).
 - `fetch_all(client, feeds) -> FetchResult`: sequential, in `feeds.yaml` order. `FetchResult` holds `articles` (in feed order), `failed_feeds` (names, for the digest footer), `undated_count` (total). Each failure is logged with the feed name and the reason, then skipped.
 - `html_to_text(html) -> str`: stdlib `html.parser` (no dependency), entities unescaped, whitespace collapsed. Text inside `<script>`/`<style>` is dropped.
 
@@ -45,7 +45,7 @@ Each step is test-first (failing tests shown to you, then implementation) and en
 - [x] **1. Dependencies.** Ask approval, then `uv add httpx feedparser`. Check they install on Python 3.15 (feedparser pulls `feedparser-sgmllib`, pure Python).
 - [x] **2. `normalize_url`.** Tests: lowercase scheme/host but not path; each tracking parameter removed (`utm_source`, `utm_medium`, `fbclid`, `gclid`); other parameters kept in order; fragment removed; trailing slash removed (root and path); already-normalized URL unchanged; two variants of one URL give the same id.
 - [x] **3. `html_to_text`.** Tests: tags removed; entities unescaped (`&amp;`, `&eacute;`); whitespace collapsed; `<script>` content dropped; plain text unchanged; empty string.
-- [ ] **4. `parse_feed`.** Fixtures in `tests/fixtures/`: valid RSS 2.0, valid Atom (one entry with `updated` only), empty feed, invalid XML, entry without any date, entry without description, entry with HTML description, entry without link. Tests: fields extracted; dates in UTC (non-UTC offset in a fixture); `updated` fallback; undated entry excluded and counted; empty feed gives zero articles; invalid XML raises `FeedError`; bozo with entries keeps them.
+- [x] **4. `parse_feed`.** Fixtures in `tests/fixtures/`: valid RSS 2.0, valid Atom (one entry with `updated` only), empty feed, invalid XML, entry without any date, entry without description, entry with HTML description, entry without link. Tests: fields extracted; dates in UTC (non-UTC offset in a fixture); `updated` fallback; undated entry excluded and counted; empty feed gives zero articles; invalid XML raises `FeedError`; bozo with entries keeps them.
 - [ ] **5. `fetch_feed` / `fetch_all`.** `httpx.MockTransport` serving the fixtures. Tests: 200 returns articles; 404, 500, timeout and connection error each skip the feed and list it in `failed_feeds`; invalid XML through `fetch_all` is skipped too; one failing feed does not stop the others; redirect is followed; `undated_count` summed across feeds; failure logged with the feed name (`caplog`); `make_http_client` has a 10 s timeout.
 - [ ] **6. `collect_candidates`.** Tests (fixed `now`): article older than `max_age_days` excluded; exactly on the boundary kept; future date kept; duplicate across two feeds kept once with the first feed's source; duplicate URL variants (tracking params, trailing slash) deduplicated; order preserved; empty input gives empty output.
 - [ ] **7. Docs.** Tick this plan, mark the phase done in [PLAN.md](PLAN.md).
