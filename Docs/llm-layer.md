@@ -1,6 +1,6 @@
 # Phase 4: LLM layer
 
-- **Status:** done, awaiting merge into `dev`
+- **Status:** done, merged into `dev` (PR #5)
 - **Branch:** `feature/llm-layer` (from `dev`)
 - **Global plan:** [PLAN.md](PLAN.md)
 

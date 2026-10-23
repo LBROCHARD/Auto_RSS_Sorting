@@ -4,7 +4,7 @@ Roadmap for implementing [SPEC.md](../SPEC.md). Each phase stays high level on p
 
 ## Current status
 
-Phases 1 to 3 are merged into `dev`. Phase 4 is done on `feature/llm-layer`, awaiting its PR into `dev`. Next: plan phase 5.
+Phases 1 to 4 are merged into `dev`. Phase 5 is in progress on `feature/digest-state` ([digest-state.md](digest-state.md)).
 
 ## How we work through phases
 
@@ -51,7 +51,7 @@ Note: `keywords.yaml` contains keywords with non-word characters (`c++`, `post-m
 
 ### [x] Phase 4: LLM layer
 
-Plan: [llm-layer.md](llm-layer.md) (done, awaiting merge)
+Plan: [llm-layer.md](llm-layer.md) (done, merged in PR #5)
 
 Generic provider interface, one shared prompt (article text treated as data), Pydantic-validated response, retry rules (invalid response: 1 retry; transient error: 3 attempts with backoff; non-recoverable error: run fails). Fake provider for tests, then a first real adapter.
 First adapter: Mistral's free tier, called with plain `httpx` (budget: at most 1 € per month). The comparison of providers is done in phase 7.
@@ -59,6 +59,8 @@ First adapter: Mistral's free tier, called with plain `httpx` (budget: at most 1
 *Done when:* all retry/skip/fail behavior is tested with the fake provider, and the real adapter has been run once by hand.
 
 ### [ ] Phase 5: Digest and state
+
+Plan: [digest-state.md](digest-state.md) (in progress)
 
 Generate `digests/YYYY-MM-DD.md` (ranking, footer, fewer than `top_n` articles, zero candidates), `state/published.json` (exclusion, purge, atomic write after the digest), same-day re-run and `--force`.
 
