@@ -6,6 +6,7 @@ from datetime import UTC, datetime
 from html.parser import HTMLParser
 from time import struct_time
 from typing import Any
+from urllib.parse import urljoin
 
 import feedparser
 import httpx
@@ -93,6 +94,10 @@ def parse_feed(feed: Feed, content: bytes) -> ParsedFeed:
             len(parsed.entries),
             parsed.bozo_exception,
         )
+    # An HTML page (error page, cookie wall...) parses without error but is
+    # recognized as no feed format: it must not pass for an empty feed.
+    if not parsed.version:
+        raise FeedError(f"{feed.name}: not a feed (no RSS or Atom format recognized)")
 
     articles: list[Article] = []
     undated_count = 0
@@ -106,6 +111,8 @@ def parse_feed(feed: Feed, content: bytes) -> ParsedFeed:
         if published_at is None:
             undated_count += 1
             continue
+        # Relative links are resolved against the feed URL; absolute ones are kept.
+        link = urljoin(str(feed.url), link)
         articles.append(
             Article(
                 id=normalize_url(link),
@@ -116,6 +123,8 @@ def parse_feed(feed: Feed, content: bytes) -> ParsedFeed:
                 source=feed.name,
             )
         )
+    if undated_count:
+        logger.info("%s: excluded %d entries without date", feed.name, undated_count)
     return ParsedFeed(articles=articles, undated_count=undated_count)
 
 

@@ -161,6 +161,34 @@ def test_title_whitespace_is_collapsed() -> None:
     assert article.title == "Still readable item"
 
 
+def test_entries_without_date_are_logged(caplog: pytest.LogCaptureFixture) -> None:
+    with caplog.at_level(logging.INFO):
+        parse_feed(FEED, fixture("missing_fields.xml"))
+
+    assert "Example: excluded 1 entries without date" in caplog.text
+
+
+def test_html_page_raises_feed_error() -> None:
+    with pytest.raises(FeedError, match="Example.*not a feed"):
+        parse_feed(FEED, fixture("html_page.html"))
+
+
+def test_relative_link_is_resolved_against_the_feed_url() -> None:
+    content = b"""<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0"><channel><title>Relative</title>
+  <item>
+    <title>Relative link</title>
+    <link>/posts/relative/</link>
+    <pubDate>Mon, 19 Oct 2026 10:00:00 GMT</pubDate>
+  </item>
+</channel></rss>"""
+
+    [article] = parse_feed(FEED, content).articles
+
+    assert article.url == "https://example.com/posts/relative/"
+    assert article.id == "https://example.com/posts/relative"
+
+
 Handler = Callable[[httpx.Request], httpx.Response]
 
 

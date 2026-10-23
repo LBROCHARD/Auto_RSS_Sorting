@@ -14,7 +14,15 @@ def test_lowercases_scheme_and_host_but_not_path() -> None:
 
 
 @pytest.mark.parametrize(
-    "param", ["utm_source=rss", "utm_medium=feed", "fbclid=abc", "gclid=xyz"]
+    "param",
+    [
+        "utm_source=rss",
+        "utm_medium=feed",
+        "fbclid=abc",
+        "gclid=xyz",
+        "UTM_Source=rss",
+        "FBCLID=abc",
+    ],
 )
 def test_removes_tracking_parameter(param: str) -> None:
     assert normalize_url(f"https://example.com/post?{param}") == (

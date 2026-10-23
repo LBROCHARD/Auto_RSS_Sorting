@@ -86,6 +86,6 @@ Before saying a task is done, run tests and lint and report the result.
 - If the work you have to do is more than a fix or a simple command, it must be planned first. You can write plans in the file Docs/ in plain .md files.
 - Each phase of the project must have a plan, with tasks. Never start working on a phase if it's not planned out first.
 - Do not write "Generated with Claude Code" in PR messages, or anywhere else, it's useless
-
+- Write an adecquate quantity of tests regarding the scope of the project, depending on the use case, maybe we don't need to test everything, try to stay cost efficient in development time in that regard.
 
 

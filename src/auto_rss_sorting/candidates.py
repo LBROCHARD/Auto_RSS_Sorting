@@ -33,7 +33,7 @@ def normalize_url(url: str) -> str:
 
 
 def _is_tracking(pair: str) -> bool:
-    name = pair.split("=", 1)[0]
+    name = pair.split("=", 1)[0].lower()
     return name in TRACKING_PARAMETERS or name.startswith(TRACKING_PREFIX)
 
 

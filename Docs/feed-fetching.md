@@ -65,6 +65,7 @@ Each step is test-first (failing tests shown to you, then implementation) and en
 - **HTML in descriptions:** converted to plain text in this phase, with the stdlib (for the keyword matching in phase 3 and the prompt in phase 4).
 - **Already published articles:** excluded in phase 5, together with reading the state.
 - **Fetching:** sequential. Worst case about 27 x 10 s, fine for a daily job.
+- **Review fixes:** after the `spec-reviewer` pass, `parse_feed` logs the number of undated entries it excluded; a document that feedparser recognizes as no feed format (an HTML page served with 200) raises `FeedError` instead of passing for an empty feed; relative links are resolved against the feed URL; tracking parameters are matched case-insensitively (`UTM_source`, `FBCLID`). Left as is: userinfo lowercased with the host, several trailing slashes removed, `TYPE_CHECKING` import of `Article` in `candidates.py`.
 
 ## Done when
 
