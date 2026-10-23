@@ -1,6 +1,6 @@
 # Phase 1: Inputs and validation
 
-- **Status:** done, awaiting merge into `dev`
+- **Status:** done, merged into `dev` (PR #2)
 - **Branch:** `feature/inputs-validation` (from `dev`)
 - **Global plan:** [PLAN.md](PLAN.md)
 
