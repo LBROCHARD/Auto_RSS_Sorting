@@ -4,7 +4,7 @@ Roadmap for implementing [SPEC.md](../SPEC.md). Each phase stays high level on p
 
 ## Current status
 
-Phases 1 to 3 are merged into `dev`. Phase 4 is in progress on `feature/llm-layer`, plan: [llm-layer.md](llm-layer.md).
+Phases 1 to 3 are merged into `dev`. Phase 4 is done on `feature/llm-layer`, awaiting its PR into `dev`. Next: plan phase 5.
 
 ## How we work through phases
 
@@ -49,9 +49,9 @@ Note: `keywords.yaml` contains keywords with non-word characters (`c++`, `post-m
 
 *Done when:* ranking is tested as deterministic, ties included, and `rust` does not match "trust".
 
-### [ ] Phase 4: LLM layer
+### [x] Phase 4: LLM layer
 
-Plan: [llm-layer.md](llm-layer.md) (in progress)
+Plan: [llm-layer.md](llm-layer.md) (done, awaiting merge)
 
 Generic provider interface, one shared prompt (article text treated as data), Pydantic-validated response, retry rules (invalid response: 1 retry; transient error: 3 attempts with backoff; non-recoverable error: run fails). Fake provider for tests, then a first real adapter.
 First adapter: Mistral's free tier, called with plain `httpx` (budget: at most 1 € per month). The comparison of providers is done in phase 7.

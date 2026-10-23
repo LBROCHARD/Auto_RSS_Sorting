@@ -21,6 +21,7 @@ This project has two purposes:
 - Changing contexte for each tasks helps you save costs, augments speed, and avoid noise or auto-confirmation
 - To keep an good knowledge of the codebase, and efficiently review the AI's work, I want it to systematically give me a list of every files created/modified/deleted.
 - Agents, and their utility, in my case, I mostly used Claude integrated agents, but I created a special "Spec-Reviewer" agent, to inspect code with a fresh and critical viewpoint. It helped me find CI errors that the writing agent didn't saw (CI launched 2 times both during push and in pull request).
+- I also created a "Security-Auditor" agent, to check that no personal informations / keys where public in the project.
 - Using a proper plan, so that every agent is on the same page, and once it has been written, they can easiely follow it.
 
 
@@ -36,7 +37,7 @@ This project has two purposes:
 |Phase 1 : inputs validation | 30 min | 15 min | Une tendance à être à la fois trop verbeux et pas assez compréhensible dans ses réponse, je prévois une règle dans CLAUDE.md pour modifier cela. L'agent Spec-reviewer remonte des petites erreurs que je n'aurais pas vu sinon. |
 |Phase 2: Feed fetching and candidates | 45 min | 20 min | Il écrits une quantitée de tests peut être trop élevé pour le projet pour remplir le plan, cela consomme beaucoup de tokens, j'écris une règle pour se contenter des tests adaptées au scope du projet. |
 |Phase 3: Keyword pre-filter and deterministic ranking | 1h | 10 min | La review qu'il me donne de son travail ne me convient pas tout a fait, et manque de lisibilitée, je crée une règle. Je veux pouvoir tester plus souvent, je lui demande de m'expliquer comment tester ce qu'il fait par moi même. |
-|Phase 4: LLM layer | 3h | 25 min | J'ajoute des règles de sécurité en prévision de l'ajout de clé d'API dans le projet, + un nouvel agent qui s'assure qu'il n'y a pas de fuite de donées senseibles. Selection du premier LLM avec un autre contexte. |
-| | | | |
+|Phase 4: LLM layer | 3h | 30 min | J'ajoute des règles de sécurité en prévision de l'ajout de clé d'API dans le projet, + un nouvel agent qui s'assure qu'il n'y a pas de fuite de donées senseibles. Selection du premier LLM avec un autre contexte. |
+|Phase 5: Digest and state | | | |
 | | | | |
 | | | | |
