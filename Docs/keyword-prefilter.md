@@ -1,6 +1,6 @@
 # Phase 3: Keyword pre-filter and deterministic ranking
 
-- **Status:** done, awaiting merge into `dev`
+- **Status:** done, merged into `dev`
 - **Branch:** `feature/keyword-prefilter` (from `dev`)
 - **Global plan:** [PLAN.md](PLAN.md)
 

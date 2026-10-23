@@ -4,7 +4,7 @@ Roadmap for implementing [SPEC.md](../SPEC.md). Each phase stays high level on p
 
 ## Current status
 
-Phases 1 and 2 are merged into `dev`. Phase 3 is done on `feature/keyword-prefilter`, awaiting its PR into `dev`. Next: plan phase 4.
+Phases 1 to 3 are merged into `dev`. Phase 4 is in progress on `feature/llm-layer`, plan: [llm-layer.md](llm-layer.md).
 
 ## How we work through phases
 
@@ -41,7 +41,7 @@ Dependencies to request: `httpx`, `feedparser`.
 
 ### [x] Phase 3: Keyword pre-filter and deterministic ranking
 
-Plan: [keyword-prefilter.md](keyword-prefilter.md) (done, awaiting merge)
+Plan: [keyword-prefilter.md](keyword-prefilter.md) (done, merged into `dev`)
 
 Keyword score (whole word or phrase, case-insensitive), keep the `llm_max_articles` best, tie-break rule (score, date, URL) reusable for the final ranking.
 
@@ -50,6 +50,8 @@ Note: `keywords.yaml` contains keywords with non-word characters (`c++`, `post-m
 *Done when:* ranking is tested as deterministic, ties included, and `rust` does not match "trust".
 
 ### [ ] Phase 4: LLM layer
+
+Plan: [llm-layer.md](llm-layer.md) (in progress)
 
 Generic provider interface, one shared prompt (article text treated as data), Pydantic-validated response, retry rules (invalid response: 1 retry; transient error: 3 attempts with backoff; non-recoverable error: run fails). Fake provider for tests, then a first real adapter.
 To decide at that point: which provider for the first adapter (and its SDK).

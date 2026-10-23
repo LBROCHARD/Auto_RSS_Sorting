@@ -55,6 +55,12 @@ Before saying a task is done, run tests and lint and report the result.
  
 - Never read, print, or modify `.env` or any secrets file.
 - API keys come only from environment variables (GitHub secrets in CI). Never hardcode them, never log them.
+- Handle API keys with care:
+  - read a key from the environment only where it is needed (the provider adapter), and never store it in a config file, a fixture, a docstring or a committed file;
+  - never put a key in a log, an exception message, a `repr` or a test assertion output: error messages name the environment variable, never its value;
+  - tests use obviously fake values (e.g. `"fake-key"`) set with `monkeypatch`, never a real key;
+  - never print, `echo` or dump environment variables in shell commands (`env`, `printenv`, `set`), and never pass a key on a command line;
+  - before every commit, check the diff for anything that looks like a secret; if one was ever committed, stop and tell me (the key must be revoked, deleting it in a new commit is not enough).
 - Do not run destructive commands (`rm -rf`, `git reset --hard`, force-push) without asking.
 - Work on a feature branch, not directly on `main`.
 
