@@ -30,7 +30,6 @@ Before saying a task is done, run tests and lint and report the result.
 - Never add a dependency without asking me first. Explain why it is needed.
 - Prefer the simplest solution. No speculative abstractions, no unused configuration options, no features outside the spec ("Out of scope" section).
 - Do not refactor code unrelated to the current task.
-- Use gitmoji for commit messages.
 
 
 ## Code rules
@@ -68,8 +67,10 @@ Before saying a task is done, run tests and lint and report the result.
 
 ## Rules (Lessons learned)
 
+- Use gitmoji for commit messages.
 - When you talk to me, use french, when you work on the code, use english only.
 - JOURNAL.md is a document that belongs to me, you can't touch it.
+- always include my modifications of JOURNAL.md in your commits, it's a file that grows with the project, it should be regularly pushed alongside it.
 - Give me a list of every file you modified/created/deleted after each action
 - If you want to use a Git command, always ask for permission first (commit, push, create branch...)
 
