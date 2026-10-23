@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0">
+  <channel>
+    <title>Missing fields</title>
+    <link>https://example.com/</link>
+    <description>Items with missing fields</description>
+    <item>
+      <title>No date</title>
+      <link>https://example.com/no-date</link>
+      <description>This item has no date.</description>
+    </item>
+    <item>
+      <title>No description</title>
+      <link>https://example.com/no-description</link>
+      <pubDate>Mon, 19 Oct 2026 10:00:00 GMT</pubDate>
+    </item>
+    <item>
+      <title>No link</title>
+      <description>This item has no link.</description>
+      <pubDate>Mon, 19 Oct 2026 10:00:00 GMT</pubDate>
+    </item>
+    <item>
+      <link>https://example.com/no-title</link>
+      <description>This item has no title.</description>
+      <pubDate>Mon, 19 Oct 2026 10:00:00 GMT</pubDate>
+    </item>
+  </channel>
+</rss>

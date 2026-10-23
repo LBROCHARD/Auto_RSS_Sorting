@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>Example Atom</title>
+  <id>https://example.org/</id>
+  <updated>2026-10-20T08:00:00Z</updated>
+  <entry>
+    <title>Published and updated</title>
+    <id>https://example.org/both</id>
+    <link rel="alternate" href="https://example.org/both"/>
+    <published>2026-10-19T12:00:00Z</published>
+    <updated>2026-10-20T08:00:00Z</updated>
+    <summary>Summary text.</summary>
+  </entry>
+  <entry>
+    <title>Updated only, content only</title>
+    <id>https://example.org/updated-only</id>
+    <link rel="alternate" href="https://example.org/updated-only"/>
+    <updated>2026-10-17T09:30:00+01:00</updated>
+    <content type="html">&lt;p&gt;Content &lt;em&gt;body&lt;/em&gt;.&lt;/p&gt;</content>
+  </entry>
+</feed>

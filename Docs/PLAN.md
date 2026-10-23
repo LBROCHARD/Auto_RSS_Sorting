@@ -4,7 +4,7 @@ Roadmap for implementing [SPEC.md](../SPEC.md). Each phase stays high level on p
 
 ## Current status
 
-Phase 1 is done on `feature/inputs-validation`, awaiting merge into `dev`: [inputs-validation.md](inputs-validation.md). Next: plan phase 2.
+Phase 1 is merged into `dev` (PR #2). Phase 2 is done on `feature/feed-fetching`, awaiting its PR into `dev`. Next: plan phase 3.
 
 ## How we work through phases
 
@@ -21,16 +21,18 @@ Project skeleton: `pyproject.toml` (no runtime dependencies), `src/auto_rss_sort
 
 The order follows the spec's pipeline, starting from the inputs, so each phase builds on tested pieces. The LLM comes late because everything before it is deterministic and easy to test.
 
-### [ ] Phase 1: Inputs and validation
+### [x] Phase 1: Inputs and validation
 
-Plan: [inputs-validation.md](inputs-validation.md) (done, awaiting merge)
+Plan: [inputs-validation.md](inputs-validation.md) (done, merged in PR #2)
 
 Pydantic models for `config.yaml`, `feeds.yaml`, `keywords.yaml`, check that `profile.md` exists. Fail fast with a clear message.
 Dependencies to request: `pydantic`, `PyYAML`.
 
 *Done when:* valid inputs load, and every invalid input has a test checking the failure and its message.
 
-### [ ] Phase 2: Feed fetching and candidates
+### [x] Phase 2: Feed fetching and candidates
+
+Plan: [feed-fetching.md](feed-fetching.md) (done, awaiting merge)
 
 Fetch feeds (`httpx`, 10 s timeout), parse them (`feedparser`), normalize URLs, deduplicate, filter by `max_age_days` (injected "now"), exclude and count articles without a date, log and skip failing feeds. Tests use fixtures in `tests/fixtures/`, no network.
 Dependencies to request: `httpx`, `feedparser`.

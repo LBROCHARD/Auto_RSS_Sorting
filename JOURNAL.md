@@ -21,7 +21,7 @@ This project has two purposes:
 - Changing contexte for each tasks helps you save costs, augments speed, and avoid noise or auto-confirmation
 - To keep an good knowledge of the codebase, and efficiently review the AI's work, I want it to systematically give me a list of every files created/modified/deleted.
 - Agents, and their utility, in my case, I mostly used Claude integrated agents, but I created a special "Spec-Reviewer" agent, to inspect code with a fresh and critical viewpoint. It helped me find CI errors that the writing agent didn't saw (CI launched 2 times both during push and in pull request).
-- Using a plan, so that every agent is on the same page, and once it has been written, they can easiely follow it.
+- Using a proper plan, so that every agent is on the same page, and once it has been written, they can easiely follow it.
 
 
 # Journal
@@ -34,5 +34,7 @@ This project has two purposes:
 |Setting up the CI (Lint, Basic GitHub action...)  | 40 min | 10 min| Comme github nous permet efficacement de faire des retours en arrière, j'ai ajouté une règle pour obliger l'IA a me demander avant d'effectuer toute commande Git.|
 |Write a plan for the project | 20 min | 2 min | Pour éviter qu'un prompt essaie de s'ocupper d'une trop grosse part du projet d'un coup, j'ai ajouté des règles initerdisant d'effectuer un travail (conséquent) sans créer un plan auparavant, ou sans suivre un plan qui existe déjà. |
 |Phase 1 : inputs validation | 30 min | 15 min | Une tendance à être à la fois trop verbeux et pas assez compréhensible dans ses réponse, je prévois une règle dans CLAUDE.md pour modifier cela. L'agent Spec-reviewer remonte des petites erreurs que je n'aurais pas vu sinon. |
+|Phase 2: Feed fetching and candidates | 45 min | 20 min | Il écrits une quantitée de tests peut être trop élevé pour le projet pour remplir le plan, cela consomme beaucoup de tokens, j'écris une règle pour se contenter des tests adaptées au scope du projet. La review qu'il me donne de son travail ne me convient pas tout a fait, je crée une règle. |
+| | | | Je veux pouvoir tester plus souvent, je lui demande de m'expliquer comment tester ce qu'il fait par moi même. |
 | | | | |
 | | | | |
