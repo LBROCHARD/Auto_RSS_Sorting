@@ -52,7 +52,7 @@ Each step is test-first (failing tests shown to you, then implementation) and en
 - [x] **2. `build_prompt`.** Tests: the profile is in `system`; the article is only in `user`, as valid JSON; the description is truncated to `max_description_chars`; an article containing quotes, newlines or "ignore previous instructions" stays inside its JSON value; `system` contains the data-not-instructions rule.
 - [x] **3. Provider interface, fake provider, `score_article`.** Tests: valid on first try (1 call); invalid then valid → scored (2 calls); invalid twice → skipped as invalid; transient twice then valid → scored, sleeps `[2, 4]`; transient three times → skipped as transient; independent counters (invalid, transient, transient, valid → scored); fatal error → raised on the first call, no retry.
 - [x] **4. `score_articles`.** Tests: scores kept in input order with skip counts; all articles skipped → `ScoringFailedError`; empty input → empty result, no error; a fatal error on the second article stops the run.
-- [ ] **5. Registry and first real adapter (Mistral).** Tests with `httpx.MockTransport` (no network): successful response parsed into a `Completion` with token usage; timeout, 429, 500 → transient; 401, 403, quota error → fatal; unknown provider and missing API key → `InputError` with a clear message, the key never appears in it. Update `config.yaml`.
+- [x] **5. Registry and first real adapter (Mistral).** Tests with `httpx.MockTransport` (no network): successful response parsed into a `Completion` with token usage; timeout, 429, 500 → transient; 401, 403, quota error → fatal; unknown provider and missing API key → `InputError` with a clear message, the key never appears in it. Update `config.yaml`.
 - [ ] **6. Manual run.** Score 2 or 3 articles from a fixture with the real adapter, through a one-off snippet in the scratchpad (not committed, the CLI comes in phase 6). Report the scores and token usage to you. No commit for this step, except ticking it with step 7.
 - [ ] **7. Docs.** Tick this plan, mark the phase done in [PLAN.md](PLAN.md).
 
@@ -89,7 +89,15 @@ Mistral API facts for step 5 (from docs.mistral.ai, checked on 2026-10-23):
 - `POST https://api.mistral.ai/v1/chat/completions`, headers `Authorization: Bearer <key>` and `Content-Type: application/json`.
 - Body: `model`, `messages` (`[{"role": "system", ...}, {"role": "user", ...}]`), optional `max_tokens`, `temperature`, `response_format` (not used: one prompt for all providers, see Decisions).
 - Response: text in `choices[0].message.content`, token usage in `usage`.
-- **Still to verify at the start of step 5**, in the API reference and with the manual run: the `usage` field names (expected `prompt_tokens` / `completion_tokens`), that `choices[0].message.content` is a plain string for this model, and the status code and error body for an exhausted quota (to map it to `FatalProviderError`, while a plain 429 stays transient).
+- Errors (from the official error glossary, checked at the start of step 5): every error body is JSON with `message`, `type`, `code`. **402** (payment required) is the exhausted quota or spending limit, **429** is only a rate limit (requests/s, tokens/min, concurrency). 500, 502, 503, 504 are transient.
+- **Still to verify with the manual run (step 6):** the `usage` field names (`prompt_tokens` / `completion_tokens`, seen only in secondary sources) and that `choices[0].message.content` is a plain string for this model.
+
+Status mapping in the adapter (decided at step 5):
+
+- timeout or connection error (`httpx.TransportError`), 429, 5xx → `TransientProviderError`;
+- 401, 402, 403 and every other 4xx (400, 404 unknown model, 422) → `FatalProviderError`: retrying cannot fix a bad key, an exhausted quota or a bad request, and every following article would fail the same way;
+- a 200 whose body has no `choices[0].message.content` string or no token usage → `InvalidResponseError`, so it gets the same single retry as an invalid JSON answer.
+- Request constants in the adapter, not in `config.yaml` (no unused options): `temperature: 0` (stable scores between runs and for `eval`), `max_tokens: 500` (bounds the answer: a score, a 1-2 sentence summary and a reason), timeout 30 s.
 
 Constraints any provider must meet:
 
