@@ -1,6 +1,6 @@
 # Phase 1: Inputs and validation
 
-- **Status:** in progress
+- **Status:** done, awaiting merge into `dev`
 - **Branch:** `feature/inputs-validation` (from `dev`)
 - **Global plan:** [PLAN.md](PLAN.md)
 
@@ -16,13 +16,13 @@ One module, `src/auto_rss_sorting/inputs.py`:
 
 - `InputError(Exception)`: the only exception raised by this module. Its message names the file and the problem.
 - Pydantic models, all with `extra="forbid"` so a typo (`top-n`) fails instead of being ignored:
-  - `Config`: `top_n`, `max_age_days`, `llm_max_articles`, `max_description_chars` (int > 0), `provider`, `model` (non-empty str), `price_input_per_mtok`, `price_output_per_mtok` (float >= 0). All fields required, no defaults: the values live in `config.yaml` only.
+  - `Config`: `top_n`, `max_age_days`, `llm_max_articles`, `max_description_chars` (int > 0), `provider`, `model` (non-empty str), `price_input_per_mtok`, `price_output_per_mtok` (finite float >= 0). All fields required, no defaults: the values live in `config.yaml` only.
   - `Feed`: `name` (non-empty str), `url` (http/https URL).
   - `FeedList`: `feeds` (non-empty list of `Feed`), feed names and URLs unique.
   - `Keywords`: `keywords` (non-empty mapping keyword -> int weight), keywords non-empty, unique case-insensitively (`Rust` and `rust` are the same keyword).
-  - `Inputs`: `config`, `feeds`, `keywords`, `profile` (text of `profile.md`).
+- `Inputs`: a frozen dataclass holding `config`, `feeds`, `keywords`, `profile` (text of `profile.md`). Not a Pydantic model: it only groups values that are already validated.
 - `load_inputs(base_dir: Path) -> Inputs`: reads the four files from `base_dir`, raises `InputError` on:
-  - missing file,
+  - missing file, or file that cannot be read (not UTF-8, directory, permissions),
   - YAML syntax error, or YAML root that is not a mapping,
   - Pydantic validation error, formatted as one line per error: `config.yaml: top_n: Input should be greater than 0`,
   - `profile.md` empty (whitespace only).
@@ -50,7 +50,10 @@ keywords:
   crypto: -5
 ```
 
-Known limit: PyYAML silently keeps the last value when a key is duplicated in the same file. We accept it for v1 (no custom loader).
+Known limits, accepted for v1:
+
+- PyYAML silently keeps the last value when a key is duplicated in the same file (no custom loader).
+- Keywords are stripped before the duplicate check, so `"rust"` and `"rust "` collapse into one key and the last weight wins silently. Same kind of typo as the duplicate key above.
 
 ## Steps
 
@@ -61,7 +64,7 @@ Each step is test-first (failing tests shown to you, then implementation) and en
 - [x] **3. `feeds.yaml`.** Tests: valid list loads; empty list; missing name; invalid URL (not http/https); duplicate name; duplicate URL. Then `Feed` + `FeedList`.
 - [x] **4. `keywords.yaml`.** Tests: valid mapping loads (positive and negative weights); empty mapping; non-integer weight; empty keyword; case-insensitive duplicate. Then `Keywords`. Create `keywords.yaml` from `profile.md` (draft weights, for you to review).
 - [x] **5. `profile.md` and `load_inputs`.** Tests: missing profile; empty profile; `load_inputs` returns all four inputs; the real files committed at the repo root are valid. Then `load_inputs` and `Inputs`.
-- [ ] **6. Docs.** Tick this plan, mark the phase done in [PLAN.md](PLAN.md).
+- [x] **6. Docs.** Tick this plan, mark the phase done in [PLAN.md](PLAN.md).
 
 ## Tests
 
@@ -73,6 +76,7 @@ Each step is test-first (failing tests shown to you, then implementation) and en
 ## Decisions
 
 - **`provider` / `model` / prices in `config.yaml`:** provisional values (`undecided`, prices `0`) until the provider is chosen in phase 4.
+- **Review fixes:** after the `spec-reviewer` pass, unreadable files and infinite prices also raise `InputError` (tests added). The whitespace collapse of keywords is kept as a known limit.
 - **PyYAML is built as pure Python:** it ships no wheel for Python 3.15, and building its C extension needs a compiler. `pyproject.toml` sets `PYYAML_FORCE_LIBYAML=0` for its build (`[tool.uv.extra-build-variables]`). Slower parsing does not matter for a few small files.
 
 ## Done when

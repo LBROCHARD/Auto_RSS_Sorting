@@ -4,7 +4,7 @@ Roadmap for implementing [SPEC.md](../SPEC.md). Each phase stays high level on p
 
 ## Current status
 
-Phase 1 in progress on `feature/inputs-validation`: [inputs-validation.md](inputs-validation.md).
+Phase 1 is done on `feature/inputs-validation`, awaiting merge into `dev`: [inputs-validation.md](inputs-validation.md). Next: plan phase 2.
 
 ## How we work through phases
 
@@ -23,7 +23,7 @@ The order follows the spec's pipeline, starting from the inputs, so each phase b
 
 ### [ ] Phase 1: Inputs and validation
 
-Plan: [inputs-validation.md](inputs-validation.md) (in progress)
+Plan: [inputs-validation.md](inputs-validation.md) (done, awaiting merge)
 
 Pydantic models for `config.yaml`, `feeds.yaml`, `keywords.yaml`, check that `profile.md` exists. Fail fast with a clear message.
 Dependencies to request: `pydantic`, `PyYAML`.
@@ -40,6 +40,8 @@ Dependencies to request: `httpx`, `feedparser`.
 ### [ ] Phase 3: Keyword pre-filter and deterministic ranking
 
 Keyword score (whole word or phrase, case-insensitive), keep the `llm_max_articles` best, tie-break rule (score, date, URL) reusable for the final ranking.
+
+Note: `keywords.yaml` contains keywords with non-word characters (`c++`, `post-mortem`) and accented French terms: a naive `` regex fails on `c++`, so whole-word matching must handle them.
 
 *Done when:* ranking is tested as deterministic, ties included, and `rust` does not match "trust".
 

@@ -33,6 +33,6 @@ This project has two purposes:
 |Finding Feeds | 1h | 10 minutes | recherche et tri qui m'aurait pris des heures, peut être un petit peu moins précis qu'un humain, mais faire un mélange des 2 est surement la meilleur solution, j'injecte quelques sources perso dans l'ensemble.|
 |Setting up the CI (Lint, Basic GitHub action...)  | 40 min | 10 min| Comme github nous permet efficacement de faire des retours en arrière, j'ai ajouté une règle pour obliger l'IA a me demander avant d'effectuer toute commande Git.|
 |Write a plan for the project | 20 min | 2 min | Pour éviter qu'un prompt essaie de s'ocupper d'une trop grosse part du projet d'un coup, j'ai ajouté des règles initerdisant d'effectuer un travail (conséquent) sans créer un plan auparavant, ou sans suivre un plan qui existe déjà. |
-|Phase 1 : inputs validation | 30 min | 10 min | Une tendance à être à la fois trop verbeux et pas assez compréhensible dans ses réponse, je prévois une règle dans CLAUDE.md pour modifier cela. L'agent Spec-reviewer remonte des petites erreurs que je n'aurais pas vu sinon. |
+|Phase 1 : inputs validation | 30 min | 15 min | Une tendance à être à la fois trop verbeux et pas assez compréhensible dans ses réponse, je prévois une règle dans CLAUDE.md pour modifier cela. L'agent Spec-reviewer remonte des petites erreurs que je n'aurais pas vu sinon. |
 | | | | |
 | | | | |
