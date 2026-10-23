@@ -77,15 +77,19 @@ Each step is test-first (failing tests shown to you, then implementation) and en
 
 Decided with the project owner: the budget is at most 1 € per month, so the first adapter targets a **free tier**. Benchmarking several providers and models (free and cheap paid ones) is planned in phase 7, with `eval`; the provider used in production can change then, by adding one adapter.
 
-**Chosen: Mistral, free "Experiment" plan** (chat completions API, `https://api.mistral.ai/v1/chat/completions`). Model: a small Mistral model (e.g. Mistral Small), exact id checked against Mistral's model list at step 5. API key environment variable: `MISTRAL_API_KEY`. Prices in `config.yaml` are `0`. Why: its free-tier limits (about 1 request/s, about 1 billion tokens/month, per third-party sources) cover 50 sequential calls/day with a wide margin, it handles French well, and its API is easy to call with `httpx`. Rejected for now: Groq (8,000 tokens/min would cause 429s on a 50-article run), Gemini (unstable free quotas), OpenRouter free (50 requests/day, no room for retries). The exact limits are read in the Mistral console before step 6.
+**Chosen: Mistral, free "Experiment" plan** (chat completions API, `https://api.mistral.ai/v1/chat/completions`). Model: **`ministral-14b-2512`**. API key environment variable: `MISTRAL_API_KEY`. Prices in `config.yaml` are `0`. Why Mistral: generous free tier, handles French well, and its API is easy to call with `httpx`.
+
+Limits read in the project owner's console (2026-10-23, "Completion rate limits per model", no monthly limit shown):
+
+- `ministral-14b-2512`: 937,500 tokens/min, 0.5 request/s. A run (about 50 calls of about 1,500 tokens) fits easily; an occasional 429 from the 0.5 request/s limit is absorbed by the 2 s transient backoff.
+- `mistral-small-2603` (Mistral Small 4) was the first idea but only allows 20,000 tokens/min: a run would hit 429s and skip articles. It is a candidate for the phase 7 benchmark, with `ministral-8b-2512` (625,000 tokens/min, 3.13 requests/s). Rejected for now: Groq (8,000 tokens/min would cause 429s on a 50-article run), Gemini (unstable free quotas), OpenRouter free (50 requests/day, no room for retries). The exact limits are read in the Mistral console before step 6.
 
 Mistral API facts for step 5 (from docs.mistral.ai, checked on 2026-10-23):
 
 - `POST https://api.mistral.ai/v1/chat/completions`, headers `Authorization: Bearer <key>` and `Content-Type: application/json`.
 - Body: `model`, `messages` (`[{"role": "system", ...}, {"role": "user", ...}]`), optional `max_tokens`, `temperature`, `response_format` (not used: one prompt for all providers, see Decisions).
 - Response: text in `choices[0].message.content`, token usage in `usage`.
-- Current small model: Mistral Small 4 (26.03), which also does reasoning; `mistral-small-2506` (Small 3.2) is deprecated.
-- **Still to verify at the start of step 5**, in the API reference and with the manual run: the exact model id (`mistral-small-latest` or a versioned id), the `usage` field names (expected `prompt_tokens` / `completion_tokens`), whether Small 4 returns its reasoning in `content` (it must not break `parse_response`), and the status code and error body for an exhausted quota (to map it to `FatalProviderError`, while a plain 429 stays transient).
+- **Still to verify at the start of step 5**, in the API reference and with the manual run: the `usage` field names (expected `prompt_tokens` / `completion_tokens`), that `choices[0].message.content` is a plain string for this model, and the status code and error body for an exhausted quota (to map it to `FatalProviderError`, while a plain 429 stays transient).
 
 Constraints any provider must meet:
 
