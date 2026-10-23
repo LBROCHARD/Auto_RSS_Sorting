@@ -52,7 +52,7 @@ Each step is test-first (failing tests shown to you, then implementation) and en
 - [x] **2. `build_prompt`.** Tests: the profile is in `system`; the article is only in `user`, as valid JSON; the description is truncated to `max_description_chars`; an article containing quotes, newlines or "ignore previous instructions" stays inside its JSON value; `system` contains the data-not-instructions rule.
 - [x] **3. Provider interface, fake provider, `score_article`.** Tests: valid on first try (1 call); invalid then valid → scored (2 calls); invalid twice → skipped as invalid; transient twice then valid → scored, sleeps `[2, 4]`; transient three times → skipped as transient; independent counters (invalid, transient, transient, valid → scored); fatal error → raised on the first call, no retry.
 - [x] **4. `score_articles`.** Tests: scores kept in input order with skip counts; all articles skipped → `ScoringFailedError`; empty input → empty result, no error; a fatal error on the second article stops the run.
-- [ ] **5. Registry and first real adapter.** Tests with `httpx.MockTransport` (no network): successful response parsed into a `Completion` with token usage; timeout, 429, 500 → transient; 401, 403, quota error → fatal; unknown provider and missing API key → `InputError` with a clear message, the key never appears in it. Update `config.yaml`.
+- [ ] **5. Registry and first real adapter (Mistral).** Tests with `httpx.MockTransport` (no network): successful response parsed into a `Completion` with token usage; timeout, 429, 500 → transient; 401, 403, quota error → fatal; unknown provider and missing API key → `InputError` with a clear message, the key never appears in it. Update `config.yaml`.
 - [ ] **6. Manual run.** Score 2 or 3 articles from a fixture with the real adapter, through a one-off snippet in the scratchpad (not committed, the CLI comes in phase 6). Report the scores and token usage to you. No commit for this step, except ticking it with step 7.
 - [ ] **7. Docs.** Tick this plan, mark the phase done in [PLAN.md](PLAN.md).
 
@@ -73,9 +73,31 @@ Each step is test-first (failing tests shown to you, then implementation) and en
 - **Plain `httpx` adapter instead of an SDK:** no new dependency, and the HTTP status codes map directly to transient / fatal.
 - **Extra fields in the LLM response are ignored:** they are harmless, and rejecting them would cost retries for nothing.
 
-## Open question: which provider for the first adapter?
+## First provider: a free tier
 
-The project owner handles the provider choice separately; steps 1 to 4 do not depend on it and go first. To decide before step 5 (it only changes `providers.py` and `config.yaml`): the provider, the model, its prices, and the name of the API key environment variable. Constraints: up to 50 calls/day must fit within its limits, and the model must follow a JSON-only instruction reliably. Phase 7 can compare other providers by adding adapters.
+Decided with the project owner: the budget is at most 1 € per month, so the first adapter targets a **free tier**. Benchmarking several providers and models (free and cheap paid ones) is planned in phase 7, with `eval`; the provider used in production can change then, by adding one adapter.
+
+**Chosen: Mistral, free "Experiment" plan** (chat completions API, `https://api.mistral.ai/v1/chat/completions`). Model: a small Mistral model (e.g. Mistral Small), exact id checked against Mistral's model list at step 5. API key environment variable: `MISTRAL_API_KEY`. Prices in `config.yaml` are `0`. Why: its free-tier limits (about 1 request/s, about 1 billion tokens/month, per third-party sources) cover 50 sequential calls/day with a wide margin, it handles French well, and its API is easy to call with `httpx`. Rejected for now: Groq (8,000 tokens/min would cause 429s on a 50-article run), Gemini (unstable free quotas), OpenRouter free (50 requests/day, no room for retries). The exact limits are read in the Mistral console before step 6.
+
+Mistral API facts for step 5 (from docs.mistral.ai, checked on 2026-10-23):
+
+- `POST https://api.mistral.ai/v1/chat/completions`, headers `Authorization: Bearer <key>` and `Content-Type: application/json`.
+- Body: `model`, `messages` (`[{"role": "system", ...}, {"role": "user", ...}]`), optional `max_tokens`, `temperature`, `response_format` (not used: one prompt for all providers, see Decisions).
+- Response: text in `choices[0].message.content`, token usage in `usage`.
+- Current small model: Mistral Small 4 (26.03), which also does reasoning; `mistral-small-2506` (Small 3.2) is deprecated.
+- **Still to verify at the start of step 5**, in the API reference and with the manual run: the exact model id (`mistral-small-latest` or a versioned id), the `usage` field names (expected `prompt_tokens` / `completion_tokens`), whether Small 4 returns its reasoning in `content` (it must not break `parse_response`), and the status code and error body for an exhausted quota (to map it to `FatalProviderError`, while a plain 429 stays transient).
+
+Constraints any provider must meet:
+
+- up to 50 calls/day, sent one after another, must fit within the free tier's per-minute and per-day limits;
+- the model must follow a JSON-only instruction reliably, in French and English;
+- the data sent is public (articles) or generic (`profile.md`), so a free tier that may use prompts for training is acceptable.
+
+Security rules for the `httpx` adapter (no SDK, per the decision above):
+
+- the API key goes in an HTTP header, never in the URL: `httpx` logs request URLs at INFO level, so a key in a query parameter would leak into the logs;
+- error messages and logs show the status code and the provider's error body, never the request headers;
+- TLS verification stays on (the `httpx` default), and the base URL is a constant in the adapter, not read from a config file.
 
 ## Done when
 

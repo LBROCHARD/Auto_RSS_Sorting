@@ -54,7 +54,7 @@ Note: `keywords.yaml` contains keywords with non-word characters (`c++`, `post-m
 Plan: [llm-layer.md](llm-layer.md) (in progress)
 
 Generic provider interface, one shared prompt (article text treated as data), Pydantic-validated response, retry rules (invalid response: 1 retry; transient error: 3 attempts with backoff; non-recoverable error: run fails). Fake provider for tests, then a first real adapter.
-To decide at that point: which provider for the first adapter (and its SDK).
+First adapter: Mistral's free tier, called with plain `httpx` (budget: at most 1 € per month). The comparison of providers is done in phase 7.
 
 *Done when:* all retry/skip/fail behavior is tested with the fake provider, and the real adapter has been run once by hand.
 
@@ -74,7 +74,9 @@ Wire everything into the `auto-rss-sorting` command: "now" computed once at the 
 
 `eval/labels.csv` (20 hand-scored articles, provided by the project owner), accuracy (±3 points, target 80 %), cost per 100 articles, average latency.
 
-*Done when:* `eval` prints the three metrics for the configured provider, and we know whether the success criterion is met.
+Then a **provider benchmark**: run `eval` on 3 or 4 provider/model pairs (free tiers and cheap paid models, e.g. Claude Haiku 5.5), adding one adapter per new provider. Compare accuracy, cost per month at 50 articles/day, latency and the free tier's limits, then pick the production provider. Budget: at most 1 € per month.
+
+*Done when:* `eval` prints the three metrics for the configured provider, the benchmark results are recorded in the phase plan, the production provider is chosen, and we know whether the success criterion is met.
 
 ### [ ] Phase 8: Scheduling and v1 release
 
