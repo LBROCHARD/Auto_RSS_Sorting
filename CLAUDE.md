@@ -63,6 +63,16 @@ Before saying a task is done, run tests and lint and report the result.
 
 - `dev` is the default branch and the center of development: feature branches start from `dev` and merge back into `dev`.
 - `main` is only for stable releases: it is updated from `dev` when a version is released, never developed on directly.
+- Every phase is developed on its own branch `feature/<feature-name>`, created from an up-to-date `dev`. One branch per phase at least: a large phase can be split into several branches, but a branch never spans two phases.
+
+
+## Planning and progress tracking
+
+- `Docs/PLAN.md` is the global roadmap: phases, their status, and a link to each phase plan. Read it at the start of every task to know where the project stands.
+- Each phase has its own plan file `Docs/<feature-name>.md`, named after the feature (same name as its branch `feature/<feature-name>`), with a status line and steps as checkboxes. It is written and approved before the phase starts.
+- Keep the docs up to date as you go: tick each step in the phase plan when it is done (in the same commit as the work), and update the phase status and "Current status" in `PLAN.md` when a phase starts or is merged.
+- If a decision during the work changes the plan, update the plan file and tell me.
+- Work outside a phase (a fix, a simple command) does not need a plan file.
 
 
 ## Rules (Lessons learned)
@@ -73,8 +83,8 @@ Before saying a task is done, run tests and lint and report the result.
 - always include my modifications of JOURNAL.md in your commits, it's a file that grows with the project, it should be regularly pushed alongside it.
 - Give me a list of every file you modified/created/deleted after each action
 - If you want to use a Git command, always ask for permission first (commit, push, create branch...)
-- If the work you have to do is more than a fix or a simple command, it must be planned first. You can write plans in the file Docs/ in plain .md.
-- When you work on a large plan, create phases and steps.
+- If the work you have to do is more than a fix or a simple command, it must be planned first. You can write plans in the file Docs/ in plain .md files.
+- Each phase of the project must have a plan, with tasks. Never start working on a phase if it's not planned out first.
 
 
 
