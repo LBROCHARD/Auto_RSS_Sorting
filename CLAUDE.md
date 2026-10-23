@@ -61,6 +61,8 @@ Before saying a task is done, run tests and lint and report the result.
   - tests use obviously fake values (e.g. `"fake-key"`) set with `monkeypatch`, never a real key;
   - never print, `echo` or dump environment variables in shell commands (`env`, `printenv`, `set`), and never pass a key on a command line;
   - before every commit, check the diff for anything that looks like a secret; if one was ever committed, stop and tell me (the key must be revoked, deleting it in a new commit is not enough).
+- Run the `security-auditor` agent before every merge (and before a commit that touches LLM providers, config, CI or fixtures). Report its findings to me; do not merge while a Critical or High finding is open.
+- Gitleaks runs in CI on every push and pull request; a failing scan blocks the merge.
 - Do not run destructive commands (`rm -rf`, `git reset --hard`, force-push) without asking.
 - Work on a feature branch, not directly on `main`.
 
