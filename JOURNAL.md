@@ -21,6 +21,7 @@ This project has two purposes:
 - Changing contexte for each tasks helps you save costs, augments speed, and avoid noise or auto-confirmation
 - To keep an good knowledge of the codebase, and efficiently review the AI's work, I want it to systematically give me a list of every files created/modified/deleted.
 - Agents, and their utility, in my case, I mostly used Claude integrated agents, but I created a special "Spec-Reviewer" agent, to inspect code with a fresh and critical viewpoint. It helped me find CI errors that the writing agent didn't saw (CI launched 2 times both during push and in pull request).
+- Using a plan, so that every agent is on the same page, and once it has been written, they can easiely follow it.
 
 
 # Journal
@@ -28,9 +29,10 @@ This project has two purposes:
 | Tâche | Temps estimé sans IA | Temps réel avec IA | Erreurs de l'IA / Remarques |
 |-------|----------------------|--------------------|-----------------|
 |Setting up the full project | 1h | ~1h| a peu près le même temps mais beaucoup plus qualitatif que si je n'avais pas utilisé l'IA. L'IA a tendance a être trop verbeuse sur certains fichiers, j'ai peur de saturer un peu le contexte, à vérifier.|
-|Writing the contexte | 20 min | 10 min | utilisation du grilling pour rédiger une spec efficace et compréhensible par l'IA |
+|Writing the SPEC | 20 min | 10 min | utilisation du grilling pour rédiger une spec efficace et compréhensible par l'IA |
 |Finding Feeds | 1h | 10 minutes | recherche et tri qui m'aurait pris des heures, peut être un petit peu moins précis qu'un humain, mais faire un mélange des 2 est surement la meilleur solution, j'injecte quelques sources perso dans l'ensemble.|
 |Setting up the CI (Lint, Basic GitHub action...)  | 40 min | 10 min| Comme github nous permet efficacement de faire des retours en arrière, j'ai ajouté une règle pour obliger l'IA a me demander avant d'effectuer toute commande Git.|
+|Write a plan for the project | 20 min | 2 min | Pour éviter qu'un prompt essaie de s'ocupper d'une trop grosse part du projet d'un coup, j'ai ajouté des règles initerdisant d'effectuer un travail (conséquent) sans créer un plan auparavant, ou sans suivre un plan qui existe déjà. |
 | | | | |
 | | | | |
 | | | | |
