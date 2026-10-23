@@ -55,6 +55,14 @@ Before saying a task is done, run tests and lint and report the result.
  
 - Never read, print, or modify `.env` or any secrets file.
 - API keys come only from environment variables (GitHub secrets in CI). Never hardcode them, never log them.
+- Handle API keys with care:
+  - read a key from the environment only where it is needed (the provider adapter), and never store it in a config file, a fixture, a docstring or a committed file;
+  - never put a key in a log, an exception message, a `repr` or a test assertion output: error messages name the environment variable, never its value;
+  - tests use obviously fake values (e.g. `"fake-key"`) set with `monkeypatch`, never a real key;
+  - never print, `echo` or dump environment variables in shell commands (`env`, `printenv`, `set`), and never pass a key on a command line;
+  - before every commit, check the diff for anything that looks like a secret; if one was ever committed, stop and tell me (the key must be revoked, deleting it in a new commit is not enough).
+- Run the `security-auditor` agent before every merge (and before a commit that touches LLM providers, config, CI or fixtures). Report its findings to me; do not merge while a Critical or High finding is open.
+- Gitleaks runs in CI on every push and pull request; a failing scan blocks the merge.
 - Do not run destructive commands (`rm -rf`, `git reset --hard`, force-push) without asking.
 - Work on a feature branch, not directly on `main`.
 
@@ -81,7 +89,8 @@ Before saying a task is done, run tests and lint and report the result.
 - When you talk to me, use french, when you work on the code, use english only.
 - JOURNAL.md is a document that belongs to me, you can't touch it.
 - always include my modifications of JOURNAL.md in your commits, it's a file that grows with the project, it should be regularly pushed alongside it.
-- After each action, I want you to present the work you did in a comprehensive way : make an ordered list of what you did and why, and list every files modified, created or deleted and what changed in them. Finish by a list of actions you wish to take next or questions to continue.
+- After each action, I want you to present the work you did in a comprehensive way : make an ordered list of what you did and why, and list every files modified, created or deleted and what changed in them. Finish by a list of actions you wish to take next or questions to continue. 
+  - I like to have thoses sections separated with a title in your response, it makes it more lisible.
 - If you want to use a Git command, always ask for permission first (commit, push, create branch...)
 - If the work you have to do is more than a fix or a simple command, it must be planned first. You can write plans in the file Docs/ in plain .md files.
 - Each phase of the project must have a plan, with tasks. Never start working on a phase if it's not planned out first.
