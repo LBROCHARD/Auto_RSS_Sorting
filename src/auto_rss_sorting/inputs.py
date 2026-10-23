@@ -56,12 +56,30 @@ class FeedList(BaseModel):
         return feeds
 
 
+class Keywords(BaseModel):
+    model_config = ConfigDict(extra="forbid", strict=True, frozen=True)
+
+    keywords: Annotated[dict[NonEmptyStr, int], Field(min_length=1)]
+
+    @field_validator("keywords")
+    @classmethod
+    def keywords_are_unique_ignoring_case(
+        cls, keywords: dict[str, int]
+    ) -> dict[str, int]:
+        _reject_duplicates("keyword", [keyword.lower() for keyword in keywords])
+        return keywords
+
+
 def load_config(path: Path) -> Config:
     return _validate(Config, _load_yaml_mapping(path), path)
 
 
 def load_feeds(path: Path) -> list[Feed]:
     return _validate(FeedList, _load_yaml_mapping(path), path).feeds
+
+
+def load_keywords(path: Path) -> dict[str, int]:
+    return _validate(Keywords, _load_yaml_mapping(path), path).keywords
 
 
 def _reject_duplicates(label: str, values: list[str]) -> None:

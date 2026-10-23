@@ -2,7 +2,13 @@ from pathlib import Path
 
 import pytest
 
-from auto_rss_sorting.inputs import Config, InputError, load_config, load_feeds
+from auto_rss_sorting.inputs import (
+    Config,
+    InputError,
+    load_config,
+    load_feeds,
+    load_keywords,
+)
 
 VALID_CONFIG = """\
 top_n: 10
@@ -231,3 +237,64 @@ def test_duplicate_feed_url(tmp_path: Path) -> None:
         match=r"feeds\.yaml: feeds: .*duplicate feed URL.*https://first\.example/feed\.xml",
     ):
         load_feeds(path)
+
+
+VALID_KEYWORDS = """\
+keywords:
+  rust: 3
+  machine learning: 2
+  crypto: -5
+"""
+
+
+def test_valid_keywords_load(tmp_path: Path) -> None:
+    keywords = load_keywords(write(tmp_path, "keywords.yaml", VALID_KEYWORDS))
+
+    assert keywords == {"rust": 3, "machine learning": 2, "crypto": -5}
+
+
+def test_missing_keywords_file(tmp_path: Path) -> None:
+    with pytest.raises(InputError, match=r"keywords\.yaml.*not found"):
+        load_keywords(tmp_path / "keywords.yaml")
+
+
+def test_keywords_key_missing(tmp_path: Path) -> None:
+    path = write(tmp_path, "keywords.yaml", "rust: 3\n")
+
+    with pytest.raises(InputError, match=r"keywords\.yaml: keywords: Field required"):
+        load_keywords(path)
+
+
+def test_empty_keyword_mapping(tmp_path: Path) -> None:
+    path = write(tmp_path, "keywords.yaml", "keywords: {}\n")
+
+    with pytest.raises(
+        InputError, match=r"keywords\.yaml: keywords: .*at least 1 item"
+    ):
+        load_keywords(path)
+
+
+@pytest.mark.parametrize("weight", ["2.5", "high", "true"])
+def test_keyword_weight_not_an_integer(tmp_path: Path, weight: str) -> None:
+    path = write(tmp_path, "keywords.yaml", f"keywords:\n  rust: {weight}\n")
+
+    with pytest.raises(InputError, match=r"keywords\.yaml: keywords\.rust: .*integer"):
+        load_keywords(path)
+
+
+def test_empty_keyword(tmp_path: Path) -> None:
+    path = write(tmp_path, "keywords.yaml", 'keywords:\n  "  ": 3\n')
+
+    with pytest.raises(
+        InputError, match=r"keywords\.yaml: keywords\..*at least 1 character"
+    ):
+        load_keywords(path)
+
+
+def test_duplicate_keyword_ignoring_case(tmp_path: Path) -> None:
+    path = write(tmp_path, "keywords.yaml", "keywords:\n  Rust: 3\n  rust: 2\n")
+
+    with pytest.raises(
+        InputError, match=r"keywords\.yaml: keywords: .*duplicate keyword.*rust"
+    ):
+        load_keywords(path)
