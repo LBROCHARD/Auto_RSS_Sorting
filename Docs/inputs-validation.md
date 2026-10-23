@@ -1,6 +1,6 @@
 # Phase 1: Inputs and validation
 
-- **Status:** draft, awaiting approval
+- **Status:** in progress
 - **Branch:** `feature/inputs-validation` (from `dev`)
 - **Global plan:** [PLAN.md](PLAN.md)
 
@@ -35,10 +35,11 @@ top_n: 10
 max_age_days: 7
 llm_max_articles: 50
 max_description_chars: 2000
-provider: <to decide>
-model: <to decide>
-price_input_per_mtok: <to decide>
-price_output_per_mtok: <to decide>
+# Provisional values: the provider and model are chosen in phase 4.
+provider: undecided
+model: undecided
+price_input_per_mtok: 0
+price_output_per_mtok: 0
 ```
 
 ```yaml
@@ -55,7 +56,7 @@ Known limit: PyYAML silently keeps the last value when a key is duplicated in th
 
 Each step is test-first (failing tests shown to you, then implementation) and ends with one commit.
 
-- [ ] **1. Dependencies.** Ask approval, then `uv add pydantic pyyaml`.
+- [x] **1. Dependencies.** Ask approval, then `uv add pydantic pyyaml`.
 - [ ] **2. `config.yaml`.** Tests: valid config loads; missing file; YAML syntax error; root not a mapping; missing field; unknown field; zero/negative values; negative price; empty provider. Then `Config` + the loading/error-formatting helper. Create `config.yaml` at the repo root.
 - [ ] **3. `feeds.yaml`.** Tests: valid list loads; empty list; missing name; invalid URL (not http/https); duplicate name; duplicate URL. Then `Feed` + `FeedList`.
 - [ ] **4. `keywords.yaml`.** Tests: valid mapping loads (positive and negative weights); empty mapping; non-integer weight; empty keyword; case-insensitive duplicate. Then `Keywords`. Create `keywords.yaml` from `profile.md` (draft weights, for you to review).
@@ -69,9 +70,10 @@ Each step is test-first (failing tests shown to you, then implementation) and en
 - Error tests assert on the message (file name and field present), not only on the exception type.
 - One test loads the real repo files, so a broken committed config fails CI.
 
-## Open questions
+## Decisions
 
-- **`provider` / `model` / prices in `config.yaml`:** the field must be filled now to pass validation, but the provider is chosen in phase 4. Either we choose it now, or we put a provisional value and change it in phase 4.
+- **`provider` / `model` / prices in `config.yaml`:** provisional values (`undecided`, prices `0`) until the provider is chosen in phase 4.
+- **PyYAML is built as pure Python:** it ships no wheel for Python 3.15, and building its C extension needs a compiler. `pyproject.toml` sets `PYYAML_FORCE_LIBYAML=0` for its build (`[tool.uv.extra-build-variables]`). Slower parsing does not matter for a few small files.
 
 ## Done when
 

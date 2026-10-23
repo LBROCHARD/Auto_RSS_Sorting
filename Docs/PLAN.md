@@ -4,7 +4,7 @@ Roadmap for implementing [SPEC.md](../SPEC.md). Each phase stays high level on p
 
 ## Current status
 
-Phase 1 is being planned: [inputs-validation.md](inputs-validation.md) (draft).
+Phase 1 in progress on `feature/inputs-validation`: [inputs-validation.md](inputs-validation.md).
 
 ## How we work through phases
 
@@ -23,7 +23,7 @@ The order follows the spec's pipeline, starting from the inputs, so each phase b
 
 ### [ ] Phase 1: Inputs and validation
 
-Plan: [inputs-validation.md](inputs-validation.md) (draft)
+Plan: [inputs-validation.md](inputs-validation.md) (in progress)
 
 Pydantic models for `config.yaml`, `feeds.yaml`, `keywords.yaml`, check that `profile.md` exists. Fail fast with a clear message.
 Dependencies to request: `pydantic`, `PyYAML`.
