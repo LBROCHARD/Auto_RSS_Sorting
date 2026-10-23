@@ -73,6 +73,8 @@ Before saying a task is done, run tests and lint and report the result.
 - always include my modifications of JOURNAL.md in your commits, it's a file that grows with the project, it should be regularly pushed alongside it.
 - Give me a list of every file you modified/created/deleted after each action
 - If you want to use a Git command, always ask for permission first (commit, push, create branch...)
+- If the work you have to do is more than a fix or a simple command, it must be planned first. You can write plans in the file Docs/ in plain .md.
+- When you work on a large plan, create phases and steps.
 
 
 
