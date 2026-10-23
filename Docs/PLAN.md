@@ -4,7 +4,7 @@ Roadmap for implementing [SPEC.md](../SPEC.md). Each phase stays high level on p
 
 ## Current status
 
-Phases 1 and 2 are merged into `dev`. Phase 3 is in progress on `feature/keyword-prefilter`, plan in [keyword-prefilter.md](keyword-prefilter.md).
+Phases 1 and 2 are merged into `dev`. Phase 3 is done on `feature/keyword-prefilter`, awaiting its PR into `dev`. Next: plan phase 4.
 
 ## How we work through phases
 
@@ -39,9 +39,9 @@ Dependencies to request: `httpx`, `feedparser`.
 
 *Done when:* every feed edge case in the spec is covered (empty feed, 404, invalid XML, missing date, duplicate across feeds).
 
-### [ ] Phase 3: Keyword pre-filter and deterministic ranking
+### [x] Phase 3: Keyword pre-filter and deterministic ranking
 
-Plan: [keyword-prefilter.md](keyword-prefilter.md) (in progress)
+Plan: [keyword-prefilter.md](keyword-prefilter.md) (done, awaiting merge)
 
 Keyword score (whole word or phrase, case-insensitive), keep the `llm_max_articles` best, tie-break rule (score, date, URL) reusable for the final ranking.
 
