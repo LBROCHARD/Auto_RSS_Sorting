@@ -3,11 +3,13 @@ from datetime import UTC, datetime, timedelta
 import pytest
 
 from auto_rss_sorting.feeds import Article
+from auto_rss_sorting.llm import LLMScore
 from auto_rss_sorting.ranking import (
     compile_keywords,
     keyword_score,
     prefilter,
     ranking_key,
+    top_articles,
 )
 
 DATE = datetime(2026, 1, 15, 12, 0, tzinfo=UTC)
@@ -165,3 +167,49 @@ def test_prefilter_does_not_depend_on_input_order() -> None:
 
 def test_prefilter_with_no_candidates_returns_empty() -> None:
     assert prefilter([], PATTERNS, limit=50) == []
+
+
+def llm_score(value: int) -> LLMScore:
+    return LLMScore(score=value, summary="A summary.", reason="A reason.")
+
+
+OLDER = DATE - timedelta(days=1)
+
+# Ties on the LLM score are broken by date (desc), then by id.
+SCORED = [
+    (make_article(id="https://b.com", published_at=OLDER), llm_score(7)),
+    (make_article(id="https://a.com", published_at=OLDER), llm_score(7)),
+    (make_article(id="https://c.com", published_at=OLDER), llm_score(9)),
+    (make_article(id="https://d.com", published_at=DATE), llm_score(7)),
+    (make_article(id="https://e.com", published_at=DATE), llm_score(2)),
+]
+
+
+def top_ids(ranked: list[tuple[Article, LLMScore]]) -> list[str]:
+    return [article.id for article, _ in ranked]
+
+
+def test_top_articles_sorts_by_llm_score_with_tie_breaks() -> None:
+    ranked = top_articles(SCORED, top_n=10)
+    assert top_ids(ranked) == [
+        "https://c.com",  # highest score
+        "https://d.com",  # score 7, most recent
+        "https://a.com",  # score 7, same date: alphabetical id
+        "https://b.com",
+        "https://e.com",  # fewer than top_n: all kept
+    ]
+
+
+def test_top_articles_keeps_top_n() -> None:
+    ranked = top_articles(SCORED, top_n=2)
+    assert top_ids(ranked) == ["https://c.com", "https://d.com"]
+
+
+def test_top_articles_does_not_depend_on_input_order() -> None:
+    forward = top_articles(SCORED, top_n=10)
+    backward = top_articles(list(reversed(SCORED)), top_n=10)
+    assert top_ids(forward) == top_ids(backward)
+
+
+def test_top_articles_with_no_scored_article_returns_empty() -> None:
+    assert top_articles([], top_n=10) == []
