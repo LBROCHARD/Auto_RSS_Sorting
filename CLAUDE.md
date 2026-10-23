@@ -89,7 +89,8 @@ Before saying a task is done, run tests and lint and report the result.
 - When you talk to me, use french, when you work on the code, use english only.
 - JOURNAL.md is a document that belongs to me, you can't touch it.
 - always include my modifications of JOURNAL.md in your commits, it's a file that grows with the project, it should be regularly pushed alongside it.
-- After each action, I want you to present the work you did in a comprehensive way : make an ordered list of what you did and why, and list every files modified, created or deleted and what changed in them. Finish by a list of actions you wish to take next or questions to continue.
+- After each action, I want you to present the work you did in a comprehensive way : make an ordered list of what you did and why, and list every files modified, created or deleted and what changed in them. Finish by a list of actions you wish to take next or questions to continue. 
+  - I like to have thoses sections separated with a title in your response, it makes it more lisible.
 - If you want to use a Git command, always ask for permission first (commit, push, create branch...)
 - If the work you have to do is more than a fix or a simple command, it must be planned first. You can write plans in the file Docs/ in plain .md files.
 - Each phase of the project must have a plan, with tasks. Never start working on a phase if it's not planned out first.

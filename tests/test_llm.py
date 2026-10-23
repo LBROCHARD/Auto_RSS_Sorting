@@ -2,16 +2,23 @@ import json
 from datetime import UTC, datetime
 
 import pytest
+from fake_provider import FakeProvider
 
 from auto_rss_sorting.feeds import Article
 from auto_rss_sorting.llm import (
+    FatalProviderError,
     InvalidResponseError,
     LLMScore,
+    SkipReason,
+    TransientProviderError,
     build_prompt,
     parse_response,
+    score_article,
 )
 
 PROFILE = "I like systems programming and databases."
+VALID = '{"score": 7, "summary": "A summary.", "reason": "A reason."}'
+INVALID = "not json"
 
 
 def make_article(
@@ -107,3 +114,67 @@ def test_injection_attempt_stays_inside_its_json_value() -> None:
     data = json.loads(user)
     assert data["title"] == hostile
     assert data["description"] == hostile
+
+
+def run_score_article(
+    responses: list[str | Exception],
+) -> tuple[LLMScore | SkipReason, FakeProvider, list[float]]:
+    provider = FakeProvider(responses)
+    sleeps: list[float] = []
+    result = score_article(
+        provider,
+        PROFILE,
+        make_article(),
+        max_description_chars=100,
+        sleep=sleeps.append,
+    )
+    return result, provider, sleeps
+
+
+def test_scores_on_first_try() -> None:
+    result, provider, sleeps = run_score_article([VALID])
+    assert result == LLMScore(score=7, summary="A summary.", reason="A reason.")
+    assert provider.calls == [build_prompt(PROFILE, make_article(), 100)]
+    assert sleeps == []
+
+
+def test_invalid_response_is_retried_once_without_waiting() -> None:
+    result, provider, sleeps = run_score_article([INVALID, VALID])
+    assert isinstance(result, LLMScore)
+    assert len(provider.calls) == 2
+    assert sleeps == []
+
+
+def test_invalid_response_twice_skips_the_article() -> None:
+    result, provider, _ = run_score_article([INVALID, INVALID, VALID])
+    assert result is SkipReason.INVALID_RESPONSE
+    assert len(provider.calls) == 2
+
+
+def test_transient_error_is_retried_with_backoff() -> None:
+    error = TransientProviderError("429")
+    result, provider, sleeps = run_score_article([error, error, VALID])
+    assert isinstance(result, LLMScore)
+    assert len(provider.calls) == 3
+    assert sleeps == [2, 4]
+
+
+def test_transient_error_three_times_skips_the_article() -> None:
+    error = TransientProviderError("timeout")
+    result, provider, sleeps = run_score_article([error, error, error, VALID])
+    assert result is SkipReason.TRANSIENT_ERROR
+    assert len(provider.calls) == 3
+    assert sleeps == [2, 4]
+
+
+def test_retry_counters_are_independent() -> None:
+    error = TransientProviderError("503")
+    result, provider, sleeps = run_score_article([INVALID, error, error, VALID])
+    assert isinstance(result, LLMScore)
+    assert len(provider.calls) == 4
+    assert sleeps == [2, 4]
+
+
+def test_fatal_error_is_raised_without_retry() -> None:
+    with pytest.raises(FatalProviderError):
+        run_score_article([FatalProviderError("401"), VALID])
