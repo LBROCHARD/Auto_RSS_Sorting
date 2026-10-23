@@ -1,9 +1,14 @@
-from datetime import UTC, datetime
+from datetime import UTC, datetime, timedelta
 
 import pytest
 
 from auto_rss_sorting.feeds import Article
-from auto_rss_sorting.ranking import compile_keywords, keyword_score
+from auto_rss_sorting.ranking import (
+    compile_keywords,
+    keyword_score,
+    prefilter,
+    ranking_key,
+)
 
 DATE = datetime(2026, 1, 15, 12, 0, tzinfo=UTC)
 
@@ -91,3 +96,72 @@ def test_negative_weights_are_summed() -> None:
 
 def test_no_keyword_found_scores_zero() -> None:
     assert score({"rust": 3}, title="Nothing here", description="") == 0
+
+
+def ids(articles: list[Article]) -> list[str]:
+    return [article.id for article in articles]
+
+
+def test_ranking_key_sorts_by_score_then_date_then_id() -> None:
+    older = DATE - timedelta(days=1)
+    articles = [
+        make_article(id="https://b.com", published_at=older),  # score 5
+        make_article(id="https://z.com", published_at=DATE),  # score 5
+        make_article(id="https://a.com", published_at=older),  # score 5
+        make_article(id="https://c.com", published_at=older),  # score 9
+    ]
+    scores = {
+        "https://a.com": 5,
+        "https://b.com": 5,
+        "https://c.com": 9,
+        "https://z.com": 5,
+    }
+
+    ranked = sorted(articles, key=lambda a: ranking_key(scores[a.id], a))
+
+    assert ids(ranked) == [
+        "https://c.com",  # highest score
+        "https://z.com",  # same score, most recent
+        "https://a.com",  # same score and date: alphabetical id
+        "https://b.com",
+    ]
+
+
+PATTERNS = compile_keywords({"rust": 3, "wasm": 2, "crypto": -5})
+
+# f.com comes before e.com in input order but ties with it: the id decides.
+ARTICLES = [
+    make_article("Rust and wasm", id="https://a.com"),  # 5
+    make_article("Crypto news", id="https://b.com"),  # -5
+    make_article("Rust too", id="https://f.com"),  # 3
+    make_article("Wasm", id="https://c.com"),  # 2
+    make_article("Nothing", id="https://d.com"),  # 0
+    make_article("Rust", id="https://e.com"),  # 3
+]
+
+
+def test_prefilter_keeps_the_best_up_to_limit() -> None:
+    kept = prefilter(ARTICLES, PATTERNS, limit=3)
+    assert ids(kept) == ["https://a.com", "https://e.com", "https://f.com"]
+
+
+def test_prefilter_keeps_all_when_fewer_than_limit() -> None:
+    kept = prefilter(ARTICLES, PATTERNS, limit=50)
+    assert ids(kept) == [
+        "https://a.com",
+        "https://e.com",
+        "https://f.com",
+        "https://c.com",
+        "https://d.com",
+        "https://b.com",  # negative score: ranked last, but not excluded
+    ]
+
+
+def test_prefilter_does_not_depend_on_input_order() -> None:
+    forward = prefilter(ARTICLES, PATTERNS, limit=50)
+    backward = prefilter(list(reversed(ARTICLES)), PATTERNS, limit=50)
+    assert ids(forward) == ids(backward)
+
+
+def test_prefilter_with_no_candidates_returns_empty() -> None:
+    assert prefilter([], PATTERNS, limit=50) == []
