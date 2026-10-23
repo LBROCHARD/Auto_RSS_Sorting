@@ -22,7 +22,7 @@ This project has two purposes:
 
 # Everything I've learned 
 
-- I've redacted a very simple SPEC.md explaining my needs in natural language, and asked claude to refine it, based on a grilling session.
+- I redact very simples files myself explaining my needs in natural language, and asked claude to refine it, based on a grilling session.
 - change contexte for each tasks helps you save costs, augments speed, and avoid noise or auto-confirmation
 
 
