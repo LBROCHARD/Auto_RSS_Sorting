@@ -1,6 +1,9 @@
+from datetime import UTC, datetime, timedelta
+
 import pytest
 
-from auto_rss_sorting.candidates import normalize_url
+from auto_rss_sorting.candidates import collect_candidates, normalize_url
+from auto_rss_sorting.feeds import Article
 
 
 def test_lowercases_scheme_and_host_but_not_path() -> None:
@@ -55,3 +58,83 @@ def test_variants_of_one_url_give_the_same_id() -> None:
         "https://example.com/post/#top",
     ]
     assert {normalize_url(url) for url in variants} == {"https://example.com/post"}
+
+
+NOW = datetime(2026, 10, 20, 6, 0, tzinfo=UTC)
+MAX_AGE_DAYS = 7
+
+
+def article(
+    url: str, published_at: datetime = NOW - timedelta(days=1), source: str = "feed"
+) -> Article:
+    return Article(
+        id=normalize_url(url),
+        url=url,
+        title="Title",
+        description="Description",
+        published_at=published_at,
+        source=source,
+    )
+
+
+def candidate_ids(articles: list[Article]) -> list[str]:
+    return [a.id for a in collect_candidates(articles, NOW, MAX_AGE_DAYS)]
+
+
+def test_excludes_articles_older_than_max_age() -> None:
+    old = article("https://example.com/old", NOW - timedelta(days=MAX_AGE_DAYS + 1))
+    recent = article("https://example.com/recent")
+
+    assert candidate_ids([old, recent]) == ["https://example.com/recent"]
+
+
+def test_keeps_article_exactly_on_the_age_boundary() -> None:
+    boundary = article("https://example.com/b", NOW - timedelta(days=MAX_AGE_DAYS))
+    just_older = article(
+        "https://example.com/o", NOW - timedelta(days=MAX_AGE_DAYS, seconds=1)
+    )
+
+    assert candidate_ids([boundary, just_older]) == ["https://example.com/b"]
+
+
+def test_keeps_article_dated_in_the_future() -> None:
+    future = article("https://example.com/future", NOW + timedelta(hours=2))
+
+    assert candidate_ids([future]) == ["https://example.com/future"]
+
+
+def test_duplicate_across_feeds_keeps_the_first_feed() -> None:
+    first = article("https://example.com/post", source="first")
+    second = article("https://example.com/post", source="second")
+
+    candidates = collect_candidates([first, second], NOW, MAX_AGE_DAYS)
+
+    assert [a.source for a in candidates] == ["first"]
+
+
+def test_url_variants_are_deduplicated() -> None:
+    articles = [
+        article("https://example.com/post"),
+        article("https://Example.com/post/?utm_source=rss"),
+        article("https://example.com/post#comments"),
+    ]
+
+    assert candidate_ids(articles) == ["https://example.com/post"]
+
+
+def test_keeps_input_order() -> None:
+    articles = [
+        article("https://example.com/c", NOW - timedelta(days=3)),
+        article("https://example.com/a", NOW - timedelta(days=1)),
+        article("https://example.com/b", NOW - timedelta(days=2)),
+    ]
+
+    assert candidate_ids(articles) == [
+        "https://example.com/c",
+        "https://example.com/a",
+        "https://example.com/b",
+    ]
+
+
+def test_no_articles_gives_no_candidates() -> None:
+    assert candidate_ids([]) == []
