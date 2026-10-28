@@ -83,10 +83,17 @@ To fill in steps 6 to 9. Monthly cost = cost per 100 articles × 15 (50 articles
 
 | Provider / model | Accuracy (±3) | Cost / 100 articles | Cost / month | Avg latency | Free tier limits | Notes |
 |---|---|---|---|---|---|---|
-| mistral / ministral-14b-2512 | | 0 | 0 | | 937,500 tok/min, 0.5 req/s | current |
+| mistral / ministral-14b-2512 | 28/40 (70 %) | 0 | 0 | 2.40 s (46 calls) | 937,500 tok/min, 0.5 req/s | current; 6 skipped (invalid response twice), 6 misses all over-scored (+4 to +7) |
 | mistral / mistral-small-2603 | | | | | 20,000 tok/min | |
 | mistral / ministral-8b-2512 | | | | | 625,000 tok/min, 3.13 req/s | |
 | anthropic / Claude Haiku 5.5 | | | | | paid, no free tier | must fit 1 €/month |
+
+### Run 1: mistral / ministral-14b-2512 (2026-10-28)
+
+- 28/40 within ±3 (70 %): target not met. 44,037 input and 6,811 output tokens, about 1,100 input tokens per article.
+- **6 articles skipped** after two invalid responses (12 of the 46 calls): The October inflection point for vibe game development, This Week in Rust 674, Announcing Rust 1.99.1, Graphics Programming weekly 456, Tokens and Greens, SCI for AI Bootcamp. All were scored 6 to 9 by hand, so in production they are relevant articles silently missing from the digest. Cause, from the run's warnings: **malformed JSON**, not a truncated answer. Every invalid answer is complete (it ends with `"\n}`) but fails with `expected ',' or '}'` at the start of a line (column 3), i.e. a missing comma between two values. The model gave 7 or 9 to all six: its enthusiastic answers are the malformed ones. The retry never helps: with `temperature: 0`, the same request returns the same malformed answer.
+- **6 misses among the 34 scored, all over-scored:** a video course on reasoning models (1 → 8), SIMD (0 → 7), GitHub Copilot for beginners (2 → 8), Anthropic coding interviews (4 → 8), Retell / OpenAI (3 → 7), Apple JSON in Xcode (3 → 7). The model rates generic AI and developer content too high.
+- With the skipped articles scored correctly, the result would be at most 34/40 (85 %): fixing the invalid responses matters more than the model choice.
 
 ## Decisions
 
