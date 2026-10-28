@@ -75,7 +75,9 @@ def test_returns_text_and_token_usage() -> None:
 
     completion = make_mistral(handler).complete("the system", "the user")
 
-    assert completion == Completion(text="{}", input_tokens=120, output_tokens=30)
+    assert completion == Completion(
+        text="{}", input_tokens=120, output_tokens=30, latency_seconds=0.0
+    )
     [request] = requests
     assert str(request.url) == MISTRAL_URL
     assert request.headers["Authorization"] == f"Bearer {FAKE_KEY}"
@@ -171,6 +173,22 @@ def test_calls_are_spaced_by_the_minimum_interval() -> None:
     clock.now += MIN_INTERVAL_SECONDS + 1
     provider.complete("s", "u")
     assert len(clock.sleeps) == 1
+
+
+def test_latency_is_the_request_time_without_the_pacing_wait() -> None:
+    clock = FakeClock()
+
+    def handler(request: httpx.Request) -> httpx.Response:
+        clock.now += 0.8  # the request takes 0.8 s
+        return httpx.Response(200, json=OK_BODY)
+
+    provider = make_mistral(handler, clock)
+    assert provider.complete("s", "u").latency_seconds == pytest.approx(0.8)
+
+    # The next call waits for the interval first: the wait is not latency.
+    second = provider.complete("s", "u")
+    assert clock.sleeps == [pytest.approx(MIN_INTERVAL_SECONDS - 0.8)]
+    assert second.latency_seconds == pytest.approx(0.8)
 
 
 def test_failed_calls_also_count_for_the_interval() -> None:

@@ -72,6 +72,9 @@ class Completion:
     text: str
     input_tokens: int
     output_tokens: int
+    # Time of the request itself, measured by the adapter: any pacing wait
+    # before the request is excluded, so providers compare fairly in eval.
+    latency_seconds: float
 
 
 class Provider(Protocol):

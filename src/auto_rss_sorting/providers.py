@@ -70,6 +70,8 @@ class MistralProvider:
 
     def complete(self, system: str, user: str) -> Completion:
         self._wait_for_rate_limit()
+        # Started after the wait: the free-tier pacing is not latency.
+        started = self._clock()
         try:
             response = self._client.post(
                 MISTRAL_URL,
@@ -86,6 +88,7 @@ class MistralProvider:
             )
         except httpx.TransportError as error:
             raise TransientProviderError(f"Mistral API: {error!r}") from error
+        latency_seconds = self._clock() - started
 
         status = response.status_code
         if status == 429 or status >= 500:
@@ -109,6 +112,7 @@ class MistralProvider:
             text=body.choices[0].message.content,
             input_tokens=body.usage.prompt_tokens,
             output_tokens=body.usage.completion_tokens,
+            latency_seconds=latency_seconds,
         )
 
     def _wait_for_rate_limit(self) -> None:
