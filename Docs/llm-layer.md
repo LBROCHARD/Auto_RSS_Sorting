@@ -70,6 +70,7 @@ Each step is test-first (failing tests shown to you, then implementation) and en
 - **Interface at the text level:** adapters only send a prompt and return text + usage; prompt, parsing and validation are shared, so all providers get exactly the same prompt and the same checks.
 - **Token usage in `Completion`:** not used before phase 7, but `eval` needs it and adding it later would change every adapter.
 - **JSON in the prompt, no provider "JSON mode":** keeps one prompt for all providers; `parse_response` tolerates a code fence, the only common deviation.
+  - *Changed in phase 7* ([eval.md](eval.md), run 1): `ministral-14b-2512` returned malformed JSON (a missing comma) for 6 of 40 eval articles, and the retry at `temperature: 0` returned the same answer. The prompt stays shared by all providers, but each adapter now enables its provider's JSON mode when there is one, as a request parameter (Mistral: `response_format: {"type": "json_object"}`). Pydantic validation is unchanged.
 - **Plain `httpx` adapter instead of an SDK:** no new dependency, and the HTTP status codes map directly to transient / fatal.
 - **Extra fields in the LLM response are ignored:** they are harmless, and rejecting them would cost retries for nothing.
 

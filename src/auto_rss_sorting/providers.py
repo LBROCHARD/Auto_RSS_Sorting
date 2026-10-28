@@ -24,6 +24,10 @@ REQUEST_TIMEOUT_SECONDS = 30
 TEMPERATURE = 0
 # A score, a one or two sentence summary and a reason fit well within this.
 MAX_OUTPUT_TOKENS = 500
+# Guarantees syntactically valid JSON (the shared prompt already asks for it):
+# without it the model sometimes drops a comma, and at temperature 0 the retry
+# returns the same malformed answer. Pydantic still checks the fields.
+RESPONSE_FORMAT = {"type": "json_object"}
 ERROR_BODY_MAX_CHARS = 300
 # The free tier allows 0.5 request/s: calls sent back to back would get 429s.
 MIN_INTERVAL_SECONDS = 2.0
@@ -84,6 +88,7 @@ class MistralProvider:
                     ],
                     "temperature": TEMPERATURE,
                     "max_tokens": MAX_OUTPUT_TOKENS,
+                    "response_format": RESPONSE_FORMAT,
                 },
             )
         except httpx.TransportError as error:

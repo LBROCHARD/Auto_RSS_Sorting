@@ -89,6 +89,21 @@ def test_returns_text_and_token_usage() -> None:
     ]
 
 
+def test_requests_json_mode() -> None:
+    # Without it, ministral-14b sometimes drops a comma between two values,
+    # and at temperature 0 the retry returns the same malformed JSON.
+    requests: list[httpx.Request] = []
+
+    def handler(request: httpx.Request) -> httpx.Response:
+        requests.append(request)
+        return httpx.Response(200, json=OK_BODY)
+
+    make_mistral(handler).complete("the system", "the user")
+
+    [request] = requests
+    assert json.loads(request.content)["response_format"] == {"type": "json_object"}
+
+
 @pytest.mark.parametrize("status", [429, 500, 503])
 def test_rate_limit_and_server_errors_are_transient(status: int) -> None:
     provider = make_mistral(lambda _: httpx.Response(status, json={"message": "x"}))
