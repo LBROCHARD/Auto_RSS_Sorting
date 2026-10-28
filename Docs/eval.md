@@ -59,7 +59,7 @@ One new module, `src/auto_rss_sorting/evaluation.py`, and a subcommand in `cli.p
 Each code step is test-first (failing tests shown to you, then implementation) and ends with one commit.
 
 - [x] **0. Plan.** This file, plus the pending PLAN.md / `cli-pipeline.md` updates marking phase 6 merged. One `:memo:` commit on `feature/eval`.
-- [ ] **1. `load_labels`.** Tests with small CSV fixtures in `tests/fixtures/`: valid file; missing file; wrong header; score `11`, `-1`, `7.5`, `abc`; empty title; invalid URL; empty file (header only); duplicate URL (same after normalization). Each error message names the file and the row.
+- [x] **1. `load_labels`.** Tests with small CSV files written inline in `tmp_path` (as in `test_inputs.py`): valid file; missing file; wrong header; score `11`, `-1`, `7.5`, `abc`; empty title; invalid URL; empty file (header only); duplicate URL (same after normalization). Each error message names the file and the row.
 - [ ] **2. Latency in `Completion`.** The Mistral adapter measures the HTTP request only, not the pacing wait (test with the injected clock: a paced call reports the request time, not the wait). `FakeProvider` updated.
 - [ ] **3. `evaluate` and `EvalReport`.** Tests with `FakeProvider`: diff of exactly 3 counts as within, 4 does not (both directions); a skipped article counts as a miss; cost computed from the tokens of every call, retries included; average latency over all calls; prices at 0 → cost 0; fatal error propagates; nothing scored → `ScoringFailedError`; the prompt sent is the production prompt (title, host as source, description truncated).
 - [ ] **4. `format_report` and the `eval` subcommand.** Tests: report text for a small fixed `EvalReport` (target met / not met, skipped row); `main(["eval"])` with a missing `eval/labels.csv` → exit 1 and a message naming the file; missing API key → exit 1; `main([])` still runs the daily pipeline path (existing tests stay green).
@@ -74,7 +74,7 @@ Each code step is test-first (failing tests shown to you, then implementation) a
 
 - New file `tests/test_evaluation.py`; additions to `tests/test_cli.py` and `tests/test_providers.py` (latency, new adapters).
 - LLM never called (`FakeProvider`), no network (`httpx.MockTransport` for adapters), no dependency on the current date (eval does not read the clock for dates; latency uses the injected monotonic clock).
-- CSV fixtures stay tiny (2-3 rows): what matters is each validation case, not volume.
+- CSV files are written inline in `tmp_path`, as in `test_inputs.py`, and stay tiny (2-3 rows): what matters is each validation case, not volume.
 - Retry/skip rules are already tested in phase 4: only their effect on eval metrics is tested here.
 
 ## Benchmark results
