@@ -4,7 +4,7 @@ Roadmap for implementing [SPEC.md](../SPEC.md). Each phase stays high level on p
 
 ## Current status
 
-Phases 1 to 5 are merged into `dev`. Phase 6 is done on `feature/cli-pipeline`, awaiting its PR into `dev`. Next: plan phase 7.
+Phases 1 to 6 are merged into `dev`. Phase 7 is in progress on `feature/eval`.
 
 ## How we work through phases
 
@@ -68,13 +68,15 @@ Generate `digests/YYYY-MM-DD.md` (ranking, footer, fewer than `top_n` articles, 
 
 ### [x] Phase 6: CLI and end-to-end pipeline
 
-Plan: [cli-pipeline.md](cli-pipeline.md) (done, awaiting merge)
+Plan: [cli-pipeline.md](cli-pipeline.md) (done, merged in PR #7)
 
 Wire everything into the `auto-rss-sorting` command: "now" computed once at the entry point, logging, exit codes. End-to-end test with fixtures and the fake provider.
 
 *Done when:* `uv run auto-rss-sorting` produces a real digest locally.
 
 ### [ ] Phase 7: `eval` subcommand
+
+Plan: [eval.md](eval.md) (in progress)
 
 `eval/labels.csv` (20 hand-scored articles, provided by the project owner), accuracy (±3 points, target 80 %), cost per 100 articles, average latency.
 
