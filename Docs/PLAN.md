@@ -4,7 +4,7 @@ Roadmap for implementing [SPEC.md](../SPEC.md). Each phase stays high level on p
 
 ## Current status
 
-Phases 1 to 4 are merged into `dev`. Phase 5 is done on `feature/digest-state`, awaiting its PR into `dev`. Next: plan phase 6.
+Phases 1 to 5 are merged into `dev`. Phase 6 is in progress on `feature/cli-pipeline`.
 
 ## How we work through phases
 
@@ -60,13 +60,15 @@ First adapter: Mistral's free tier, called with plain `httpx` (budget: at most 1
 
 ### [x] Phase 5: Digest and state
 
-Plan: [digest-state.md](digest-state.md) (done, awaiting merge)
+Plan: [digest-state.md](digest-state.md) (done, merged in PR #6)
 
 Generate `digests/YYYY-MM-DD.md` (ranking, footer, fewer than `top_n` articles, zero candidates), `state/published.json` (exclusion, purge, atomic write after the digest), same-day re-run and `--force`.
 
 *Done when:* the digest format and every state case are tested.
 
 ### [ ] Phase 6: CLI and end-to-end pipeline
+
+Plan: [cli-pipeline.md](cli-pipeline.md) (in progress)
 
 Wire everything into the `auto-rss-sorting` command: "now" computed once at the entry point, logging, exit codes. End-to-end test with fixtures and the fake provider.
 
