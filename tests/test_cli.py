@@ -6,7 +6,7 @@ import httpx
 import pytest
 from fake_provider import FakeProvider
 
-from auto_rss_sorting.cli import run
+from auto_rss_sorting.cli import main, run
 from auto_rss_sorting.inputs import Inputs, load_inputs
 from auto_rss_sorting.llm import FatalProviderError
 from auto_rss_sorting.state import load_state
@@ -57,12 +57,16 @@ def answer(score: int) -> str:
 ANSWERS = [answer(5), answer(9), answer(2), answer(7)]
 
 
+def write_inputs(base_dir: Path, config_yaml: str = CONFIG_YAML) -> None:
+    (base_dir / "config.yaml").write_text(config_yaml, encoding="utf-8")
+    (base_dir / "feeds.yaml").write_text(FEEDS_YAML, encoding="utf-8")
+    (base_dir / "keywords.yaml").write_text(KEYWORDS_YAML, encoding="utf-8")
+    (base_dir / "profile.md").write_text("I like Rust.\n", encoding="utf-8")
+
+
 @pytest.fixture
 def inputs(tmp_path: Path) -> Inputs:
-    (tmp_path / "config.yaml").write_text(CONFIG_YAML, encoding="utf-8")
-    (tmp_path / "feeds.yaml").write_text(FEEDS_YAML, encoding="utf-8")
-    (tmp_path / "keywords.yaml").write_text(KEYWORDS_YAML, encoding="utf-8")
-    (tmp_path / "profile.md").write_text("I like Rust.\n", encoding="utf-8")
+    write_inputs(tmp_path)
     return load_inputs(tmp_path)
 
 
@@ -175,3 +179,36 @@ def test_fatal_provider_error_writes_nothing(
 
     assert not (tmp_path / "digests").exists()
     assert not (tmp_path / "state").exists()
+
+
+# main() runs in tmp_path and only covers paths that fail before any fetch or
+# LLM call: no network, and the current date does not matter.
+
+
+def test_invalid_input_exits_with_1_and_names_the_file(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch, caplog: pytest.LogCaptureFixture
+) -> None:
+    write_inputs(tmp_path, CONFIG_YAML.replace("top_n: 3", "top_n: 0"))
+    monkeypatch.chdir(tmp_path)
+
+    assert main([]) == 1
+    assert "config.yaml: top_n" in caplog.text
+
+
+def test_missing_api_key_exits_with_1_and_names_the_variable(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch, caplog: pytest.LogCaptureFixture
+) -> None:
+    write_inputs(tmp_path, CONFIG_YAML.replace("provider: fake", "provider: mistral"))
+    monkeypatch.chdir(tmp_path)
+    monkeypatch.delenv("MISTRAL_API_KEY", raising=False)
+
+    assert main([]) == 1
+    assert "MISTRAL_API_KEY is not set" in caplog.text
+    assert not (tmp_path / "digests").exists()
+
+
+def test_unknown_option_exits_with_2(tmp_path: Path) -> None:
+    with pytest.raises(SystemExit) as exit_info:
+        main(["--unknown"])
+
+    assert exit_info.value.code == 2

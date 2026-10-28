@@ -40,6 +40,6 @@ This project has two purposes:
 |Phase 3: Keyword pre-filter and deterministic ranking | 1h | 10 min | La review qu'il me donne de son travail ne me convient pas tout a fait, et manque de lisibilitée, je crée une règle. Je veux pouvoir tester plus souvent, je lui demande de m'expliquer comment tester ce qu'il fait par moi même. |
 |Phase 4: LLM layer | 3h | 30 min | J'ajoute des règles de sécurité en prévision de l'ajout de clé d'API dans le projet, + un nouvel agent qui s'assure qu'il n'y a pas de fuite de donées senseibles. Selection du premier LLM avec un autre contexte. |
 |Phase 5: Digest and state | 1h | 20 min | Une certaines incohérence d'explications des resultats entre les contextes, il faudrait que mon CLAUDE.md soit plus précis. |
-|Phase 6: CLI and end-to-end pipeline | 1h | 15h50 |  |
+|Phase 6: CLI and end-to-end pipeline | 1h | 30 min |  |
 | | | | |
 | | | | |

@@ -52,7 +52,7 @@ Each step is test-first (failing tests shown to you, then implementation) and en
   - next-day run: articles published the day before are excluded;
   - no candidate (all too old): digest with "No new articles today." and the footer, provider never called;
   - `FatalProviderError` during scoring: the error propagates, no digest, state unchanged.
-- [ ] **2.** `main`**: arguments, logging, exit codes, entry point.** Tests (`monkeypatch.chdir(tmp_path)`, no network): invalid `config.yaml` → exit code 1 and a message naming the file; missing API key (`monkeypatch.delenv`) → exit code 1 and a message naming the variable; unknown option → exit code 2. Removes the smoke test.
+- [x] **2.** `main`**: arguments, logging, exit codes, entry point.** Tests (`monkeypatch.chdir(tmp_path)`, no network): invalid `config.yaml` → exit code 1 and a message naming the file; missing API key (`monkeypatch.delenv`) → exit code 1 and a message naming the variable; unknown option → exit code 2. Removes the smoke test.
 - [ ] **3. Manual run.** You run `uv run auto-rss-sorting` locally with your real `MISTRAL_API_KEY` in your shell (I never read `.env` nor pass a key on a command line). We check the digest together. The produced `digests/` and `state/` files are not committed on the feature branch (the Action commits them to `main` in phase 8). No commit for this step.
 - [ ] **4. Docs.** Tick this plan, mark the phase done in [PLAN.md](PLAN.md).
 

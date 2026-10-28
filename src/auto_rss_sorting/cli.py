@@ -1,18 +1,27 @@
-"""The daily run: every step of the pipeline, in order."""
+"""The `auto-rss-sorting` command and the daily run: every step of the
+pipeline, in order."""
 
+import argparse
 import logging
-from datetime import datetime
+from datetime import UTC, datetime
 from pathlib import Path
 
 import httpx
 
 from auto_rss_sorting.candidates import collect_candidates
 from auto_rss_sorting.digest import RunReport, already_published, digest_path, publish
-from auto_rss_sorting.feeds import fetch_all
-from auto_rss_sorting.inputs import Inputs
-from auto_rss_sorting.llm import Provider, score_articles
+from auto_rss_sorting.feeds import fetch_all, make_http_client
+from auto_rss_sorting.inputs import InputError, Inputs, load_inputs
+from auto_rss_sorting.llm import (
+    FatalProviderError,
+    Provider,
+    ScoringFailedError,
+    score_articles,
+)
+from auto_rss_sorting.providers import make_provider
 from auto_rss_sorting.ranking import compile_keywords, prefilter, top_articles
 from auto_rss_sorting.state import (
+    StateError,
     drop_digest_date,
     exclude_published,
     load_state,
@@ -20,6 +29,38 @@ from auto_rss_sorting.state import (
 )
 
 logger = logging.getLogger(__name__)
+
+LOG_FORMAT = "%(asctime)s %(levelname)s %(name)s: %(message)s"
+# The failures the run expects: reported as one line, without a traceback.
+# Any other exception is a bug and keeps its traceback.
+RUN_ERRORS = (InputError, StateError, FatalProviderError, ScoringFailedError)
+
+
+def main(argv: list[str] | None = None) -> int:
+    """Entry point: read the inputs from the current directory, publish today's
+    digest. Returns the exit code: 0 on success, 1 if the run failed."""
+    parser = argparse.ArgumentParser(
+        prog="auto-rss-sorting",
+        description="Publish today's digest of the best articles from the feeds.",
+    )
+    parser.add_argument(
+        "--force", action="store_true", help="regenerate today's digest"
+    )
+    args = parser.parse_args(argv)
+    logging.basicConfig(level=logging.INFO, format=LOG_FORMAT)
+
+    # The only place that reads the clock.
+    now = datetime.now(UTC)
+    base_dir = Path.cwd()
+    try:
+        inputs = load_inputs(base_dir)
+        provider = make_provider(inputs.config)
+        with make_http_client() as client:
+            run(inputs, provider, client, base_dir, now, args.force)
+    except RUN_ERRORS as error:
+        logger.error("run failed: %s", error)
+        return 1
+    return 0
 
 
 def run(
