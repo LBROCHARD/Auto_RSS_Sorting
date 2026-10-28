@@ -15,7 +15,7 @@ dependencies = [
 ]
 
 [project.scripts]
-auto-rss-sorting = "auto_rss_sorting:main"
+auto-rss-sorting = "auto_rss_sorting.cli:main"
 
 [build-system]
 requires = ["uv_build>=0.13.5,<0.14.0"]

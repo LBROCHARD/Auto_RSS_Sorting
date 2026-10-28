@@ -17,12 +17,13 @@ This project has two purposes:
 - Usage of Claude Code within Cursor
 - Grilling (an interview, where the IA asks questions to precise and refine the SPEC.md)
 - To redact very simples files myself explaining my needs in natural language, and ask claude to refine it, based on a grilling session.
-- Usin a  AGENTS.md (or CLAUDE.md in my case) file, as a guideline for development 
+- Using an AGENTS.md (or CLAUDE.md in my case) file, as a guideline and set of rules for development 
 - Changing contexte for each tasks helps you save costs, augments speed, and avoid noise or auto-confirmation
 - To keep an good knowledge of the codebase, and efficiently review the AI's work, I want it to systematically give me a list of every files created/modified/deleted.
-- Agents, and their utility, in my case, I mostly used Claude integrated agents, but I created a special "Spec-Reviewer" agent, to inspect code with a fresh and critical viewpoint. It helped me find CI errors that the writing agent didn't saw (CI launched 2 times both during push and in pull request).
-- I also created a "Security-Auditor" agent, to check that no personal informations / keys where public in the project.
-- Using a proper plan, so that every agent is on the same page, and once it has been written, they can easiely follow it.
+- Agents, and their utility.
+  - I created a special "Spec-Reviewer" agent, to inspect code with a fresh and critical viewpoint. It helped me find CI errors that the writing agent didn't saw (CI launched 2 times both during push and in pull request).
+  - I also created a "Security-Auditor" agent, to check that no personal informations / keys where public in the project.
+- Using a proper plan/documentation, so that every agent is on the same page, and once it has been written, they can easiely follow it.
 
 
 # Journal
@@ -39,6 +40,6 @@ This project has two purposes:
 |Phase 3: Keyword pre-filter and deterministic ranking | 1h | 10 min | La review qu'il me donne de son travail ne me convient pas tout a fait, et manque de lisibilitée, je crée une règle. Je veux pouvoir tester plus souvent, je lui demande de m'expliquer comment tester ce qu'il fait par moi même. |
 |Phase 4: LLM layer | 3h | 30 min | J'ajoute des règles de sécurité en prévision de l'ajout de clé d'API dans le projet, + un nouvel agent qui s'assure qu'il n'y a pas de fuite de donées senseibles. Selection du premier LLM avec un autre contexte. |
 |Phase 5: Digest and state | 1h | 20 min | Une certaines incohérence d'explications des resultats entre les contextes, il faudrait que mon CLAUDE.md soit plus précis. |
-|Phase 6: CLI and end-to-end pipeline | | | |
+|Phase 6: CLI and end-to-end pipeline | 1h | 30 min | Mélange étonnant de français et d'anglais dans les réponses, je mets à jour. |
 | | | | |
 | | | | |
