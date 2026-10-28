@@ -78,7 +78,7 @@ Wire everything into the `auto-rss-sorting` command: "now" computed once at the 
 
 Plan: [eval.md](eval.md) (in progress)
 
-`eval/labels.csv` (20 hand-scored articles, provided by the project owner), accuracy (±3 points, target 80 %), cost per 100 articles, average latency.
+`eval/labels.csv` (30 hand-scored articles, provided by the project owner), accuracy (±3 points, target 80 %), cost per 100 articles, average latency.
 
 Then a **provider benchmark**: run `eval` on 3 or 4 provider/model pairs (free tiers and cheap paid models, e.g. Claude Haiku 5.5), adding one adapter per new provider. Compare accuracy, cost per month at 50 articles/day, latency and the free tier's limits, then pick the production provider. Budget: at most 1 € per month.
 

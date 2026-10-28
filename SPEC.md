@@ -6,7 +6,7 @@ Every day, read a list of RSS feeds, score articles against my interests, and pu
 
 ## Success criterion
 
-On 20 articles that I scored by hand (`eval/labels.csv`, columns `url,title,description,score`), the LLM score is within **±3 points** of mine for at least **80 %** of them.
+On 30 articles that I scored by hand (`eval/labels.csv`, columns `url,title,description,score`), the LLM score is within **±3 points** of mine for at least **80 %** of them.
 An `eval` subcommand runs the configured provider/model on this set and reports accuracy, cost per 100 articles and average latency, so providers can be compared by changing the config.
 
 ## Inputs
