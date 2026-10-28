@@ -45,7 +45,7 @@ Each step is test-first (failing tests shown to you, then implementation) and en
 
 
 
-- [ ] **1.** `run`**, end to end.** Tests (in `tmp_path`, feeds served from `tests/fixtures/` through `httpx.MockTransport`, `FakeProvider`, fixed `now`):
+- [x] **1.** `run`**, end to end.** Tests (in `tmp_path`, feeds served from `tests/fixtures/` through `httpx.MockTransport`, `FakeProvider`, fixed `now`):
   - happy path: the digest lists the expected articles in score order, a 404 feed is named in the footer, the state holds the published articles;
   - same-day re-run without `--force`: digest and state unchanged, provider never called;
   - same-day re-run with `--force`: digest regenerated, today's articles scored again, state holds them once;
