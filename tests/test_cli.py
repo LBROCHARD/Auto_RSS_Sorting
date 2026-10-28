@@ -212,3 +212,57 @@ def test_unknown_option_exits_with_2(tmp_path: Path) -> None:
         main(["--unknown"])
 
     assert exit_info.value.code == 2
+
+
+LABELS_CSV = (
+    "url,title,description,score\nhttps://example.com/a,An article about Rust,,8\n"
+)
+
+
+def write_labels(base_dir: Path) -> None:
+    (base_dir / "eval").mkdir()
+    (base_dir / "eval" / "labels.csv").write_text(LABELS_CSV, encoding="utf-8")
+
+
+def test_eval_prints_the_report_and_writes_nothing(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch, capsys: pytest.CaptureFixture
+) -> None:
+    write_inputs(tmp_path)
+    write_labels(tmp_path)
+    monkeypatch.chdir(tmp_path)
+    provider = FakeProvider([answer(7)])
+    monkeypatch.setattr("auto_rss_sorting.cli.make_provider", lambda _: provider)
+
+    assert main(["eval"]) == 0
+
+    out = capsys.readouterr().out
+    assert "    8    7    -1  An article about Rust" in out
+    assert "accuracy: 1/1 within ±3 points (100 %), target 80 %: met" in out
+    assert len(provider.calls) == 1
+    assert not (tmp_path / "digests").exists()
+    assert not (tmp_path / "state").exists()
+
+
+def test_eval_without_labels_exits_with_1_and_names_the_file(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch, caplog: pytest.LogCaptureFixture
+) -> None:
+    write_inputs(tmp_path)
+    monkeypatch.chdir(tmp_path)
+    monkeypatch.setattr(
+        "auto_rss_sorting.cli.make_provider", lambda _: FakeProvider([])
+    )
+
+    assert main(["eval"]) == 1
+    assert "labels.csv: file not found" in caplog.text
+
+
+def test_eval_missing_api_key_exits_with_1_and_names_the_variable(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch, caplog: pytest.LogCaptureFixture
+) -> None:
+    write_inputs(tmp_path, CONFIG_YAML.replace("provider: fake", "provider: mistral"))
+    write_labels(tmp_path)
+    monkeypatch.chdir(tmp_path)
+    monkeypatch.delenv("MISTRAL_API_KEY", raising=False)
+
+    assert main(["eval"]) == 1
+    assert "MISTRAL_API_KEY is not set" in caplog.text

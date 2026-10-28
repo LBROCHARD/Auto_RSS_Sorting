@@ -4,8 +4,15 @@ from pathlib import Path
 import pytest
 from fake_provider import FakeProvider
 
-from auto_rss_sorting.evaluation import EvalReport, Label, evaluate, load_labels
-from auto_rss_sorting.inputs import InputError
+from auto_rss_sorting.evaluation import (
+    EvalReport,
+    Label,
+    LabelResult,
+    evaluate,
+    format_report,
+    load_labels,
+)
+from auto_rss_sorting.inputs import Config, InputError
 from auto_rss_sorting.llm import (
     SYSTEM_PROMPT,
     FatalProviderError,
@@ -224,3 +231,60 @@ def test_the_production_prompt_is_sent() -> None:
         "source": "example.com",
         "description": "x" * 10,
     }
+
+
+def make_config(price_input: float = 2.0, price_output: float = 10.0) -> Config:
+    return Config(
+        top_n=10,
+        max_age_days=7,
+        llm_max_articles=50,
+        max_description_chars=2000,
+        provider="mistral",
+        model="some-model",
+        price_input_per_mtok=price_input,
+        price_output_per_mtok=price_output,
+    )
+
+
+def test_report_lists_each_article_then_the_metrics() -> None:
+    report = EvalReport(
+        results=[
+            LabelResult(label(5, 0), llm_score=8, skip_reason=None),
+            LabelResult(
+                label(5, 1), llm_score=None, skip_reason=SkipReason.INVALID_RESPONSE
+            ),
+        ],
+        input_tokens=24180,
+        output_tokens=60,
+        calls=3,
+        total_latency_seconds=1.5,
+    )
+
+    assert format_report(report, make_config()) == (
+        "eval: mistral / some-model, 2 articles\n"
+        "human  llm  diff  title\n"
+        "    5    8    +3  Title 0\n"
+        "    5    -     -  Title 1 (skipped: invalid LLM response)\n"
+        "accuracy: 1/2 within ±3 points (50 %), target 80 %: not met\n"
+        "cost: 2.4480 per 100 articles (24,180 input tokens, 60 output tokens)\n"
+        "latency: 0.50 s per call on average (3 calls)"
+    )
+
+
+def test_report_says_the_target_is_met_at_80_percent() -> None:
+    llm_scores = [5, 5, 5, 5, 9]  # four within ±3 of 5, one not: exactly 80 %
+    report = EvalReport(
+        results=[
+            LabelResult(label(5, n), llm_score=score, skip_reason=None)
+            for n, score in enumerate(llm_scores)
+        ],
+        input_tokens=500,
+        output_tokens=100,
+        calls=5,
+        total_latency_seconds=2.0,
+    )
+
+    text = format_report(report, make_config(0.0, 0.0))
+
+    assert "accuracy: 4/5 within ±3 points (80 %), target 80 %: met" in text
+    assert "cost: 0.0000 per 100 articles" in text

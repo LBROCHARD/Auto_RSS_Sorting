@@ -10,6 +10,7 @@ import httpx
 
 from auto_rss_sorting.candidates import collect_candidates
 from auto_rss_sorting.digest import RunReport, already_published, digest_path, publish
+from auto_rss_sorting.evaluation import evaluate, format_report, load_labels
 from auto_rss_sorting.feeds import fetch_all, make_http_client
 from auto_rss_sorting.inputs import InputError, Inputs, load_inputs
 from auto_rss_sorting.llm import (
@@ -46,6 +47,12 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument(
         "--force", action="store_true", help="regenerate today's digest"
     )
+    subcommands = parser.add_subparsers(dest="command")
+    subcommands.add_parser(
+        "eval",
+        help="score eval/labels.csv with the configured provider and report "
+        "accuracy, cost and latency",
+    )
     args = parser.parse_args(argv)
     logging.basicConfig(level=logging.INFO, format=LOG_FORMAT)
 
@@ -55,12 +62,25 @@ def main(argv: list[str] | None = None) -> int:
     try:
         inputs = load_inputs(base_dir)
         provider = make_provider(inputs.config)
-        with make_http_client() as client:
-            run(inputs, provider, client, base_dir, now, args.force)
+        if args.command == "eval":
+            run_eval(inputs, provider, base_dir)
+        else:
+            with make_http_client() as client:
+                run(inputs, provider, client, base_dir, now, args.force)
     except RUN_ERRORS as error:
         logger.error("run failed: %s", error)
         return 1
     return 0
+
+
+def run_eval(inputs: Inputs, provider: Provider, base_dir: Path) -> None:
+    """Score the hand-labelled articles and print the report. Fetches no feed
+    and never touches the digests or the state."""
+    labels = load_labels(base_dir / "eval" / "labels.csv")
+    report = evaluate(
+        provider, inputs.profile, labels, inputs.config.max_description_chars
+    )
+    print(format_report(report, inputs.config))
 
 
 def run(

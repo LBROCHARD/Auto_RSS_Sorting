@@ -14,7 +14,7 @@ from pydantic import BaseModel, ConfigDict, Field, HttpUrl, ValidationError
 
 from auto_rss_sorting.candidates import normalize_url
 from auto_rss_sorting.feeds import Article
-from auto_rss_sorting.inputs import InputError, NonEmptyStr, _read_text
+from auto_rss_sorting.inputs import Config, InputError, NonEmptyStr, _read_text
 from auto_rss_sorting.llm import (
     Completion,
     Provider,
@@ -24,8 +24,10 @@ from auto_rss_sorting.llm import (
 )
 
 LABEL_COLUMNS = ["url", "title", "description", "score"]
-# Spec: the LLM score must be within ±3 points of the human score.
+# Spec: the LLM score must be within ±3 points of the human score...
 TOLERANCE = 3
+# ...for at least 80 % of the labelled articles.
+TARGET_ACCURACY = 0.8
 # The prompt does not use the publication date, and the CSV has none.
 PLACEHOLDER_DATE = datetime(1970, 1, 1, tzinfo=UTC)
 
@@ -196,3 +198,42 @@ def evaluate(
         calls=metered.calls,
         total_latency_seconds=metered.total_latency_seconds,
     )
+
+
+def format_report(report: EvalReport, config: Config) -> str:
+    """The eval result as plain text: one line per article, in file order, so
+    disagreements are visible, then the three metrics."""
+    lines = [
+        f"eval: {config.provider} / {config.model}, {len(report.results)} articles",
+        "human  llm  diff  title",
+    ]
+    for result in report.results:
+        human = result.label.score
+        if result.llm_score is None:
+            lines.append(
+                f"{human:>5}  {'-':>3}  {'-':>4}  {result.label.title} "
+                f"(skipped: {result.skip_reason.value})"
+            )
+        else:
+            diff = result.llm_score - human
+            lines.append(
+                f"{human:>5}  {result.llm_score:>3}  {diff:>+4}  {result.label.title}"
+            )
+    met = "met" if report.accuracy >= TARGET_ACCURACY else "not met"
+    cost = report.cost_per_100_articles(
+        config.price_input_per_mtok, config.price_output_per_mtok
+    )
+    accuracy = (
+        f"accuracy: {report.within_tolerance}/{len(report.results)} within "
+        f"±{TOLERANCE} points ({report.accuracy * 100:.0f} %), "
+        f"target {TARGET_ACCURACY * 100:.0f} %: {met}"
+    )
+    usage = (
+        f"cost: {cost:.4f} per 100 articles ({report.input_tokens:,} input tokens, "
+        f"{report.output_tokens:,} output tokens)"
+    )
+    latency = (
+        f"latency: {report.average_latency_seconds:.2f} s per call on average "
+        f"({report.calls} calls)"
+    )
+    return "\n".join([*lines, accuracy, usage, latency])
