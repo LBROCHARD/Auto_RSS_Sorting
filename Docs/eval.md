@@ -6,7 +6,7 @@
 
 ## Goal
 
-Measure the spec's success criterion: on the 30 hand-scored articles of `eval/labels.csv`, the LLM score is within ±3 points of the owner's score for at least 80 % of them. An `auto-rss-sorting eval` subcommand runs the configured provider/model on this set and prints accuracy, cost per 100 articles and average latency. Then benchmark 3 or 4 provider/model pairs with it, pick the production provider (budget: at most 1 € per month) and record the results here.
+Measure the spec's success criterion: on the 40 hand-scored articles of `eval/labels.csv`, the LLM score is within ±3 points of the owner's score for at least 80 % of them. An `auto-rss-sorting eval` subcommand runs the configured provider/model on this set and prints accuracy, cost per 100 articles and average latency. Then benchmark 3 or 4 provider/model pairs with it, pick the production provider (budget: at most 1 € per month) and record the results here.
 
 Out of this phase: the GitHub Actions workflow and the README (phase 8). No score cache, no new dependency: `csv` from the stdlib, `pydantic`, `httpx` for new adapters.
 
@@ -17,7 +17,7 @@ One new module, `src/auto_rss_sorting/evaluation.py`, and a subcommand in `cli.p
 ### `eval/labels.csv` (provided by the project owner)
 
 - Columns `url,title,description,score` (spec), UTF-8, standard CSV quoting (a description containing a comma is quoted).
-- 30 rows (the spec first said 20; 30 kept for a finer measure), scored by hand **before** looking at any LLM output. To make the measure meaningful: a spread of scores (some low, some mid, some high), a mix of French and English articles, descriptions copied as the feeds give them and cut at 2000 characters, exactly as the prompt truncates them (`max_description_chars`).
+- 40 rows (the spec first said 20), scored by hand **before** looking at any LLM output. To make the measure meaningful: a spread of scores (some low, some mid, some high), a mix of French and English articles, descriptions copied as the feeds give them and cut at 2000 characters, exactly as the prompt truncates them (`max_description_chars`).
 - Committed: the articles are public and the scores say nothing personal beyond `profile.md`.
 
 ### `evaluation.py`
@@ -35,12 +35,12 @@ One new module, `src/auto_rss_sorting/evaluation.py`, and a subcommand in `cli.p
 - **`format_report(report, config) -> str`**: plain text printed on stdout (the command's result; logs stay on stderr):
 
   ```
-  eval: mistral / ministral-14b-2512, 30 articles
+  eval: mistral / ministral-14b-2512, 40 articles
   human  llm  diff  title
       8    7    -1  Rust 2.0 is out
       2    -      -  Some article (skipped: invalid LLM response)
   ...
-  accuracy: 25/30 within ±3 points (83 %), target 80 %: met
+  accuracy: 34/40 within ±3 points (85 %), target 80 %: met
   cost: 0.0000 per 100 articles (24,180 input tokens, 2,310 output tokens)
   latency: 0.84 s per call on average (21 calls)
   ```
@@ -63,7 +63,7 @@ Each code step is test-first (failing tests shown to you, then implementation) a
 - [x] **2. Latency in `Completion`.** The Mistral adapter measures the HTTP request only, not the pacing wait (test with the injected clock: a paced call reports the request time, not the wait). `FakeProvider` updated.
 - [ ] **3. `evaluate` and `EvalReport`.** Tests with `FakeProvider`: diff of exactly 3 counts as within, 4 does not (both directions); a skipped article counts as a miss; cost computed from the tokens of every call, retries included; average latency over all calls; prices at 0 → cost 0; fatal error propagates; nothing scored → `ScoringFailedError`; the prompt sent is the production prompt (title, host as source, description truncated).
 - [ ] **4. `format_report` and the `eval` subcommand.** Tests: report text for a small fixed `EvalReport` (target met / not met, skipped row); `main(["eval"])` with a missing `eval/labels.csv` → exit 1 and a message naming the file; missing API key → exit 1; `main([])` still runs the daily pipeline path (existing tests stay green).
-- [x] **5. Labels.** You write `eval/labels.csv` (30 rows, see above). I validate it by running `load_labels` on it, without calling any LLM. Committed with step 6's results or on its own.
+- [x] **5. Labels.** You write `eval/labels.csv` (40 rows, see above). I validate it by running `load_labels` on it, without calling any LLM. Committed with step 6's results or on its own.
 - [ ] **6. First eval: current provider.** You run `uv run auto-rss-sorting eval` with your `MISTRAL_API_KEY` (I never read `.env` nor pass a key on a command line). We record the three metrics here and check the language drift seen in phase 4 (English article answered in French) on the per-article results.
 - [ ] **7. Benchmark, same adapter.** Other Mistral models need only a `config.yaml` change: `mistral-small-2603` and `ministral-8b-2512` (see the limits recorded in [llm-layer.md](llm-layer.md)). Run eval for each, record the results.
 - [ ] **8. Benchmark, new adapter(s).** One adapter per new provider (plain `httpx`, same error mapping and security rules as the Mistral adapter, tests with `httpx.MockTransport`), one commit each, then one eval run. Decided with the project owner: free tiers only, plus Claude Haiku 5.5 (the only paid candidate, cheap). So one new adapter, for Anthropic (`ANTHROPIC_API_KEY`). Another free provider is added only if one meets the constraints listed in [llm-layer.md](llm-layer.md) (50 calls/day without 429s, reliable JSON in French and English); the ones rejected in phase 4 stay rejected unless their limits changed. Exact API details and prices are checked in the provider's official docs at the start of the step, not from memory.
@@ -98,6 +98,7 @@ To fill in steps 6 to 9. Monthly cost = cost per 100 articles × 15 (50 articles
 - **Eval exit code is 0 even below 80 %.** It is a measuring tool, not a gate; the report says whether the target is met.
 - **`source` = URL host** for eval articles: the CSV has no source column (spec), and the prompt expects one.
 - **No mean absolute error in the report.** Not in the spec; the per-article lines already show how far each score is. The labels must cover the whole 0-10 range, otherwise the ±3 tolerance makes 80 % too easy (a model always answering 5 is within ±3 of any score from 2 to 8).
+- **Labels rebalanced towards the extremes.** The first 30 labels were mostly 4-8: a constant "always 5" answer scored 25/30 (83 %) and passed the criterion. 5 mid articles were replaced by 15 very low (crypto, game news, politics, general-audience content, from feeds outside `feeds.yaml`) or very high ones (two or more core interests). With the 40 labels, the best constant answer ("always 6") scores 26/40 (65 %), below the 80 % target.
 - **Benchmark candidates:** free tiers only, plus Claude Haiku 5.5 (decided with the project owner).
 
 ## Done when

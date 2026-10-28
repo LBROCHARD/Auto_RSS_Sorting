@@ -41,5 +41,5 @@ This project has two purposes:
 |Phase 4: LLM layer | 3h | 30 min | J'ajoute des règles de sécurité en prévision de l'ajout de clé d'API dans le projet, + un nouvel agent qui s'assure qu'il n'y a pas de fuite de donées senseibles. Selection du premier LLM avec un autre contexte. |
 |Phase 5: Digest and state | 1h | 20 min | Une certaines incohérence d'explications des resultats entre les contextes, il faudrait que mon CLAUDE.md soit plus précis. |
 |Phase 6: CLI and end-to-end pipeline | 1h | 30 min | Mélange étonnant de français et d'anglais dans les réponses, je mets à jour. |
-| Phase 7: eval subcommand | 4h | 10 min | Benchmark |
+| Phase 7: eval subcommand | 4h | 1h | Benchmark, Difficile de faire un benchmark entre un humain et une machine avec un prompt. |
 | | | | |
