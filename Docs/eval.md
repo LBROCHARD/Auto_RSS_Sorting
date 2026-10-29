@@ -64,11 +64,11 @@ Each code step is test-first (failing tests shown to you, then implementation) a
 - [x] **3. `evaluate` and `EvalReport`.** Tests with `FakeProvider`: diff of exactly 3 counts as within, 4 does not (both directions); a skipped article counts as a miss; cost computed from the tokens of every call, retries included; average latency over all calls; prices at 0 → cost 0; fatal error propagates; nothing scored → `ScoringFailedError`; the prompt sent is the production prompt (title, host as source, description truncated).
 - [x] **4. `format_report` and the `eval` subcommand.** Tests: report text for a small fixed `EvalReport` (target met / not met, skipped row); `main(["eval"])` with a missing `eval/labels.csv` → exit 1 and a message naming the file; missing API key → exit 1; `main([])` still runs the daily pipeline path (existing tests stay green).
 - [x] **5. Labels.** You write `eval/labels.csv` (40 rows, see above). I validate it by running `load_labels` on it, without calling any LLM. Committed with step 6's results or on its own.
-- [ ] **6. First eval: current provider.** You run `uv run auto-rss-sorting eval` with your `MISTRAL_API_KEY` (I never read `.env` nor pass a key on a command line). We record the three metrics here and check the language drift seen in phase 4 (English article answered in French) on the per-article results.
+- [x] **6. First eval: current provider.** You run `uv run auto-rss-sorting eval` with your `MISTRAL_API_KEY` (I never read `.env` nor pass a key on a command line). We record the three metrics here. The language drift seen in phase 4 is checked in step 9 instead (see Decisions).
 - [x] **6b. Fix the malformed answers.** Run 1 lost 6 articles to malformed JSON: the Mistral adapter now requests JSON mode (`response_format: {"type": "json_object"}`, checked in the official API docs). Test: the request body holds it. Then run eval again (run 2).
 - [ ] **7. Benchmark, same adapter.** Other Mistral models need only a `config.yaml` change: `mistral-small-2603` and `ministral-8b-2512` (see the limits recorded in [llm-layer.md](llm-layer.md)). Run eval for each, record the results.
 - [ ] **8. Benchmark, new adapter(s).** One adapter per new provider (plain `httpx`, same error mapping and security rules as the Mistral adapter, tests with `httpx.MockTransport`), one commit each, then one eval run. Decided with the project owner: free tiers only, plus Claude Haiku 5.5 (the only paid candidate, cheap). So one new adapter, for Anthropic (`ANTHROPIC_API_KEY`). Another free provider is added only if one meets the constraints listed in [llm-layer.md](llm-layer.md) (50 calls/day without 429s, reliable JSON in French and English); the ones rejected in phase 4 stay rejected unless their limits changed. Exact API details and prices are checked in the provider's official docs at the start of the step, not from memory.
-- [ ] **9. Decision.** Fill the benchmark table, pick the production provider, set it in `config.yaml` (provider, model, prices). If no pair reaches 80 %, we discuss before changing anything (prompt wording, model, or the labels themselves).
+- [ ] **9. Decision.** Fill the benchmark table, pick the production provider, set it in `config.yaml` (provider, model, prices). If no pair reaches 80 %, we discuss before changing anything (prompt wording, model, or the labels themselves). Then check the summary language of the chosen model on a real digest (`--force`, not committed), and decide whether the prompt needs a stronger language rule.
 - [ ] **10. Docs.** Tick this plan, mark the phase done in [PLAN.md](PLAN.md).
 
 ## Tests
@@ -84,7 +84,7 @@ To fill in steps 6 to 9. Monthly cost = cost per 100 articles × 15 (50 articles
 
 | Provider / model | Accuracy (±3) | Cost / 100 articles | Cost / month | Avg latency | Free tier limits | Notes |
 |---|---|---|---|---|---|---|
-| mistral / ministral-14b-2512 | 28/40 (70 %) | 0 | 0 | 2.40 s (46 calls) | 937,500 tok/min, 0.5 req/s | current; 6 skipped (invalid response twice), 6 misses all over-scored (+4 to +7) |
+| mistral / ministral-14b-2512 | 33/40 (82 %) | 0 | 0 | 2.34 s (40 calls) | 937,500 tok/min, 0.5 req/s | current; run 2, JSON mode: 0 skipped, 7 misses all over-scored (+4 to +7). Run 1 without JSON mode: 28/40 (70 %) |
 | mistral / mistral-small-2603 | | | | | 20,000 tok/min | |
 | mistral / ministral-8b-2512 | | | | | 625,000 tok/min, 3.13 req/s | |
 | anthropic / Claude Haiku 5.5 | | | | | paid, no free tier | must fit 1 €/month |
@@ -95,6 +95,13 @@ To fill in steps 6 to 9. Monthly cost = cost per 100 articles × 15 (50 articles
 - **6 articles skipped** after two invalid responses (12 of the 46 calls): The October inflection point for vibe game development, This Week in Rust 674, Announcing Rust 1.99.1, Graphics Programming weekly 456, Tokens and Greens, SCI for AI Bootcamp. All were scored 6 to 9 by hand, so in production they are relevant articles silently missing from the digest. Cause, from the run's warnings: **malformed JSON**, not a truncated answer. Every invalid answer is complete (it ends with `"\n}`) but fails with `expected ',' or '}'` at the start of a line (column 3), i.e. a missing comma between two values. The model gave 7 or 9 to all six: its enthusiastic answers are the malformed ones. The retry never helps: with `temperature: 0`, the same request returns the same malformed answer.
 - **6 misses among the 34 scored, all over-scored:** a video course on reasoning models (1 → 8), SIMD (0 → 7), GitHub Copilot for beginners (2 → 8), Anthropic coding interviews (4 → 8), Retell / OpenAI (3 → 7), Apple JSON in Xcode (3 → 7). The model rates generic AI and developer content too high.
 - With the skipped articles scored correctly, the result would be at most 34/40 (85 %): fixing the invalid responses matters more than the model choice.
+
+### Run 2: mistral / ministral-14b-2512, JSON mode (2026-10-29)
+
+- **33/40 within ±3 (82.5 %, printed 82 %): target met**, by a small margin (32/40 is exactly 80 %, so one more miss still passes, two fail). 37,245 input and 5,216 output tokens, about 930 input tokens per article.
+- **JSON mode fixed the invalid responses:** 0 skipped, 40 calls for 40 articles (no retry at all). Of the 6 articles lost in run 1, 5 are now within tolerance; This Week in Rust 674 is over-scored (4 → 9).
+- **7 misses, all over-scored:** the 6 of run 1 (reasoning-model course 1 → 8, SIMD 0 → 7, Copilot for beginners 2 → 8, Anthropic interviews 4 → 8, Retell 3 → 7, Apple JSON in Xcode 3 → 7) plus This Week in Rust 674. No article is under-scored by more than 3: the model is too generous with AI and developer content, but never misses a relevant article.
+- The off-topic articles (crypto, politics, mainstream games, food) are all scored 0-2, as by hand.
 
 ## Decisions
 
@@ -109,6 +116,7 @@ To fill in steps 6 to 9. Monthly cost = cost per 100 articles × 15 (50 articles
 - **Labels rebalanced towards the extremes.** The first 30 labels were mostly 4-8: a constant "always 5" answer scored 25/30 (83 %) and passed the criterion. 5 mid articles were replaced by 15 very low (crypto, game news, politics, general-audience content, from feeds outside `feeds.yaml`) or very high ones (two or more core interests). With the 40 labels, the best constant answer ("always 6") scores 26/40 (65 %), below the 80 % target.
 - **Benchmark candidates:** free tiers only, plus Claude Haiku 5.5 (decided with the project owner).
 - **Provider JSON mode, prompt unchanged** (after run 1, approved by the project owner): each adapter enables its provider's JSON mode as a request parameter when there is one; the prompt stays shared. `json_object` rather than Mistral's `json_schema`: the problem is syntax, and a schema in the adapter would duplicate `LLMScore`. Updates the phase 4 decision in [llm-layer.md](llm-layer.md).
+- **Summary language: wait for the chosen model** (project owner's choice). The local phase 6 digest showed 9 of 10 English articles summarized in French by `ministral-14b-2512`, against the spec ("in the article's language"). The score is not affected, so the benchmark runs with the prompt unchanged; the language is checked on the chosen model in step 9, and the prompt is strengthened only if that model drifts too.
 
 ## Done when
 
