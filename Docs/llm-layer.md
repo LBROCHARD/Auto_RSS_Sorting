@@ -83,7 +83,7 @@ Decided with the project owner: the budget is at most 1 € per month, so the fi
 Limits read in the project owner's console (2026-10-23, "Completion rate limits per model", no monthly limit shown):
 
 - `ministral-14b-2512`: 937,500 tokens/min, 0.5 request/s. A run (about 50 calls of about 1,500 tokens) fits easily. The adapter spaces calls by at least 2 s to stay under 0.5 request/s (see the pacing rule below).
-- `mistral-small-2603` (Mistral Small 4) was the first idea but only allows 20,000 tokens/min: a run would hit 429s and skip articles. It is a candidate for the phase 7 benchmark, with `ministral-8b-2512` (625,000 tokens/min, 3.13 requests/s). Rejected for now: Groq (8,000 tokens/min would cause 429s on a 50-article run), Gemini (unstable free quotas), OpenRouter free (50 requests/day, no room for retries). The exact limits are read in the Mistral console before step 6.
+- `mistral-small-2603` (Mistral Small 4) was the first idea but only allows 20,000 tokens/min: a run would hit 429s and skip articles. It is a candidate for the phase 7 benchmark, with `ministral-8b-2512` (625,000 tokens/min, 3.13 requests/s). Rejected for now: Groq (8,000 tokens/min would cause 429s on a 50-article run), Gemini (unstable free quotas), OpenRouter free (50 requests/day, no room for retries). *Changed in phase 7:* free tiers re-checked, Gemini added to the benchmark (see [eval.md](eval.md), Decisions). The exact limits are read in the Mistral console before step 6.
 
 Mistral API facts for step 5 (from docs.mistral.ai, checked on 2026-10-23):
 
