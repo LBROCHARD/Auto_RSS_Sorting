@@ -80,7 +80,7 @@ Plan: [eval.md](eval.md) (in progress)
 
 `eval/labels.csv` (40 hand-scored articles, provided by the project owner), accuracy (±3 points, target 80 %), cost per 100 articles, average latency.
 
-Then a **provider benchmark**: run `eval` on 3 or 4 provider/model pairs (free tiers and cheap paid models, e.g. Claude Haiku 5.5), adding one adapter per new provider. Compare accuracy, cost per month at 50 articles/day, latency and the free tier's limits, then pick the production provider. Budget: at most 1 € per month.
+Then a **provider benchmark**: run `eval` on 3 or 4 provider/model pairs (free tiers), adding one adapter per new provider. Compare accuracy, cost per month at 50 articles/day, latency and the free tier's limits, then pick the production provider. Budget: at most 1 € per month.
 
 *Done when:* `eval` prints the three metrics for the configured provider, the benchmark results are recorded in the phase plan, the production provider is chosen, and we know whether the success criterion is met.
 
