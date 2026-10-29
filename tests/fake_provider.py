@@ -16,4 +16,6 @@ class FakeProvider:
         response = self.responses.pop(0)
         if isinstance(response, Exception):
             raise response
-        return Completion(text=response, input_tokens=100, output_tokens=20)
+        return Completion(
+            text=response, input_tokens=100, output_tokens=20, latency_seconds=0.5
+        )

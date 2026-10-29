@@ -4,7 +4,7 @@ Roadmap for implementing [SPEC.md](../SPEC.md). Each phase stays high level on p
 
 ## Current status
 
-Phases 1 to 5 are merged into `dev`. Phase 6 is done on `feature/cli-pipeline`, awaiting its PR into `dev`. Next: plan phase 7.
+Phases 1 to 6 are merged into `dev`. Phase 7 is done on `feature/eval`, waiting for the pre-merge reviews and the merge into `dev`. Production provider: Gemini (`gemini-3.5-flash-lite`, free tier), 36/40 (90 %) on the eval set.
 
 ## How we work through phases
 
@@ -68,7 +68,7 @@ Generate `digests/YYYY-MM-DD.md` (ranking, footer, fewer than `top_n` articles, 
 
 ### [x] Phase 6: CLI and end-to-end pipeline
 
-Plan: [cli-pipeline.md](cli-pipeline.md) (done, awaiting merge)
+Plan: [cli-pipeline.md](cli-pipeline.md) (done, merged in PR #7)
 
 Wire everything into the `auto-rss-sorting` command: "now" computed once at the entry point, logging, exit codes. End-to-end test with fixtures and the fake provider.
 
@@ -76,15 +76,17 @@ Wire everything into the `auto-rss-sorting` command: "now" computed once at the 
 
 ### [ ] Phase 7: `eval` subcommand
 
-`eval/labels.csv` (20 hand-scored articles, provided by the project owner), accuracy (±3 points, target 80 %), cost per 100 articles, average latency.
+Plan: [eval.md](eval.md) (done, waiting for merge)
 
-Then a **provider benchmark**: run `eval` on 3 or 4 provider/model pairs (free tiers and cheap paid models, e.g. Claude Haiku 5.5), adding one adapter per new provider. Compare accuracy, cost per month at 50 articles/day, latency and the free tier's limits, then pick the production provider. Budget: at most 1 € per month.
+`eval/labels.csv` (40 hand-scored articles, provided by the project owner), accuracy (±3 points, target 80 %), cost per 100 articles, average latency.
+
+Then a **provider benchmark**: run `eval` on 3 or 4 provider/model pairs (free tiers), adding one adapter per new provider. Compare accuracy, cost per month at 50 articles/day, latency and the free tier's limits, then pick the production provider. Budget: at most 1 € per month.
 
 *Done when:* `eval` prints the three metrics for the configured provider, the benchmark results are recorded in the phase plan, the production provider is chosen, and we know whether the success criterion is met.
 
 ### [ ] Phase 8: Scheduling and v1 release
 
-Daily GitHub Actions workflow (cron + manual trigger, secrets), commit of the digest and state to `main`, README, merge `dev` into `main`.
+Daily GitHub Actions workflow (cron + manual trigger, secret `GEMINI_API_KEY`), commit of the digest and state to `main`, README, merge `dev` into `main`.
 
 *Done when:* a scheduled run has produced and committed a digest.
 

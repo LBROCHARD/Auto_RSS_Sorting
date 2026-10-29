@@ -70,6 +70,7 @@ Each step is test-first (failing tests shown to you, then implementation) and en
 - **Interface at the text level:** adapters only send a prompt and return text + usage; prompt, parsing and validation are shared, so all providers get exactly the same prompt and the same checks.
 - **Token usage in `Completion`:** not used before phase 7, but `eval` needs it and adding it later would change every adapter.
 - **JSON in the prompt, no provider "JSON mode":** keeps one prompt for all providers; `parse_response` tolerates a code fence, the only common deviation.
+  - *Changed in phase 7* ([eval.md](eval.md), run 1): `ministral-14b-2512` returned malformed JSON (a missing comma) for 6 of 40 eval articles, and the retry at `temperature: 0` returned the same answer. The prompt stays shared by all providers, but each adapter now enables its provider's JSON mode when there is one, as a request parameter (Mistral: `response_format: {"type": "json_object"}`). Pydantic validation is unchanged.
 - **Plain `httpx` adapter instead of an SDK:** no new dependency, and the HTTP status codes map directly to transient / fatal.
 - **Extra fields in the LLM response are ignored:** they are harmless, and rejecting them would cost retries for nothing.
 
@@ -79,10 +80,12 @@ Decided with the project owner: the budget is at most 1 € per month, so the fi
 
 **Chosen: Mistral, free "Experiment" plan** (chat completions API, `https://api.mistral.ai/v1/chat/completions`). Model: **`ministral-14b-2512`**. API key environment variable: `MISTRAL_API_KEY`. Prices in `config.yaml` are `0`. Why Mistral: generous free tier, handles French well, and its API is easy to call with `httpx`.
 
+*Changed in phase 7* ([eval.md](eval.md)): after the provider benchmark, production uses **Gemini** (`gemini-3.5-flash-lite`, free tier, `GEMINI_API_KEY`): 36/40 (90 %) on the eval set against 33/40 for `ministral-14b-2512`. `MistralProvider` became `ChatCompletionsProvider`, shared by Mistral and Gemini; the pacing interval is now set per provider (`ChatAPI.min_interval_seconds`: 2 s for Mistral, 4 s for Gemini). The Mistral facts below stay valid for the Mistral entry.
+
 Limits read in the project owner's console (2026-10-23, "Completion rate limits per model", no monthly limit shown):
 
 - `ministral-14b-2512`: 937,500 tokens/min, 0.5 request/s. A run (about 50 calls of about 1,500 tokens) fits easily. The adapter spaces calls by at least 2 s to stay under 0.5 request/s (see the pacing rule below).
-- `mistral-small-2603` (Mistral Small 4) was the first idea but only allows 20,000 tokens/min: a run would hit 429s and skip articles. It is a candidate for the phase 7 benchmark, with `ministral-8b-2512` (625,000 tokens/min, 3.13 requests/s). Rejected for now: Groq (8,000 tokens/min would cause 429s on a 50-article run), Gemini (unstable free quotas), OpenRouter free (50 requests/day, no room for retries). The exact limits are read in the Mistral console before step 6.
+- `mistral-small-2603` (Mistral Small 4) was the first idea but only allows 20,000 tokens/min: a run would hit 429s and skip articles. It is a candidate for the phase 7 benchmark, with `ministral-8b-2512` (625,000 tokens/min, 3.13 requests/s). Rejected for now: Groq (8,000 tokens/min would cause 429s on a 50-article run), Gemini (unstable free quotas), OpenRouter free (50 requests/day, no room for retries). *Changed in phase 7:* free tiers re-checked, Gemini added to the benchmark (see [eval.md](eval.md), Decisions). The exact limits are read in the Mistral console before step 6.
 
 Mistral API facts for step 5 (from docs.mistral.ai, checked on 2026-10-23):
 
@@ -106,7 +109,7 @@ Status mapping in the adapter (decided at step 5):
 - every other 4xx (400, 413, 422) → `InvalidResponseError` (changed after the pre-merge review): it may come from one odd article, which is then retried once and skipped instead of killing the digest; if it is systematic, no article is scored and the run fails anyway (`ScoringFailedError`);
 - a 200 whose body has no `choices[0].message.content` string or no token usage → `InvalidResponseError`, so it gets the same single retry as an invalid JSON answer.
 - Request constants in the adapter, not in `config.yaml` (no unused options): `temperature: 0` (stable scores between runs and for `eval`), `max_tokens: 500` (bounds the answer: a score, a 1-2 sentence summary and a reason), timeout 30 s.
-- Pacing (added after the pre-merge review): the adapter keeps at least `MIN_INTERVAL_SECONDS = 2` between the starts of two calls, retries and failed calls included, so a 50-article run does not hit the 0.5 request/s limit with back-to-back calls (which would burn transient attempts and could skip many articles). A run takes at least about 100 s, fine for a daily job. The clock and `sleep` are injected, so tests never wait.
+- Pacing (added after the pre-merge review): the adapter keeps at least 2 s (`MIN_INTERVAL_SECONDS`; per provider since phase 7: `ChatAPI.min_interval_seconds`) between the starts of two calls, retries and failed calls included, so a 50-article run does not hit the 0.5 request/s limit with back-to-back calls (which would burn transient attempts and could skip many articles). A run takes at least about 100 s, fine for a daily job. The clock and `sleep` are injected, so tests never wait.
 
 Constraints any provider must meet:
 

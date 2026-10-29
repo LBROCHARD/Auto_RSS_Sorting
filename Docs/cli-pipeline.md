@@ -1,6 +1,6 @@
 # Phase 6: CLI and end-to-end pipeline
 
-- **Status:** done, awaiting merge into `dev`
+- **Status:** done, merged into `dev` (PR #7)
 - **Branch:** `feature/cli-pipeline` (from `dev`)
 - **Global plan:** [PLAN.md](PLAN.md)
 

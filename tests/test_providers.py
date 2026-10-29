@@ -12,9 +12,10 @@ from auto_rss_sorting.llm import (
     TransientProviderError,
 )
 from auto_rss_sorting.providers import (
-    MIN_INTERVAL_SECONDS,
-    MISTRAL_URL,
-    MistralProvider,
+    GEMINI,
+    MISTRAL,
+    ChatAPI,
+    ChatCompletionsProvider,
     make_provider,
 )
 
@@ -40,14 +41,15 @@ class FakeClock:
         self.now += seconds
 
 
-def make_mistral(
+def make_chat(
     handler: Callable[[httpx.Request], httpx.Response],
     clock: FakeClock | None = None,
-) -> MistralProvider:
+    api: ChatAPI = MISTRAL,
+) -> ChatCompletionsProvider:
     clock = clock or FakeClock()
     client = httpx.Client(transport=httpx.MockTransport(handler))
-    return MistralProvider(
-        "ministral-14b-2512", FAKE_KEY, client=client, clock=clock, sleep=clock.sleep
+    return ChatCompletionsProvider(
+        api, "some-model", FAKE_KEY, client=client, clock=clock, sleep=clock.sleep
     )
 
 
@@ -59,7 +61,7 @@ def make_config(provider: str = "mistral") -> Config:
             "llm_max_articles": 50,
             "max_description_chars": 2000,
             "provider": provider,
-            "model": "ministral-14b-2512",
+            "model": "some-model",
             "price_input_per_mtok": 0.0,
             "price_output_per_mtok": 0.0,
         }
@@ -73,23 +75,40 @@ def test_returns_text_and_token_usage() -> None:
         requests.append(request)
         return httpx.Response(200, json=OK_BODY)
 
-    completion = make_mistral(handler).complete("the system", "the user")
+    completion = make_chat(handler).complete("the system", "the user")
 
-    assert completion == Completion(text="{}", input_tokens=120, output_tokens=30)
+    assert completion == Completion(
+        text="{}", input_tokens=120, output_tokens=30, latency_seconds=0.0
+    )
     [request] = requests
-    assert str(request.url) == MISTRAL_URL
+    assert str(request.url) == MISTRAL.url
     assert request.headers["Authorization"] == f"Bearer {FAKE_KEY}"
     body = json.loads(request.content)
-    assert body["model"] == "ministral-14b-2512"
+    assert body["model"] == "some-model"
     assert body["messages"] == [
         {"role": "system", "content": "the system"},
         {"role": "user", "content": "the user"},
     ]
 
 
+def test_requests_json_mode() -> None:
+    # Without it, ministral-14b sometimes drops a comma between two values,
+    # and at temperature 0 the retry returns the same malformed JSON.
+    requests: list[httpx.Request] = []
+
+    def handler(request: httpx.Request) -> httpx.Response:
+        requests.append(request)
+        return httpx.Response(200, json=OK_BODY)
+
+    make_chat(handler).complete("the system", "the user")
+
+    [request] = requests
+    assert json.loads(request.content)["response_format"] == {"type": "json_object"}
+
+
 @pytest.mark.parametrize("status", [429, 500, 503])
 def test_rate_limit_and_server_errors_are_transient(status: int) -> None:
-    provider = make_mistral(lambda _: httpx.Response(status, json={"message": "x"}))
+    provider = make_chat(lambda _: httpx.Response(status, json={"message": "x"}))
     with pytest.raises(TransientProviderError, match=str(status)):
         provider.complete("s", "u")
 
@@ -99,14 +118,15 @@ def test_timeout_is_transient() -> None:
         raise httpx.ReadTimeout("timed out", request=request)
 
     with pytest.raises(TransientProviderError):
-        make_mistral(handler).complete("s", "u")
+        make_chat(handler).complete("s", "u")
 
 
-# 402 is Mistral's "payment required" (quota exhausted); 404 is an unknown model.
+# 402 is Mistral's "payment required" (quota exhausted); 403 is also Gemini's
+# "project denied access"; 404 is an unknown model.
 @pytest.mark.parametrize("status", [401, 402, 403, 404])
 def test_auth_quota_and_unknown_model_errors_are_fatal(status: int) -> None:
     body = {"message": "Unauthorized", "type": "authentication_error"}
-    provider = make_mistral(lambda _: httpx.Response(status, json=body))
+    provider = make_chat(lambda _: httpx.Response(status, json=body))
     with pytest.raises(FatalProviderError, match=str(status)) as error:
         provider.complete("s", "u")
     assert "Unauthorized" in str(error.value)
@@ -117,7 +137,7 @@ def test_auth_quota_and_unknown_model_errors_are_fatal(status: int) -> None:
 @pytest.mark.parametrize("status", [400, 413, 422])
 def test_other_client_errors_are_invalid_responses(status: int) -> None:
     body = {"message": "Bad request", "type": "invalid_request_error"}
-    provider = make_mistral(lambda _: httpx.Response(status, json=body))
+    provider = make_chat(lambda _: httpx.Response(status, json=body))
     with pytest.raises(InvalidResponseError, match=str(status)) as error:
         provider.complete("s", "u")
     assert FAKE_KEY not in str(error.value)
@@ -128,56 +148,154 @@ def test_other_client_errors_are_invalid_responses(status: int) -> None:
     [{"choices": []}, {"usage": {}}, {"choices": [{"message": {"content": None}}]}],
 )
 def test_malformed_success_body_is_an_invalid_response(body: dict) -> None:
-    provider = make_mistral(lambda _: httpx.Response(200, json=body))
+    provider = make_chat(lambda _: httpx.Response(200, json=body))
     with pytest.raises(InvalidResponseError):
         provider.complete("s", "u")
 
 
+@pytest.mark.parametrize("provider", ["mistral", "gemini"])
 def test_make_provider_builds_the_configured_provider(
-    monkeypatch: pytest.MonkeyPatch,
+    monkeypatch: pytest.MonkeyPatch, provider: str
 ) -> None:
     monkeypatch.setenv("MISTRAL_API_KEY", FAKE_KEY)
-    assert isinstance(make_provider(make_config()), MistralProvider)
+    monkeypatch.setenv("GEMINI_API_KEY", FAKE_KEY)
+    built = make_provider(make_config(provider))
+    assert isinstance(built, ChatCompletionsProvider)
+    assert built.api == {"mistral": MISTRAL, "gemini": GEMINI}[provider]
 
 
 def test_unknown_provider_lists_the_known_ones() -> None:
-    with pytest.raises(InputError, match="unknown provider 'nope'.*mistral"):
+    with pytest.raises(InputError, match="unknown provider 'nope'.*gemini, mistral"):
         make_provider(make_config(provider="nope"))
 
 
+@pytest.mark.parametrize(
+    ("provider", "variable"),
+    [("mistral", "MISTRAL_API_KEY"), ("gemini", "GEMINI_API_KEY")],
+)
 @pytest.mark.parametrize("value", [None, "", "   "])
 def test_missing_api_key_names_the_variable(
-    monkeypatch: pytest.MonkeyPatch, value: str | None
+    monkeypatch: pytest.MonkeyPatch, provider: str, variable: str, value: str | None
 ) -> None:
     if value is None:
-        monkeypatch.delenv("MISTRAL_API_KEY", raising=False)
+        monkeypatch.delenv(variable, raising=False)
     else:
-        monkeypatch.setenv("MISTRAL_API_KEY", value)
-    with pytest.raises(InputError, match="MISTRAL_API_KEY"):
-        make_provider(make_config())
+        monkeypatch.setenv(variable, value)
+    with pytest.raises(InputError, match=variable):
+        make_provider(make_config(provider))
 
 
 def test_calls_are_spaced_by_the_minimum_interval() -> None:
     clock = FakeClock()
-    provider = make_mistral(lambda _: httpx.Response(200, json=OK_BODY), clock)
+    provider = make_chat(lambda _: httpx.Response(200, json=OK_BODY), clock)
+    interval = MISTRAL.min_interval_seconds
 
     provider.complete("s", "u")
     assert clock.sleeps == []
 
     clock.now += 0.5
     provider.complete("s", "u")
-    assert clock.sleeps == [pytest.approx(MIN_INTERVAL_SECONDS - 0.5)]
+    assert clock.sleeps == [pytest.approx(interval - 0.5)]
 
-    clock.now += MIN_INTERVAL_SECONDS + 1
+    clock.now += interval + 1
     provider.complete("s", "u")
     assert len(clock.sleeps) == 1
 
 
+def test_latency_is_the_request_time_without_the_pacing_wait() -> None:
+    clock = FakeClock()
+
+    def handler(request: httpx.Request) -> httpx.Response:
+        clock.now += 0.8  # the request takes 0.8 s
+        return httpx.Response(200, json=OK_BODY)
+
+    provider = make_chat(handler, clock)
+    assert provider.complete("s", "u").latency_seconds == pytest.approx(0.8)
+
+    # The next call waits for the interval first: the wait is not latency.
+    second = provider.complete("s", "u")
+    assert clock.sleeps == [pytest.approx(MISTRAL.min_interval_seconds - 0.8)]
+    assert second.latency_seconds == pytest.approx(0.8)
+
+
 def test_failed_calls_also_count_for_the_interval() -> None:
     clock = FakeClock()
-    provider = make_mistral(lambda _: httpx.Response(429, json={}), clock)
+    provider = make_chat(lambda _: httpx.Response(429, json={}), clock)
     with pytest.raises(TransientProviderError):
         provider.complete("s", "u")
     with pytest.raises(TransientProviderError):
         provider.complete("s", "u")
-    assert clock.sleeps == [pytest.approx(MIN_INTERVAL_SECONDS)]
+    assert clock.sleeps == [pytest.approx(MISTRAL.min_interval_seconds)]
+
+
+# Step 8b: Gemini, through the same adapter.
+
+
+def test_gemini_request_goes_to_gemini_with_its_own_fields() -> None:
+    requests: list[httpx.Request] = []
+
+    def handler(request: httpx.Request) -> httpx.Response:
+        requests.append(request)
+        return httpx.Response(200, json=OK_BODY)
+
+    make_chat(handler, api=GEMINI).complete("the system", "the user")
+
+    [request] = requests
+    assert str(request.url) == (
+        "https://generativelanguage.googleapis.com/v1beta/openai/chat/completions"
+    )
+    assert request.headers["Authorization"] == f"Bearer {FAKE_KEY}"
+    body = json.loads(request.content)
+    # Gemini 3 always thinks first: kept low so it does not eat the answer budget.
+    assert body["reasoning_effort"] == "low"
+    assert body["response_format"] == {"type": "json_object"}
+
+
+def test_mistral_request_has_no_gemini_only_field() -> None:
+    requests: list[httpx.Request] = []
+
+    def handler(request: httpx.Request) -> httpx.Response:
+        requests.append(request)
+        return httpx.Response(200, json=OK_BODY)
+
+    make_chat(handler).complete("s", "u")
+
+    [request] = requests
+    assert "reasoning_effort" not in json.loads(request.content)
+
+
+def test_errors_name_the_provider() -> None:
+    provider = make_chat(lambda _: httpx.Response(429, json={}), api=GEMINI)
+    with pytest.raises(TransientProviderError, match="^Gemini API returned 429"):
+        provider.complete("s", "u")
+
+
+def test_gemini_calls_are_spaced_by_its_own_interval() -> None:
+    clock = FakeClock()
+    provider = make_chat(lambda _: httpx.Response(200, json=OK_BODY), clock, api=GEMINI)
+    provider.complete("s", "u")
+    provider.complete("s", "u")
+    assert clock.sleeps == [pytest.approx(GEMINI.min_interval_seconds)]
+    assert GEMINI.min_interval_seconds != MISTRAL.min_interval_seconds
+
+
+def test_provider_only_fields_cannot_replace_the_shared_ones() -> None:
+    requests: list[httpx.Request] = []
+
+    def handler(request: httpx.Request) -> httpx.Response:
+        requests.append(request)
+        return httpx.Response(200, json=OK_BODY)
+
+    api = ChatAPI(
+        name="Other",
+        url=MISTRAL.url,
+        min_interval_seconds=0.0,
+        extra_body={"model": "other-model", "messages": [], "extra": 1},
+    )
+    make_chat(handler, api=api).complete("the system", "the user")
+
+    [request] = requests
+    body = json.loads(request.content)
+    assert body["model"] == "some-model"
+    assert len(body["messages"]) == 2
+    assert body["extra"] == 1
