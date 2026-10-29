@@ -1,6 +1,6 @@
 # Phase 8: Scheduling and v1 release
 
-- **Status:** approved, not started
+- **Status:** in progress (step 1 done)
 - **Branch:** `feature/scheduling` (from `dev`)
 - **Global plan:** [PLAN.md](PLAN.md)
 
@@ -60,7 +60,7 @@ Also fill the `description` field in `pyproject.toml` and set the version to `1.
 One task = one commit on `feature/scheduling`.
 
 - [ ] **0. Plan.** This file, plus the pending PLAN.md / `eval.md` updates marking phase 7 merged. One `:memo:` commit.
-- [ ] **1. Workflow.** `.github/workflows/daily.yml` as designed above. Checked with a careful read and `security-auditor` (it touches CI and secrets); it cannot be run before step 5. One `:construction_worker:` commit.
+- [x] **1. Workflow.** `.github/workflows/daily.yml` as designed above. Checked with a careful read and `security-auditor` (it touches CI and secrets); it cannot be run before step 5. One `:construction_worker:` commit.
 - [ ] **2. Examples.** Copy the two local digests and `published.json` into `examples/`, `security-auditor` on them. One `:card_file_box:` commit.
 - [ ] **3. README and version.** README sections above, `pyproject.toml` description and version `1.0.0` (`uv.lock` updated by `uv lock` if the version change requires it). One `:memo:` commit.
 - [ ] **4. Merge into `dev`.** Tests, lint, format pass; `spec-reviewer` and `security-auditor` on the branch diff; PR `feature/scheduling` → `dev`.
@@ -70,9 +70,11 @@ One task = one commit on `feature/scheduling`.
 
 ## Risks
 
-- **Scheduled workflows are disabled by GitHub after 60 days without activity on a public repository.** Whether the bot's own daily commits count as activity is to be checked in the GitHub docs during step 1; if they do not, the README says how to re-enable the workflow.
+- **Scheduled workflows are disabled by GitHub after 60 days without activity on a public repository.** Checked in the GitHub docs during step 1: they confirm the 60-day rule (and that `schedule` and `workflow_dispatch` only work from the default branch) but do not define "activity". Community sources say only commits on the default branch count; the bot commits to `main`, not `dev`, so they probably do not. Development on `dev` keeps it alive meanwhile; the README says how to re-enable the workflow (Actions tab, "Enable workflow"). No keepalive hack: it would add commits or a dependency for an unconfirmed problem.
 - **Push rejected** if `main` moved during the run (e.g. a release merged at that moment): the job fails, nothing is lost, the next run (or a manual one) catches up. The concurrency group already prevents two runs racing each other; no automatic rebase, to keep the workflow simple.
-- **Gemini free tier:** 500 requests/day, a daily run uses at most 150 (see [eval.md](eval.md)); a manual `--force` run on the same day adds up to 150 more, still within the limit.
+- **Gemini free tier:** 500 requests/day. A daily run makes 50 calls normally and at most 200 (50 articles × 4 calls: one retry on an invalid response plus two on transient errors, independent counters; counted by the security-auditor in step 1, [eval.md](eval.md) said 150). A manual `--force` run on the same day adds up to 200 more: 400, still within the limit. A third forced run could exceed it; over-quota answers are 429s, so articles would be skipped rather than billed (the project owner checks that billing is off on the key's project).
+- **Job timeout:** 60 minutes (`timeout-minutes`, after the security-auditor's step 1 review). A normal run takes about 4 minutes (50 calls, 4 s apart); the worst case with a slow API (3 attempts × 30 s timeout per article) is longer, so a cap at 30 minutes could kill a run that would still produce a digest.
+- **Actions pinned by tag, not by commit SHA** (security-auditor, Medium): same pins as `ci.yml`, first-party actions. Kept as is for consistency; pinning both workflows by SHA would be a separate change.
 
 ## Decisions
 
