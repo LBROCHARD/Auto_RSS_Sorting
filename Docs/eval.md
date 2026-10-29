@@ -1,6 +1,6 @@
 # Phase 7: `eval` subcommand and provider benchmark
 
-- **Status:** done, waiting for the pre-merge reviews and the merge into `dev`
+- **Status:** done, merged into `dev` (PR #8)
 - **Branch:** `feature/eval` (from `dev`)
 - **Global plan:** [PLAN.md](PLAN.md)
 
