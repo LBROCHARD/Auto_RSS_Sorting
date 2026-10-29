@@ -66,7 +66,7 @@ Each code step is test-first (failing tests shown to you, then implementation) a
 - [x] **5. Labels.** You write `eval/labels.csv` (40 rows, see above). I validate it by running `load_labels` on it, without calling any LLM. Committed with step 6's results or on its own.
 - [x] **6. First eval: current provider.** You run `uv run auto-rss-sorting eval` with your `MISTRAL_API_KEY` (I never read `.env` nor pass a key on a command line). We record the three metrics here. The language drift seen in phase 4 is checked in step 9 instead (see Decisions).
 - [x] **6b. Fix the malformed answers.** Run 1 lost 6 articles to malformed JSON: the Mistral adapter now requests JSON mode (`response_format: {"type": "json_object"}`, checked in the official API docs). Test: the request body holds it. Then run eval again (run 2).
-- [ ] **7. Benchmark, same adapter.** Other Mistral models need only a `config.yaml` change: `mistral-small-2603` and `ministral-8b-2512` (see the limits recorded in [llm-layer.md](llm-layer.md)). Run eval for each, record the results.
+- [x] **7. Benchmark, same adapter.** Other Mistral models need only a `config.yaml` change: `mistral-small-2603` and `ministral-8b-2512` (see the limits recorded in [llm-layer.md](llm-layer.md)). Run eval for each, record the results.
 - [ ] **8. Benchmark, new adapter(s).** One adapter per new provider (plain `httpx`, same error mapping and security rules as the Mistral adapter, tests with `httpx.MockTransport`), one commit each, then one eval run. Decided with the project owner: free tiers only, plus Claude Haiku 5.5 (the only paid candidate, cheap). So one new adapter, for Anthropic (`ANTHROPIC_API_KEY`). Another free provider is added only if one meets the constraints listed in [llm-layer.md](llm-layer.md) (50 calls/day without 429s, reliable JSON in French and English); the ones rejected in phase 4 stay rejected unless their limits changed. Exact API details and prices are checked in the provider's official docs at the start of the step, not from memory.
 - [ ] **9. Decision.** Fill the benchmark table, pick the production provider, set it in `config.yaml` (provider, model, prices). If no pair reaches 80 %, we discuss before changing anything (prompt wording, model, or the labels themselves). Then check the summary language of the chosen model on a real digest (`--force`, not committed), and decide whether the prompt needs a stronger language rule.
 - [ ] **10. Docs.** Tick this plan, mark the phase done in [PLAN.md](PLAN.md).
@@ -85,8 +85,8 @@ To fill in steps 6 to 9. Monthly cost = cost per 100 articles × 15 (50 articles
 | Provider / model | Accuracy (±3) | Cost / 100 articles | Cost / month | Avg latency | Free tier limits | Notes |
 |---|---|---|---|---|---|---|
 | mistral / ministral-14b-2512 | 33/40 (82 %) | 0 | 0 | 2.34 s (40 calls) | 937,500 tok/min, 0.5 req/s | current; run 2, JSON mode: 0 skipped, 7 misses all over-scored (+4 to +7). Run 1 without JSON mode: 28/40 (70 %) |
-| mistral / mistral-small-2603 | | | | | 20,000 tok/min | |
-| mistral / ministral-8b-2512 | | | | | 625,000 tok/min, 3.13 req/s | |
+| mistral / mistral-small-2603 | 0/40, run failed | 0 | 0 | - | 20,000 tok/min | run 3: every call answered 429, all 40 articles skipped. Unusable on this account's free tier |
+| mistral / ministral-8b-2512 | 32/40 (80 %) | 0 | 0 | 1.77 s (40 calls) | 625,000 tok/min, 3.13 req/s | run 4, JSON mode: 0 skipped, 8 misses: 6 over-scored (+4 to +8), 2 under-scored (-4) |
 | anthropic / Claude Haiku 5.5 | | | | | paid, no free tier | must fit 1 €/month |
 
 ### Run 1: mistral / ministral-14b-2512 (2026-10-28)
@@ -102,6 +102,21 @@ To fill in steps 6 to 9. Monthly cost = cost per 100 articles × 15 (50 articles
 - **JSON mode fixed the invalid responses:** 0 skipped, 40 calls for 40 articles (no retry at all). Of the 6 articles lost in run 1, 5 are now within tolerance; This Week in Rust 674 is over-scored (4 → 9).
 - **7 misses, all over-scored:** the 6 of run 1 (reasoning-model course 1 → 8, SIMD 0 → 7, Copilot for beginners 2 → 8, Anthropic interviews 4 → 8, Retell 3 → 7, Apple JSON in Xcode 3 → 7) plus This Week in Rust 674. No article is under-scored by more than 3: the model is too generous with AI and developer content, but never misses a relevant article.
 - The off-topic articles (crypto, politics, mainstream games, food) are all scored 0-2, as by hand.
+
+### Run 3: mistral / mistral-small-2603 (2026-10-29)
+
+- **Run failed: none of the 40 articles could be scored.** Every call answered `429 Rate limit exceeded` (`"type":"rate_limited","code":"1300"`), including the retries after 2 s and 4 s. Each article was skipped after its 3 attempts, then the run failed as the spec requires.
+- The 429s lasted the whole run (about 6 minutes, 120 calls). A per-minute token limit would have let calls through again within a minute. The model is most likely not usable at all on this account's free tier (zero or exhausted quota): not a pacing problem the code can fix.
+- The error handling worked as designed: transient errors retried with backoff, each article skipped and logged, no digest from a run where nothing was scored.
+- Result: mistral-small-2603 is out of the benchmark.
+
+### Run 4: mistral / ministral-8b-2512, JSON mode (2026-10-29)
+
+- **32/40 within ±3 (80 %): target met, with no margin** (one more miss fails). 37,245 input and 4,985 output tokens, 0 skipped, 40 calls (no retry), 1.77 s per call on average (ministral-14b: 2.34 s).
+- **6 over-scored misses**, mostly the same as ministral-14b: reasoning-model course 1 → 9, SIMD 0 → 7, Copilot for beginners 2 → 7, This Week in Rust 674 4 → 9, Retell 3 → 7, Apple JSON in Xcode 3 → 7.
+- **2 under-scored misses**, which ministral-14b never had: Artificial Analysis v5 6 → 2 and Announcing Rust 1.99.1 6 → 2. Under-scoring is the costly error for a digest: a relevant article drops out instead of a weak one getting in.
+- The off-topic articles are all scored 0, as by hand.
+- Compared with ministral-14b (82 %, no under-scoring), ministral-8b is slightly faster but less accurate, and both are free: ministral-14b stays the best Mistral candidate.
 
 ## Decisions
 
