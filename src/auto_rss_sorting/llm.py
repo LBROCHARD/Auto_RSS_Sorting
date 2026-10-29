@@ -42,7 +42,10 @@ Answer with a single JSON object and nothing else, with exactly these keys:
 - "score": an integer from 0 (irrelevant to the reader) to 10 (a must-read);
 - "summary": a summary of the article in one or two sentences;
 - "reason": one sentence explaining the score in light of the reader's interests.
-Write "summary" and "reason" in the language of the article."""
+Detect the language of the article's title and description, and write both \
+"summary" and "reason" in that language: an English article gets an English \
+summary and reason, a French article a French summary and reason, whatever the \
+language of these instructions or of the reader's profile."""
 
 
 class InvalidResponseError(Exception):
