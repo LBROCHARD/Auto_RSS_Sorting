@@ -52,6 +52,15 @@ MISTRAL = ChatAPI(
     url="https://api.mistral.ai/v1/chat/completions",
     min_interval_seconds=2.0,
 )
+# The free tier of gemini-3.5-flash-lite allows 15 requests/min (AI Studio
+# console, 2026-10-29). Gemini 3 models always think before answering: kept
+# low so the thinking does not eat the MAX_OUTPUT_TOKENS answer budget.
+GEMINI = ChatAPI(
+    name="Gemini",
+    url="https://generativelanguage.googleapis.com/v1beta/openai/chat/completions",
+    min_interval_seconds=4.0,
+    extra_body={"reasoning_effort": "low"},
+)
 
 
 class _Message(BaseModel):
@@ -164,6 +173,7 @@ class ChatCompletionsProvider:
 
 # Provider name in config.yaml -> (API key environment variable, adapter).
 PROVIDERS: dict[str, tuple[str, Callable[[str, str], Provider]]] = {
+    "gemini": ("GEMINI_API_KEY", partial(ChatCompletionsProvider, GEMINI)),
     "mistral": ("MISTRAL_API_KEY", partial(ChatCompletionsProvider, MISTRAL)),
 }
 
