@@ -1,6 +1,6 @@
 # Phase 8: Scheduling and v1 release
 
-- **Status:** in progress (steps 1-3 done)
+- **Status:** in progress (steps 0-3 done, step 4 in review)
 - **Branch:** `feature/scheduling` (from `dev`)
 - **Global plan:** [PLAN.md](PLAN.md)
 
@@ -59,7 +59,7 @@ Also fill the `description` field in `pyproject.toml` and set the version to `1.
 
 One task = one commit on `feature/scheduling`.
 
-- [ ] **0. Plan.** This file, plus the pending PLAN.md / `eval.md` updates marking phase 7 merged. One `:memo:` commit.
+- [x] **0. Plan.** This file, plus the pending PLAN.md / `eval.md` updates marking phase 7 merged. One `:memo:` commit.
 - [x] **1. Workflow.** `.github/workflows/daily.yml` as designed above. Checked with a careful read and `security-auditor` (it touches CI and secrets); it cannot be run before step 5. One `:construction_worker:` commit.
 - [x] **2. Examples.** Copy the two local digests and `published.json` into `examples/`, `security-auditor` on them. One `:card_file_box:` commit.
 - [x] **3. README and version.** README sections above, `pyproject.toml` description and version `1.0.0` (`uv.lock` updated by `uv lock` if the version change requires it). One `:memo:` commit.

@@ -26,7 +26,7 @@ The full specification is in [SPEC.md](SPEC.md).
 
 ## Example output
 
-Two digests and the matching state, produced by local runs before the release and kept as a frozen sample:
+Two digests and the matching state, produced by local runs before the release and kept as a frozen sample. They are unedited model output, quirks included (a reason that does not quite fit its article, two entries about the same story):
 
 - [`examples/digests/2026-10-29.md`](examples/digests/2026-10-29.md): a digest with the final prompt (rank, title, source, score, link, summary and reason in the article's language, footer with failed feeds and skipped articles).
 - [`examples/digests/2026-10-28.md`](examples/digests/2026-10-28.md): the previous day's digest.
