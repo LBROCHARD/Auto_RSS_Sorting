@@ -4,7 +4,7 @@ Roadmap for implementing [SPEC.md](../SPEC.md). Each phase stays high level on p
 
 ## Current status
 
-Phases 1 to 6 are merged into `dev`. Phase 7 is in progress on `feature/eval`.
+Phases 1 to 6 are merged into `dev`. Phase 7 is done on `feature/eval`, waiting for the pre-merge reviews and the merge into `dev`. Production provider: Gemini (`gemini-3.5-flash-lite`, free tier), 36/40 (90 %) on the eval set.
 
 ## How we work through phases
 
@@ -76,7 +76,7 @@ Wire everything into the `auto-rss-sorting` command: "now" computed once at the 
 
 ### [ ] Phase 7: `eval` subcommand
 
-Plan: [eval.md](eval.md) (in progress)
+Plan: [eval.md](eval.md) (done, waiting for merge)
 
 `eval/labels.csv` (40 hand-scored articles, provided by the project owner), accuracy (±3 points, target 80 %), cost per 100 articles, average latency.
 
@@ -86,7 +86,7 @@ Then a **provider benchmark**: run `eval` on 3 or 4 provider/model pairs (free t
 
 ### [ ] Phase 8: Scheduling and v1 release
 
-Daily GitHub Actions workflow (cron + manual trigger, secrets), commit of the digest and state to `main`, README, merge `dev` into `main`.
+Daily GitHub Actions workflow (cron + manual trigger, secret `GEMINI_API_KEY`), commit of the digest and state to `main`, README, merge `dev` into `main`.
 
 *Done when:* a scheduled run has produced and committed a digest.
 

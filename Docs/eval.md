@@ -1,6 +1,6 @@
 # Phase 7: `eval` subcommand and provider benchmark
 
-- **Status:** in progress
+- **Status:** done, waiting for the pre-merge reviews and the merge into `dev`
 - **Branch:** `feature/eval` (from `dev`)
 - **Global plan:** [PLAN.md](PLAN.md)
 
@@ -71,7 +71,7 @@ Each code step is test-first (failing tests shown to you, then implementation) a
   - [x] **8a. One adapter for every OpenAI-style chat completions API** (refactor, no behavior change). `MistralProvider` becomes `ChatCompletionsProvider`, built from a small per-provider description (`ChatAPI`: name for error messages, fixed URL, minimum interval between calls, provider-only request fields). Mistral is the first entry. Existing tests are renamed, not weakened. Why: Gemini (and other free tiers) accept the same request and response format, so a second copy of the adapter would duplicate everything.
   - [x] **8b. Gemini** (`provider: gemini`, `GEMINI_API_KEY`, model `gemini-3.5-flash-lite`). Free tier re-checked during phase 7 (see Decisions); OpenAI-compatible endpoint `https://generativelanguage.googleapis.com/v1beta/openai/chat/completions`, key in the `Authorization: Bearer` header. Gemini 3 models always "think" before answering: the request sets `reasoning_effort: "low"` so the thinking does not eat the 500-token answer budget. Limits read in the project owner's AI Studio console (2026-10-29) for Gemini 3.5 Flash-Lite: 15 requests/min, 250,000 input tokens/min, 500 requests/day; hence 4 s between calls. A daily run uses at most 150 requests (50 articles, retries included) and an eval run about 40, so several eval runs a day still fit. Error mapping checked in the official API errors page: 401 (invalid key), 403 (no access) and 404 (unknown model) are fatal, 429 (rate limit or daily quota) and 5xx transient, as for Mistral. Then eval run.
 - [x] **9. Decision.** Fill the benchmark table, pick the production provider, set it in `config.yaml` (provider, model, prices). If no pair reaches 80 %, we discuss before changing anything (prompt wording, model, or the labels themselves). Then check the summary language of the chosen model on a real digest (`--force`, not committed), and decide whether the prompt needs a stronger language rule.
-- [ ] **10. Docs.** Tick this plan, mark the phase done in [PLAN.md](PLAN.md).
+- [x] **10. Docs.** Tick this plan, mark the phase done in [PLAN.md](PLAN.md).
 
 ## Tests
 

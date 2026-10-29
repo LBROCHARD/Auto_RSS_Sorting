@@ -80,6 +80,8 @@ Decided with the project owner: the budget is at most 1 € per month, so the fi
 
 **Chosen: Mistral, free "Experiment" plan** (chat completions API, `https://api.mistral.ai/v1/chat/completions`). Model: **`ministral-14b-2512`**. API key environment variable: `MISTRAL_API_KEY`. Prices in `config.yaml` are `0`. Why Mistral: generous free tier, handles French well, and its API is easy to call with `httpx`.
 
+*Changed in phase 7* ([eval.md](eval.md)): after the provider benchmark, production uses **Gemini** (`gemini-3.5-flash-lite`, free tier, `GEMINI_API_KEY`): 36/40 (90 %) on the eval set against 33/40 for `ministral-14b-2512`. `MistralProvider` became `ChatCompletionsProvider`, shared by Mistral and Gemini; the pacing interval is now set per provider (`ChatAPI.min_interval_seconds`: 2 s for Mistral, 4 s for Gemini). The Mistral facts below stay valid for the Mistral entry.
+
 Limits read in the project owner's console (2026-10-23, "Completion rate limits per model", no monthly limit shown):
 
 - `ministral-14b-2512`: 937,500 tokens/min, 0.5 request/s. A run (about 50 calls of about 1,500 tokens) fits easily. The adapter spaces calls by at least 2 s to stay under 0.5 request/s (see the pacing rule below).
@@ -107,7 +109,7 @@ Status mapping in the adapter (decided at step 5):
 - every other 4xx (400, 413, 422) → `InvalidResponseError` (changed after the pre-merge review): it may come from one odd article, which is then retried once and skipped instead of killing the digest; if it is systematic, no article is scored and the run fails anyway (`ScoringFailedError`);
 - a 200 whose body has no `choices[0].message.content` string or no token usage → `InvalidResponseError`, so it gets the same single retry as an invalid JSON answer.
 - Request constants in the adapter, not in `config.yaml` (no unused options): `temperature: 0` (stable scores between runs and for `eval`), `max_tokens: 500` (bounds the answer: a score, a 1-2 sentence summary and a reason), timeout 30 s.
-- Pacing (added after the pre-merge review): the adapter keeps at least `MIN_INTERVAL_SECONDS = 2` between the starts of two calls, retries and failed calls included, so a 50-article run does not hit the 0.5 request/s limit with back-to-back calls (which would burn transient attempts and could skip many articles). A run takes at least about 100 s, fine for a daily job. The clock and `sleep` are injected, so tests never wait.
+- Pacing (added after the pre-merge review): the adapter keeps at least 2 s (`MIN_INTERVAL_SECONDS`; per provider since phase 7: `ChatAPI.min_interval_seconds`) between the starts of two calls, retries and failed calls included, so a 50-article run does not hit the 0.5 request/s limit with back-to-back calls (which would burn transient attempts and could skip many articles). A run takes at least about 100 s, fine for a daily job. The clock and `sleep` are injected, so tests never wait.
 
 Constraints any provider must meet:
 
