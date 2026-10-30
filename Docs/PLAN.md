@@ -4,7 +4,7 @@ Roadmap for implementing [SPEC.md](../SPEC.md). Each phase stays high level on p
 
 ## Current status
 
-Phases 1 to 7 are merged into `dev`. Phase 8 (scheduling and v1 release) is planned in [scheduling.md](scheduling.md) (in progress). Production provider: Gemini (`gemini-3.5-flash-lite`, free tier), 36/40 (90 %) on the eval set.
+v1.0.0 is released: phases 1 to 8 are merged into `dev` and `main`, and a GitHub Action publishes the digest to `main` every day at 05:00 UTC. Production provider: Gemini (`gemini-3.5-flash-lite`, free tier), 36/40 (90 %) on the eval set.
 
 ## How we work through phases
 
@@ -84,9 +84,9 @@ Then a **provider benchmark**: run `eval` on 3 or 4 provider/model pairs (free t
 
 *Done when:* `eval` prints the three metrics for the configured provider, the benchmark results are recorded in the phase plan, the production provider is chosen, and we know whether the success criterion is met.
 
-### [ ] Phase 8: Scheduling and v1 release
+### [x] Phase 8: Scheduling and v1 release
 
-Plan: [scheduling.md](scheduling.md) (in progress)
+Plan: [scheduling.md](scheduling.md) (done, merged in PR #10, released in PR #11 and tag `v1.0.0`)
 
 Daily GitHub Actions workflow (cron + manual trigger, secret `GEMINI_API_KEY`), commit of the digest and state to `main`, README, merge `dev` into `main`.
 

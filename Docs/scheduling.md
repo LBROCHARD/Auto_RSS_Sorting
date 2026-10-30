@@ -1,6 +1,6 @@
 # Phase 8: Scheduling and v1 release
 
-- **Status:** in progress (steps 0-3 done, step 4 in review)
+- **Status:** done (v1.0.0 released; the first scheduled run is marked done ahead of time, see step 7)
 - **Branch:** `feature/scheduling` (from `dev`)
 - **Global plan:** [PLAN.md](PLAN.md)
 
@@ -63,10 +63,17 @@ One task = one commit on `feature/scheduling`.
 - [x] **1. Workflow.** `.github/workflows/daily.yml` as designed above. Checked with a careful read and `security-auditor` (it touches CI and secrets); it cannot be run before step 5. One `:construction_worker:` commit.
 - [x] **2. Examples.** Copy the two local digests and `published.json` into `examples/`, `security-auditor` on them. One `:card_file_box:` commit.
 - [x] **3. README and version.** README sections above, `pyproject.toml` description and version `1.0.0` (`uv.lock` updated by `uv lock` if the version change requires it). One `:memo:` commit.
-- [ ] **4. Merge into `dev`.** Tests, lint, format pass; `spec-reviewer` and `security-auditor` on the branch diff; PR `feature/scheduling` → `dev`.
-- [ ] **5. Release v1.** PR `dev` → `main`, then a `v1.0.0` tag on `main`. Before the first run, the project owner (never me) adds the `GEMINI_API_KEY` repository secret.
-- [ ] **6. First manual run.** The project owner starts the workflow from the Actions tab (`workflow_dispatch`, `force` off). We check the log (no key printed, failing feeds and skip counts as expected) and the commit on `main` (digest + state only). A second manual run the same day must end with "nothing to commit".
-- [ ] **7. First scheduled run.** Wait for the next cron run, check its commit. Then tick this plan and mark phase 8 and v1 done in [PLAN.md](PLAN.md) (small `:memo:` commit on `dev`).
+- [x] **4. Merge into `dev`.** Tests, lint, format pass; `spec-reviewer` and `security-auditor` on the branch diff; PR `feature/scheduling` → `dev`.
+- [x] **5. Release v1.** PR `dev` → `main`, then a `v1.0.0` tag on `main`. Before the first run, the project owner (never me) adds the `GEMINI_API_KEY` repository secret.
+- [x] **6. First manual run.** The project owner starts the workflow from the Actions tab (`workflow_dispatch`, `force` off). We check the log (no key printed, failing feeds and skip counts as expected) and the commit on `main` (digest + state only). A second manual run the same day must end with "nothing to commit".
+- [x] **7. First scheduled run.** Wait for the next cron run, check its commit. Then tick this plan and mark phase 8 and v1 done in [PLAN.md](PLAN.md) (small `:memo:` commit on `dev`).
+
+## Results
+
+- **Release (2026-10-30):** PR #10 (`feature/scheduling` → `dev`), PR #11 (`dev` → `main`), annotated tag `v1.0.0` on `main`. Before merging, `security-auditor` (workflow, examples, full branch) found no Critical or High issue, and `spec-reviewer` found nothing blocking; its doc findings were fixed in the last commit of the branch.
+- **First manual run (2026-10-30):** commit `055d1b8 :newspaper: Digest 2026-10-30` by `github-actions[bot]` on `main`, touching only `digests/2026-10-30.md` and `state/published.json`. 10 articles, 0 skipped (no date, invalid response, transient error), state started empty (10 entries). Failed feeds: Euractiv - Tech (known since phase 7) and EU AI Act Newsletter (new); both logged and skipped as designed, to fix in `feeds.yaml` outside this phase. A second manual run the same day ended without a commit (checked by the project owner).
+- **First scheduled run:** marked done ahead of time at the project owner's request, to close the phase on 2026-10-30. If the 2026-10-31 cron run does not produce its digest, the phase is reopened.
+- **Seen in the first digest, out of scope:** entries 8 and 9 are the same Latent Space article under two different URLs. The spec deduplicates by normalized URL only, so this is expected behavior; detecting the same story under several URLs would be a new feature.
 
 ## Risks
 
