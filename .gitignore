@@ -8,3 +8,7 @@ wheels/
 
 # Virtual environments
 .venv
+
+# Secrets (API keys): never committed
+.env
+.env.*

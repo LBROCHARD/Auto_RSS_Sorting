@@ -6,7 +6,7 @@ Every day, read a list of RSS feeds, score articles against my interests, and pu
 
 ## Success criterion
 
-On 20 articles that I scored by hand (`eval/labels.csv`, columns `url,title,description,score`), the LLM score is within **±3 points** of mine for at least **80 %** of them.
+On 40 articles that I scored by hand (`eval/labels.csv`, columns `url,title,description,score`), the LLM score is within **±3 points** of mine for at least **80 %** of them.
 An `eval` subcommand runs the configured provider/model on this set and reports accuracy, cost per 100 articles and average latency, so providers can be compared by changing the config.
 
 ## Inputs
@@ -41,7 +41,7 @@ An `eval` subcommand runs the configured provider/model on this set and reports 
 - Contract: `score(profile, article) -> {score: int 0-10, summary: str, reason: str}`, validated with Pydantic (integer in range, non-empty text).
 - Article text is **data, not instructions**; the prompt says so explicitly.
 - Invalid response for one article: one retry, then the article is skipped and logged.
-- Transient errors (timeout, 429, 5xx): up to 3 attempts, exponential backoff (2 s, 4 s, 8 s), then the article is skipped and logged.
+- Transient errors (timeout, 429, 5xx): up to 3 attempts, exponential backoff (waits of 2 s then 4 s between attempts), then the article is skipped and logged.
 - The two retry rules above use independent counters.
 - Non-recoverable errors (401/403, quota exhausted) or no article could be scored: the run fails, no digest is produced.
 - Cost note: up to 50 calls per day (no cache), so the chosen provider's daily limit must allow it.

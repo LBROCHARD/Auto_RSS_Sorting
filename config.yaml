@@ -1,0 +1,10 @@
+top_n: 10
+max_age_days: 7
+llm_max_articles: 50
+max_description_chars: 2000
+
+# Gemini free tier: no cost, so both prices are 0 (chosen in phase 7, see Docs/eval.md).
+provider: gemini
+model: gemini-3.5-flash-lite
+price_input_per_mtok: 0
+price_output_per_mtok: 0

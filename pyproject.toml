@@ -1,17 +1,32 @@
 [project]
 name = "auto-rss-sorting"
-version = "0.1.0"
-description = "Add your description here"
+version = "1.0.0"
+description = "Daily Markdown digest of the best RSS articles, scored by an LLM against a profile of interests."
 readme = "README.md"
 authors = [
     { name = "LBROCHARD", email = "lewis.brochard@gmail.com" }
 ]
 requires-python = ">=3.15"
-dependencies = []
+dependencies = [
+    "feedparser>=6.0.14",
+    "httpx>=0.28.1",
+    "pydantic>=2.14.1",
+    "pyyaml>=6.0.3",
+]
 
 [project.scripts]
-auto-rss-sorting = "auto_rss_sorting:main"
+auto-rss-sorting = "auto_rss_sorting.cli:main"
 
 [build-system]
 requires = ["uv_build>=0.13.5,<0.14.0"]
 build-backend = "uv_build"
+
+[dependency-groups]
+dev = [
+    "pytest>=9.1.1",
+    "ruff>=0.17.2",
+]
+
+# PyYAML ships no wheel for Python 3.15: build it as pure Python (no C compiler needed).
+[tool.uv.extra-build-variables]
+pyyaml = { PYYAML_FORCE_LIBYAML = "0" }
