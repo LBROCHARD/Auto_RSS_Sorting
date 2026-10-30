@@ -1,7 +1,7 @@
 [project]
 name = "auto-rss-sorting"
-version = "0.1.0"
-description = "Add your description here"
+version = "1.0.0"
+description = "Daily Markdown digest of the best RSS articles, scored by an LLM against a profile of interests."
 readme = "README.md"
 authors = [
     { name = "LBROCHARD", email = "lewis.brochard@gmail.com" }
