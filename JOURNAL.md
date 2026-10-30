@@ -42,4 +42,4 @@ This project has two purposes:
 |Phase 5: Digest and state | 1h | 20 min | Une certaines incohérence d'explications des resultats entre les contextes, il faudrait que mon CLAUDE.md soit plus précis. |
 |Phase 6: CLI and end-to-end pipeline | 1h | 30 min | Mélange étonnant de français et d'anglais dans les réponses, je mets à jour. |
 | Phase 7: eval subcommand | 4h | 2h | Mise en place d'un benchmark pour tester plusieurs modèles. Problème : difficile de benchmark, car difficile de faire comprendre les choix de notation d'un humain a une IA... |
-| | | | |
+|Phase 8: Scheduling and v1 release | 1h | 30min | RAS |
