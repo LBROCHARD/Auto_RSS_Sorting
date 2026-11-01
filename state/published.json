@@ -45,11 +45,6 @@
     "digest_date": "2026-10-30"
   },
   {
-    "id": "https://www.jendrikillner.com/post/graphics-programming-weekly-issue-460",
-    "article_published_at": "2026-10-25T04:00:00Z",
-    "digest_date": "2026-10-30"
-  },
-  {
     "id": "https://delta.dev/blog/fine-grained-version-control-for-agents",
     "article_published_at": "2026-10-30T16:50:44Z",
     "digest_date": "2026-10-31"
@@ -98,5 +93,55 @@
     "id": "https://www.interconnects.ai/p/was-i-wrong-about-open-models-and",
     "article_published_at": "2026-10-30T17:36:56Z",
     "digest_date": "2026-10-31"
+  },
+  {
+    "id": "https://aatishb.com/myriad/lets-build-a-brain",
+    "article_published_at": "2026-10-31T15:09:27Z",
+    "digest_date": "2026-11-01"
+  },
+  {
+    "id": "https://gamefromscratch.com/unibuilder-probuilder-for-godot",
+    "article_published_at": "2026-10-27T16:10:10Z",
+    "digest_date": "2026-11-01"
+  },
+  {
+    "id": "https://gpuopen.com/learn/amd-fsr-sdk-2-4-rx-6000-ryzen-apus",
+    "article_published_at": "2026-10-28T13:00:00Z",
+    "digest_date": "2026-11-01"
+  },
+  {
+    "id": "https://latent.space/p/arca",
+    "article_published_at": "2026-10-31T16:05:00Z",
+    "digest_date": "2026-11-01"
+  },
+  {
+    "id": "https://next.ink/264263/travail-du-clic-scale-ai-poursuivie-en-justice-dans-quatre-pays-europeens",
+    "article_published_at": "2026-10-27T16:06:19Z",
+    "digest_date": "2026-11-01"
+  },
+  {
+    "id": "https://next.ink/264997/le-parti-socialiste-a-fait-passer-sa-taxe-au-gigaoctet-a-lassemblee-nationale",
+    "article_published_at": "2026-10-30T15:26:07Z",
+    "digest_date": "2026-11-01"
+  },
+  {
+    "id": "https://openai.com/index/gpt-6-1-sol-coderabbit-code-security",
+    "article_published_at": "2026-10-26T13:45:00Z",
+    "digest_date": "2026-11-01"
+  },
+  {
+    "id": "https://simonwillison.net/2026/Oct/26/gpt-61-terra",
+    "article_published_at": "2026-10-26T23:53:07Z",
+    "digest_date": "2026-11-01"
+  },
+  {
+    "id": "https://simonwillison.net/2026/Oct/31/datasette-llm",
+    "article_published_at": "2026-10-31T22:10:01Z",
+    "digest_date": "2026-11-01"
+  },
+  {
+    "id": "https://simonwillison.net/2026/Oct/31/how-we-took-over-chatgpt-accounts",
+    "article_published_at": "2026-10-31T23:15:22Z",
+    "digest_date": "2026-11-01"
   }
 ]
