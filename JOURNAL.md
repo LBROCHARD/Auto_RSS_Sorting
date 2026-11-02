@@ -14,32 +14,32 @@ This project has two purposes:
 
 # Technologies, Concepts & Everything I've learned 
 
-- Usage of Claude Code within Cursor
-- Grilling (an interview, where the IA asks questions to precise and refine the SPEC.md)
-- To redact very simples files myself explaining my needs in natural language, and ask claude to refine it, based on a grilling session.
-- Using an AGENTS.md (or CLAUDE.md in my case) file, as a guideline and set of rules for development 
-- Changing contexte for each tasks helps you save costs, augments speed, and avoid noise or auto-confirmation
-- To keep an good knowledge of the codebase, and efficiently review the AI's work, I want it to systematically give me a list of every files created/modified/deleted.
-- Agents, and their utility.
-  - I created a special "Spec-Reviewer" agent, to inspect code with a fresh and critical viewpoint. It helped me find CI errors that the writing agent didn't saw (CI launched 2 times both during push and in pull request).
-  - I also created a "Security-Auditor" agent, to check that no personal informations / keys where public in the project.
-- Using a proper plan/documentation, so that every agent is on the same page, and once it has been written, they can easiely follow it.
+- Using Claude Code within Cursor
+- Grilling (an interview where the AI asks questions to clarify and refine SPEC.md)
+- Writing very simple files myself that explain my needs in natural language, then asking Claude to refine them based on a grilling session.
+- Using an AGENTS.md file (CLAUDE.md in my case) as a set of guidelines and rules for development 
+- Changing context for each task saves costs, increases speed, and avoids noise and self-confirmation
+- To keep a good knowledge of the codebase and efficiently review the AI's work, I want it to systematically give me a list of every file created/modified/deleted.
+- Agents and their usefulness.
+  - I created a dedicated "Spec-Reviewer" agent to inspect code with a fresh, critical eye. It helped me find CI errors that the writing agent hadn't seen (CI ran twice, on both push and pull request).
+  - I also created a "Security-Auditor" agent to check that no personal information or keys were public in the project.
+- Using a proper plan and documentation so that every agent is on the same page and can easily follow it once it has been written.
 
 
 # Journal
 
-| Tâche | Temps estimé sans IA | Temps réel avec IA | Erreurs de l'IA / Remarques |
+| Task | Estimated time without AI | Actual time with AI | AI mistakes / Notes |
 |-------|----------------------|--------------------|-----------------|
-|Setting up the full project | 1h | ~1h| a peu près le même temps mais beaucoup plus qualitatif que si je n'avais pas utilisé l'IA. L'IA a tendance a être trop verbeuse sur certains fichiers, j'ai peur de saturer un peu le contexte, à vérifier.|
-|Writing the SPEC | 20 min | 10 min | utilisation du grilling pour rédiger une spec efficace et compréhensible par l'IA |
-|Finding Feeds | 1h | 10 minutes | recherche et tri qui m'aurait pris des heures, peut être un petit peu moins précis qu'un humain, mais faire un mélange des 2 est surement la meilleur solution, j'injecte quelques sources perso dans l'ensemble.|
-|Setting up the CI (Lint, Basic GitHub action...)  | 40 min | 10 min| Comme github nous permet efficacement de faire des retours en arrière, j'ai ajouté une règle pour obliger l'IA a me demander avant d'effectuer toute commande Git.|
-|Write a plan for the project | 20 min | 2 min | Pour éviter qu'un prompt essaie de s'ocupper d'une trop grosse part du projet d'un coup, j'ai ajouté des règles initerdisant d'effectuer un travail (conséquent) sans créer un plan auparavant, ou sans suivre un plan qui existe déjà. |
-|Phase 1 : inputs validation | 30 min | 20 min | Une tendance à être à la fois trop verbeux et pas assez compréhensible dans ses réponse, je prévois une règle dans CLAUDE.md pour modifier cela. L'agent Spec-reviewer remonte des petites erreurs que je n'aurais pas vu sinon. |
-|Phase 2: Feed fetching and candidates | 45 min | 20 min | Il écrits une quantitée de tests peut être trop élevé pour le projet pour remplir le plan, cela consomme beaucoup de tokens, j'écris une règle pour se contenter des tests adaptées au scope du projet. |
-|Phase 3: Keyword pre-filter and deterministic ranking | 1h | 10 min | La review qu'il me donne de son travail ne me convient pas tout a fait, et manque de lisibilitée, je crée une règle. Je veux pouvoir tester plus souvent, je lui demande de m'expliquer comment tester ce qu'il fait par moi même. |
-|Phase 4: LLM layer | 3h | 30 min | J'ajoute des règles de sécurité en prévision de l'ajout de clé d'API dans le projet, + un nouvel agent qui s'assure qu'il n'y a pas de fuite de donées senseibles. Selection du premier LLM avec un autre contexte. |
-|Phase 5: Digest and state | 1h | 20 min | Une certaines incohérence d'explications des resultats entre les contextes, il faudrait que mon CLAUDE.md soit plus précis. |
-|Phase 6: CLI and end-to-end pipeline | 1h | 30 min | Mélange étonnant de français et d'anglais dans les réponses, je mets à jour. |
-| Phase 7: eval subcommand | 4h | 2h | Mise en place d'un benchmark pour tester plusieurs modèles. Problème : difficile de benchmark, car difficile de faire comprendre les choix de notation d'un humain a une IA... |
-| | | | |
+|Setting up the full project | 1h | ~1h| Roughly the same time, but much higher quality than if I hadn't used AI. The AI tends to be too verbose in some files; I'm worried it may saturate the context a bit, to be checked.|
+|Writing the SPEC | 20 min | 10 min | Used grilling to write an effective spec that the AI can understand. |
+|Finding feeds | 1h | 10 min | Searching and sorting that would have taken me hours. Maybe slightly less precise than a human, but mixing the two is probably the best solution, so I'm adding a few personal sources to the set.|
+|Setting up the CI (lint, basic GitHub Action...) | 40 min | 10 min| Since GitHub lets us roll back efficiently, I added a rule forcing the AI to ask me before running any Git command.|
+|Write a plan for the project | 20 min | 2 min | To prevent a single prompt from tackling too large a part of the project at once, I added rules forbidding any (substantial) work without first creating a plan, or without following an existing one. |
+|Phase 1: Input validation | 30 min | 20 min | A tendency to be both too verbose and not clear enough in its answers; I'm planning a rule in CLAUDE.md to change that. The Spec-reviewer agent reports small errors I wouldn't have seen otherwise. |
+|Phase 2: Feed fetching and candidates | 45 min | 20 min | To fulfill the plan, it writes what may be too many tests for this project, which consumes a lot of tokens; I'm writing a rule to stick to tests suited to the project's scope. |
+|Phase 3: Keyword pre-filter and deterministic ranking | 1h | 10 min | The review it gives of its own work doesn't quite suit me and lacks readability, so I'm creating a rule. I want to be able to test more often, so I ask it to explain how I can test its work myself. |
+|Phase 4: LLM layer | 3h | 30 min | I'm adding security rules ahead of adding API keys to the project, plus a new agent that makes sure no sensitive data leaks. Selected the first LLM using a separate context. |
+|Phase 5: Digest and state | 1h | 20 min | Some inconsistency in how results are explained across contexts; my CLAUDE.md should be more precise. |
+|Phase 6: CLI and end-to-end pipeline | 1h | 30 min | Surprising mix of French and English in the answers; I'm updating the rules. |
+| Phase 7: eval subcommand | 4h | 2h | Set up a benchmark to test several models. Problem: benchmarking is hard, because it's hard to make an AI understand a human's scoring choices... |
+|Phase 8: Scheduling and v1 release | 1h | 30 min | Small mix-up regarding the main branches, but quickly resolved!|
