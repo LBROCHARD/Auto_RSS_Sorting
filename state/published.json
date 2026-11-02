@@ -143,5 +143,55 @@
     "id": "https://simonwillison.net/2026/Oct/31/how-we-took-over-chatgpt-accounts",
     "article_published_at": "2026-10-31T23:15:22Z",
     "digest_date": "2026-11-01"
+  },
+  {
+    "id": "https://dataswamp.org/~solene/2026-11-01-braindead-local-intelligence.html",
+    "article_published_at": "2026-11-01T20:26:47Z",
+    "digest_date": "2026-11-02"
+  },
+  {
+    "id": "https://godotengine.org/article/rendering-cpu-optimizations",
+    "article_published_at": "2026-11-02T06:21:08Z",
+    "digest_date": "2026-11-02"
+  },
+  {
+    "id": "https://next.ink/264168/ia-et-logiciel-libre-la-linux-foundation-fait-le-point",
+    "article_published_at": "2026-10-27T14:32:03Z",
+    "digest_date": "2026-11-02"
+  },
+  {
+    "id": "https://next.ink/265045/kids-act-bruxelles-veut-imposer-un-calendrier-commun-aux-etats",
+    "article_published_at": "2026-11-02T07:09:32Z",
+    "digest_date": "2026-11-02"
+  },
+  {
+    "id": "https://next.ink/265047/les-bandes-magnetiques-ont-encore-de-beaux-jours-devant-elles-notamment-grace-a-lia",
+    "article_published_at": "2026-11-02T07:42:00Z",
+    "digest_date": "2026-11-02"
+  },
+  {
+    "id": "https://next.ink/265082/la-taxe-ps-au-gigaoctet-votee-a-lassemblee-nationale-fait-reagir-de-vlc-a-ovhcloud",
+    "article_published_at": "2026-11-02T09:38:50Z",
+    "digest_date": "2026-11-02"
+  },
+  {
+    "id": "https://next.ink/265086/stack-overflow-assume-son-positionnement-b2b-pour-agents-ia-et-entreprise",
+    "article_published_at": "2026-11-02T11:06:50Z",
+    "digest_date": "2026-11-02"
+  },
+  {
+    "id": "https://next.ink/265087/ia-lamende-honorable-de-proton-a-bien-du-mal-a-passer",
+    "article_published_at": "2026-11-02T08:57:23Z",
+    "digest_date": "2026-11-02"
+  },
+  {
+    "id": "https://simonwillison.net/2026/Nov/1/delete-uv-lock-first",
+    "article_published_at": "2026-11-01T23:24:22Z",
+    "digest_date": "2026-11-02"
+  },
+  {
+    "id": "https://simonwillison.net/2026/Oct/29/ben-hylak",
+    "article_published_at": "2026-10-29T14:06:27Z",
+    "digest_date": "2026-11-02"
   }
 ]
