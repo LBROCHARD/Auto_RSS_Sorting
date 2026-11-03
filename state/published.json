@@ -125,16 +125,6 @@
     "digest_date": "2026-11-01"
   },
   {
-    "id": "https://openai.com/index/gpt-6-1-sol-coderabbit-code-security",
-    "article_published_at": "2026-10-26T13:45:00Z",
-    "digest_date": "2026-11-01"
-  },
-  {
-    "id": "https://simonwillison.net/2026/Oct/26/gpt-61-terra",
-    "article_published_at": "2026-10-26T23:53:07Z",
-    "digest_date": "2026-11-01"
-  },
-  {
     "id": "https://simonwillison.net/2026/Oct/31/datasette-llm",
     "article_published_at": "2026-10-31T22:10:01Z",
     "digest_date": "2026-11-01"
@@ -193,5 +183,55 @@
     "id": "https://simonwillison.net/2026/Oct/29/ben-hylak",
     "article_published_at": "2026-10-29T14:06:27Z",
     "digest_date": "2026-11-02"
+  },
+  {
+    "id": "https://gamefromscratch.com/godot-terrain3d-1-1-0-released",
+    "article_published_at": "2026-11-02T17:16:26Z",
+    "digest_date": "2026-11-03"
+  },
+  {
+    "id": "https://latent.space/p/ainews-llms-can-read-write-neural-network-weights-weight-space-programming-cuts-autoresearch-out-of",
+    "article_published_at": "2026-11-03T05:35:00Z",
+    "digest_date": "2026-11-03"
+  },
+  {
+    "id": "https://latent.space/p/building-ai-for-lawyers-jacob-lauritzen-cto-of-legora",
+    "article_published_at": "2026-11-02T23:01:02Z",
+    "digest_date": "2026-11-03"
+  },
+  {
+    "id": "https://latent.space/p/building_legal_agents_when_you_can_t_see_the_data_-_jacob_lauritzen_cto_of_legora",
+    "article_published_at": "2026-11-02T22:54:03Z",
+    "digest_date": "2026-11-03"
+  },
+  {
+    "id": "https://next.ink/265227/le-createur-de-rocky-linux-a-cree-un-noyau-compatible-linux-en-11-jours-avec-lia",
+    "article_published_at": "2026-11-02T14:25:38Z",
+    "digest_date": "2026-11-03"
+  },
+  {
+    "id": "https://next.ink/265307/anthropic-veut-empecher-claude-code-de-cloner-des-jeux-video",
+    "article_published_at": "2026-11-03T07:04:00Z",
+    "digest_date": "2026-11-03"
+  },
+  {
+    "id": "https://openai.com/index/qodo-codex-plugin",
+    "article_published_at": "2026-11-02T00:00:00Z",
+    "digest_date": "2026-11-03"
+  },
+  {
+    "id": "https://rikiyat.github.io/blog/weight-space-programming",
+    "article_published_at": "2026-11-02T19:24:33Z",
+    "digest_date": "2026-11-03"
+  },
+  {
+    "id": "https://simonwillison.net/2026/Nov/2/llm",
+    "article_published_at": "2026-11-02T23:49:30Z",
+    "digest_date": "2026-11-03"
+  },
+  {
+    "id": "https://simonwillison.net/2026/Oct/28/terk-terkowitz",
+    "article_published_at": "2026-10-28T10:09:07Z",
+    "digest_date": "2026-11-03"
   }
 ]
