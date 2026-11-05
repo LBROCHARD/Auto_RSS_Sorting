@@ -1,22 +1,7 @@
 [
   {
-    "id": "https://latent.space/p/ainews-gemini-4-carbon",
-    "article_published_at": "2026-10-29T05:55:19Z",
-    "digest_date": "2026-10-30"
-  },
-  {
-    "id": "https://latent.space/p/supabase",
-    "article_published_at": "2026-10-28T19:48:05Z",
-    "digest_date": "2026-10-30"
-  },
-  {
     "id": "https://next.ink/260208/mistral-lance-une-preversion-de-son-llm-frontiere-mistrale-large-surnomme-le-chonk",
     "article_published_at": "2026-10-29T14:34:48Z",
-    "digest_date": "2026-10-30"
-  },
-  {
-    "id": "https://simonwillison.net/2026/Oct/28/vibe-game-development",
-    "article_published_at": "2026-10-28T13:55:15Z",
     "digest_date": "2026-10-30"
   },
   {
@@ -40,23 +25,8 @@
     "digest_date": "2026-10-31"
   },
   {
-    "id": "https://next.ink/264508/apple-ajoute-du-json-dans-xcode-et-keynote-pour-les-agents-ia-et-les-developpeurs",
-    "article_published_at": "2026-10-28T14:50:30Z",
-    "digest_date": "2026-10-31"
-  },
-  {
     "id": "https://next.ink/264947/data-centers-la-souverainete-europeenne-grace-a-des-travailleurs-immigres-surexploites",
     "article_published_at": "2026-10-30T16:25:00Z",
-    "digest_date": "2026-10-31"
-  },
-  {
-    "id": "https://openai.com/index/how-we-detect-frontier-model-misalignment",
-    "article_published_at": "2026-10-29T09:00:00Z",
-    "digest_date": "2026-10-31"
-  },
-  {
-    "id": "https://simonwillison.net/2026/Oct/28/github-octoverse-2026",
-    "article_published_at": "2026-10-28T16:45:23Z",
     "digest_date": "2026-10-31"
   },
   {
@@ -72,11 +42,6 @@
   {
     "id": "https://aatishb.com/myriad/lets-build-a-brain",
     "article_published_at": "2026-10-31T15:09:27Z",
-    "digest_date": "2026-11-01"
-  },
-  {
-    "id": "https://gpuopen.com/learn/amd-fsr-sdk-2-4-rx-6000-ryzen-apus",
-    "article_published_at": "2026-10-28T13:00:00Z",
     "digest_date": "2026-11-01"
   },
   {
@@ -238,5 +203,55 @@
     "id": "https://utcc.utoronto.ca/~cks/space/blog/linux/Ubuntu2604RustSudoNotCompatible",
     "article_published_at": "2026-11-03T15:23:21Z",
     "digest_date": "2026-11-04"
+  },
+  {
+    "id": "https://gamefromscratch.com/the-future-of-unreal-engine-6",
+    "article_published_at": "2026-11-04T15:17:17Z",
+    "digest_date": "2026-11-05"
+  },
+  {
+    "id": "https://gpuopen.com/learn/amd-fsr-upscaling-412-xbox",
+    "article_published_at": "2026-11-04T12:00:00Z",
+    "digest_date": "2026-11-05"
+  },
+  {
+    "id": "https://next.ink/265207/marvell-veut-soffrir-lumentum-et-ses-puces-optiques-pour-115-milliards-de-dollars",
+    "article_published_at": "2026-11-02T16:42:55Z",
+    "digest_date": "2026-11-05"
+  },
+  {
+    "id": "https://openai.com/index/introducing-images-2-6",
+    "article_published_at": "2026-11-04T00:00:00Z",
+    "digest_date": "2026-11-05"
+  },
+  {
+    "id": "https://ruffle.rs/blog/2026/11/04/stable-releases-and-everything-else",
+    "article_published_at": "2026-11-04T19:37:40Z",
+    "digest_date": "2026-11-05"
+  },
+  {
+    "id": "https://simonwillison.net/2026/Nov/2/census-bureau-super-intelligence",
+    "article_published_at": "2026-11-02T13:31:26Z",
+    "digest_date": "2026-11-05"
+  },
+  {
+    "id": "https://simonwillison.net/2026/Nov/3/datasette-agent",
+    "article_published_at": "2026-11-03T23:13:45Z",
+    "digest_date": "2026-11-05"
+  },
+  {
+    "id": "https://wiredream.com/anagram-fun",
+    "article_published_at": "2026-11-05T07:37:35Z",
+    "digest_date": "2026-11-05"
+  },
+  {
+    "id": "https://www.cnil.fr/fr/rejeu-de-session-recommandation",
+    "article_published_at": "2026-11-05T12:00:00Z",
+    "digest_date": "2026-11-05"
+  },
+  {
+    "id": "https://www.theverge.com/news/1027379/discord-ditching-electron-web-app",
+    "article_published_at": "2026-11-05T12:51:09Z",
+    "digest_date": "2026-11-05"
   }
 ]
