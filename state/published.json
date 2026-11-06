@@ -1,22 +1,7 @@
 [
   {
-    "id": "https://next.ink/260208/mistral-lance-une-preversion-de-son-llm-frontiere-mistrale-large-surnomme-le-chonk",
-    "article_published_at": "2026-10-29T14:34:48Z",
-    "digest_date": "2026-10-30"
-  },
-  {
-    "id": "https://simonwillison.net/2026/Oct/29/how-i-built-the-most-ai-pilled-company-in-the-world",
-    "article_published_at": "2026-10-29T17:00:26Z",
-    "digest_date": "2026-10-30"
-  },
-  {
     "id": "https://delta.dev/blog/fine-grained-version-control-for-agents",
     "article_published_at": "2026-10-30T16:50:44Z",
-    "digest_date": "2026-10-31"
-  },
-  {
-    "id": "https://latent.space/p/ainews-building-aie-code-the-top-coding-agent-conference",
-    "article_published_at": "2026-10-30T08:24:29Z",
     "digest_date": "2026-10-31"
   },
   {
@@ -105,11 +90,6 @@
     "digest_date": "2026-11-02"
   },
   {
-    "id": "https://simonwillison.net/2026/Oct/29/ben-hylak",
-    "article_published_at": "2026-10-29T14:06:27Z",
-    "digest_date": "2026-11-02"
-  },
-  {
     "id": "https://gamefromscratch.com/godot-terrain3d-1-1-0-released",
     "article_published_at": "2026-11-02T17:16:26Z",
     "digest_date": "2026-11-03"
@@ -195,11 +175,6 @@
     "digest_date": "2026-11-04"
   },
   {
-    "id": "https://simonwillison.net/2026/Oct/29/api-credits",
-    "article_published_at": "2026-10-29T22:48:29Z",
-    "digest_date": "2026-11-04"
-  },
-  {
     "id": "https://utcc.utoronto.ca/~cks/space/blog/linux/Ubuntu2604RustSudoNotCompatible",
     "article_published_at": "2026-11-03T15:23:21Z",
     "digest_date": "2026-11-04"
@@ -253,5 +228,55 @@
     "id": "https://www.theverge.com/news/1027379/discord-ditching-electron-web-app",
     "article_published_at": "2026-11-05T12:51:09Z",
     "digest_date": "2026-11-05"
+  },
+  {
+    "id": "https://huggingface.co/blog/nvidia/cosmos-interactive-world-simulation",
+    "article_published_at": "2026-11-05T19:35:16Z",
+    "digest_date": "2026-11-06"
+  },
+  {
+    "id": "https://latent.space/p/ainews-inkling-2-small-17a-594b-trained-in-68-hours-on-12t-tokens-beating-muse-spark",
+    "article_published_at": "2026-11-06T10:35:21Z",
+    "digest_date": "2026-11-06"
+  },
+  {
+    "id": "https://next.ink/265780/google-precise-les-contours-de-son-datacenter-a-10-milliards-de-dollars-dans-lindre",
+    "article_published_at": "2026-11-05T16:15:13Z",
+    "digest_date": "2026-11-06"
+  },
+  {
+    "id": "https://next.ink/265956/microsoft-propose-deux-ameliorations-significatives-du-ray-tracing-pour-les-jeux",
+    "article_published_at": "2026-11-05T16:42:00Z",
+    "digest_date": "2026-11-06"
+  },
+  {
+    "id": "https://next.ink/266026/openai-debauche-une-responsable-de-claude-code-et-lorgne-du-cote-de-github",
+    "article_published_at": "2026-11-06T07:18:00Z",
+    "digest_date": "2026-11-06"
+  },
+  {
+    "id": "https://nnethercote.github.io/2026/11/04/how-to-speed-up-the-rust-compiler-in-november-2026.html",
+    "article_published_at": "2026-11-04T14:05:16Z",
+    "digest_date": "2026-11-06"
+  },
+  {
+    "id": "https://openai.com/index/introducing-gpt-6-cyber",
+    "article_published_at": "2026-11-05T09:00:00Z",
+    "digest_date": "2026-11-06"
+  },
+  {
+    "id": "https://simonwillison.net/2026/Nov/4/datasette-apps",
+    "article_published_at": "2026-11-04T00:29:36Z",
+    "digest_date": "2026-11-06"
+  },
+  {
+    "id": "https://this-week-in-rust.org/blog/2026/11/04/this-week-in-rust-676",
+    "article_published_at": "2026-11-04T05:00:00Z",
+    "digest_date": "2026-11-06"
+  },
+  {
+    "id": "https://www.youtube.com/watch?v=5D7QPOIZ7gY",
+    "article_published_at": "2026-11-05T17:32:18Z",
+    "digest_date": "2026-11-06"
   }
 ]
