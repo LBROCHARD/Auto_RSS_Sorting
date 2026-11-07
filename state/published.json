@@ -1,30 +1,5 @@
 [
   {
-    "id": "https://delta.dev/blog/fine-grained-version-control-for-agents",
-    "article_published_at": "2026-10-30T16:50:44Z",
-    "digest_date": "2026-10-31"
-  },
-  {
-    "id": "https://linuxfr.org/news/hadron-le-futur-de-macos-court-circuite-tout-macos",
-    "article_published_at": "2026-10-30T14:56:38Z",
-    "digest_date": "2026-10-31"
-  },
-  {
-    "id": "https://next.ink/264947/data-centers-la-souverainete-europeenne-grace-a-des-travailleurs-immigres-surexploites",
-    "article_published_at": "2026-10-30T16:25:00Z",
-    "digest_date": "2026-10-31"
-  },
-  {
-    "id": "https://simonwillison.net/2026/Oct/30/nesformer",
-    "article_published_at": "2026-10-30T21:59:22Z",
-    "digest_date": "2026-10-31"
-  },
-  {
-    "id": "https://www.interconnects.ai/p/was-i-wrong-about-open-models-and",
-    "article_published_at": "2026-10-30T17:36:56Z",
-    "digest_date": "2026-10-31"
-  },
-  {
     "id": "https://aatishb.com/myriad/lets-build-a-brain",
     "article_published_at": "2026-10-31T15:09:27Z",
     "digest_date": "2026-11-01"
@@ -32,11 +7,6 @@
   {
     "id": "https://latent.space/p/arca",
     "article_published_at": "2026-10-31T16:05:00Z",
-    "digest_date": "2026-11-01"
-  },
-  {
-    "id": "https://next.ink/264997/le-parti-socialiste-a-fait-passer-sa-taxe-au-gigaoctet-a-lassemblee-nationale",
-    "article_published_at": "2026-10-30T15:26:07Z",
     "digest_date": "2026-11-01"
   },
   {
@@ -278,5 +248,55 @@
     "id": "https://www.youtube.com/watch?v=5D7QPOIZ7gY",
     "article_published_at": "2026-11-05T17:32:18Z",
     "digest_date": "2026-11-06"
+  },
+  {
+    "id": "https://github.blog/ai-and-ml/github-copilot/beyond-code-generation-a-developers-guide-to-agentic-engineering",
+    "article_published_at": "2026-11-06T22:15:59Z",
+    "digest_date": "2026-11-07"
+  },
+  {
+    "id": "https://latent.space/p/ainews-anthropic-ipo-whither-now",
+    "article_published_at": "2026-11-07T03:04:53Z",
+    "digest_date": "2026-11-07"
+  },
+  {
+    "id": "https://next.ink/263676/google-dereference-9-des-plus-gros-sites-dinfos-generes-par-ia-qui-polluent-discover",
+    "article_published_at": "2026-11-06T15:01:30Z",
+    "digest_date": "2026-11-07"
+  },
+  {
+    "id": "https://next.ink/266199/lue-somme-tiktok-darreter-denfermer-ses-utilisateurs-dans-une-spirale-de-surutilisation",
+    "article_published_at": "2026-11-06T16:03:00Z",
+    "digest_date": "2026-11-07"
+  },
+  {
+    "id": "https://next.ink/266258/leurope-dedie-une-plateforme-et-525-millions-deuros-aux-concepteurs-de-puces",
+    "article_published_at": "2026-11-06T16:51:00Z",
+    "digest_date": "2026-11-07"
+  },
+  {
+    "id": "https://next.ink/266259/google-microsoft-anthropic-et-openai-veulent-changer-robots-txt-pour-refuser-les-ia",
+    "article_published_at": "2026-11-06T16:32:31Z",
+    "digest_date": "2026-11-07"
+  },
+  {
+    "id": "https://op.tngl.io/meridian",
+    "article_published_at": "2026-11-07T09:21:55Z",
+    "digest_date": "2026-11-07"
+  },
+  {
+    "id": "https://openai.com/index/measuring-how-ai-agents-handle-wet-lab-science",
+    "article_published_at": "2026-11-06T00:00:00Z",
+    "digest_date": "2026-11-07"
+  },
+  {
+    "id": "https://simonwillison.net/2026/Nov/6/nilay-patel",
+    "article_published_at": "2026-11-06T17:13:12Z",
+    "digest_date": "2026-11-07"
+  },
+  {
+    "id": "https://www.jendrikillner.com/post/graphics-programming-weekly-issue-461",
+    "article_published_at": "2026-11-01T04:00:00Z",
+    "digest_date": "2026-11-07"
   }
 ]
