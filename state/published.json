@@ -1,25 +1,5 @@
 [
   {
-    "id": "https://aatishb.com/myriad/lets-build-a-brain",
-    "article_published_at": "2026-10-31T15:09:27Z",
-    "digest_date": "2026-11-01"
-  },
-  {
-    "id": "https://latent.space/p/arca",
-    "article_published_at": "2026-10-31T16:05:00Z",
-    "digest_date": "2026-11-01"
-  },
-  {
-    "id": "https://simonwillison.net/2026/Oct/31/datasette-llm",
-    "article_published_at": "2026-10-31T22:10:01Z",
-    "digest_date": "2026-11-01"
-  },
-  {
-    "id": "https://simonwillison.net/2026/Oct/31/how-we-took-over-chatgpt-accounts",
-    "article_published_at": "2026-10-31T23:15:22Z",
-    "digest_date": "2026-11-01"
-  },
-  {
     "id": "https://dataswamp.org/~solene/2026-11-01-braindead-local-intelligence.html",
     "article_published_at": "2026-11-01T20:26:47Z",
     "digest_date": "2026-11-02"
@@ -295,8 +275,53 @@
     "digest_date": "2026-11-07"
   },
   {
-    "id": "https://www.jendrikillner.com/post/graphics-programming-weekly-issue-461",
-    "article_published_at": "2026-11-01T04:00:00Z",
-    "digest_date": "2026-11-07"
+    "id": "https://deepmind.google/blog/gemini-omni-12-flash-fast-and-cost-effective-with-longer-clips",
+    "article_published_at": "2026-11-05T17:05:16Z",
+    "digest_date": "2026-11-08"
+  },
+  {
+    "id": "https://gamefromscratch.com/saudi-arabia-pif-silver-lake-looking-to-buy-unity",
+    "article_published_at": "2026-11-06T14:49:00Z",
+    "digest_date": "2026-11-08"
+  },
+  {
+    "id": "https://godotengine.org/article/godot-showcase-sovereign-tower",
+    "article_published_at": "2026-11-06T14:00:00Z",
+    "digest_date": "2026-11-08"
+  },
+  {
+    "id": "https://next.ink/264997/le-parti-socialiste-a-fait-passer-sa-taxe-au-gigaoctet-a-lassemblee-nationale",
+    "article_published_at": "2026-11-05T20:04:26Z",
+    "digest_date": "2026-11-08"
+  },
+  {
+    "id": "https://next.ink/266035/jeudi-noir-pour-lia-la-fin-de-linvestissement-sans-limite",
+    "article_published_at": "2026-11-06T13:37:46Z",
+    "digest_date": "2026-11-08"
+  },
+  {
+    "id": "https://next.ink/266066/une-faille-dans-alpine-linux-permet-de-se-connecter-avec-un-mot-de-passe-trop-long",
+    "article_published_at": "2026-11-06T11:10:47Z",
+    "digest_date": "2026-11-08"
+  },
+  {
+    "id": "https://openai.com/index/cultfit-builds-with-codex",
+    "article_published_at": "2026-11-05T20:00:00Z",
+    "digest_date": "2026-11-08"
+  },
+  {
+    "id": "https://openai.com/index/partnering-with-hacktron",
+    "article_published_at": "2026-11-06T08:00:00Z",
+    "digest_date": "2026-11-08"
+  },
+  {
+    "id": "https://simonwillison.net/2026/Nov/3/llm",
+    "article_published_at": "2026-11-03T21:41:42Z",
+    "digest_date": "2026-11-08"
+  },
+  {
+    "id": "https://tomclancy.info/joshua-judges-ruth.html",
+    "article_published_at": "2026-11-07T19:34:01Z",
+    "digest_date": "2026-11-08"
   }
 ]
