@@ -1,45 +1,5 @@
 [
   {
-    "id": "https://dataswamp.org/~solene/2026-11-01-braindead-local-intelligence.html",
-    "article_published_at": "2026-11-01T20:26:47Z",
-    "digest_date": "2026-11-02"
-  },
-  {
-    "id": "https://godotengine.org/article/rendering-cpu-optimizations",
-    "article_published_at": "2026-11-02T06:21:08Z",
-    "digest_date": "2026-11-02"
-  },
-  {
-    "id": "https://next.ink/265045/kids-act-bruxelles-veut-imposer-un-calendrier-commun-aux-etats",
-    "article_published_at": "2026-11-02T07:09:32Z",
-    "digest_date": "2026-11-02"
-  },
-  {
-    "id": "https://next.ink/265047/les-bandes-magnetiques-ont-encore-de-beaux-jours-devant-elles-notamment-grace-a-lia",
-    "article_published_at": "2026-11-02T07:42:00Z",
-    "digest_date": "2026-11-02"
-  },
-  {
-    "id": "https://next.ink/265082/la-taxe-ps-au-gigaoctet-votee-a-lassemblee-nationale-fait-reagir-de-vlc-a-ovhcloud",
-    "article_published_at": "2026-11-02T09:38:50Z",
-    "digest_date": "2026-11-02"
-  },
-  {
-    "id": "https://next.ink/265086/stack-overflow-assume-son-positionnement-b2b-pour-agents-ia-et-entreprise",
-    "article_published_at": "2026-11-02T11:06:50Z",
-    "digest_date": "2026-11-02"
-  },
-  {
-    "id": "https://next.ink/265087/ia-lamende-honorable-de-proton-a-bien-du-mal-a-passer",
-    "article_published_at": "2026-11-02T08:57:23Z",
-    "digest_date": "2026-11-02"
-  },
-  {
-    "id": "https://simonwillison.net/2026/Nov/1/delete-uv-lock-first",
-    "article_published_at": "2026-11-01T23:24:22Z",
-    "digest_date": "2026-11-02"
-  },
-  {
     "id": "https://gamefromscratch.com/godot-terrain3d-1-1-0-released",
     "article_published_at": "2026-11-02T17:16:26Z",
     "digest_date": "2026-11-03"
@@ -67,11 +27,6 @@
   {
     "id": "https://next.ink/265307/anthropic-veut-empecher-claude-code-de-cloner-des-jeux-video",
     "article_published_at": "2026-11-03T07:04:00Z",
-    "digest_date": "2026-11-03"
-  },
-  {
-    "id": "https://openai.com/index/qodo-codex-plugin",
-    "article_published_at": "2026-11-02T00:00:00Z",
     "digest_date": "2026-11-03"
   },
   {
@@ -152,11 +107,6 @@
   {
     "id": "https://ruffle.rs/blog/2026/11/04/stable-releases-and-everything-else",
     "article_published_at": "2026-11-04T19:37:40Z",
-    "digest_date": "2026-11-05"
-  },
-  {
-    "id": "https://simonwillison.net/2026/Nov/2/census-bureau-super-intelligence",
-    "article_published_at": "2026-11-02T13:31:26Z",
     "digest_date": "2026-11-05"
   },
   {
@@ -323,5 +273,55 @@
     "id": "https://tomclancy.info/joshua-judges-ruth.html",
     "article_published_at": "2026-11-07T19:34:01Z",
     "digest_date": "2026-11-08"
+  },
+  {
+    "id": "https://amutable.com/blog/systemd-loves-rust",
+    "article_published_at": "2026-11-08T12:55:05Z",
+    "digest_date": "2026-11-09"
+  },
+  {
+    "id": "https://blog.zortax.de/posts/a-critique-of-gpui",
+    "article_published_at": "2026-11-09T11:48:19Z",
+    "digest_date": "2026-11-09"
+  },
+  {
+    "id": "https://latent.space/p/cs146s",
+    "article_published_at": "2026-11-08T21:41:44Z",
+    "digest_date": "2026-11-09"
+  },
+  {
+    "id": "https://latent.space/p/one_million_ai_engineer_special_how_stanford_teaches_ai-native_engineering_mihail_eric_monaco",
+    "article_published_at": "2026-11-08T21:23:29Z",
+    "digest_date": "2026-11-09"
+  },
+  {
+    "id": "https://lobste.rs/s/umsitb/what_can_i_realistically_do_with_local_ai",
+    "article_published_at": "2026-11-08T17:07:51Z",
+    "digest_date": "2026-11-09"
+  },
+  {
+    "id": "https://next.ink/266033/apres-la-claque-electorale-des-promesses-pour-amadouer-les-refractaires-aux-datacenters",
+    "article_published_at": "2026-11-06T06:47:42Z",
+    "digest_date": "2026-11-09"
+  },
+  {
+    "id": "https://next.ink/266327/ia-et-droit-dauteur-mistral-et-les-industriels-du-numerique-accentuent-le-lobbying",
+    "article_published_at": "2026-11-09T11:13:23Z",
+    "digest_date": "2026-11-09"
+  },
+  {
+    "id": "https://simonwillison.net/2026/Nov/8/sqlite-parse-number-c-vs-rust",
+    "article_published_at": "2026-11-08T22:26:00Z",
+    "digest_date": "2026-11-09"
+  },
+  {
+    "id": "https://simonwillison.net/2026/Nov/9/details-summary",
+    "article_published_at": "2026-11-09T04:25:05Z",
+    "digest_date": "2026-11-09"
+  },
+  {
+    "id": "https://simonwillison.net/2026/Nov/9/hn-50421091",
+    "article_published_at": "2026-11-09T04:32:33Z",
+    "digest_date": "2026-11-09"
   }
 ]
