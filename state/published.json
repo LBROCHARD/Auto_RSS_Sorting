@@ -1,50 +1,5 @@
 [
   {
-    "id": "https://gamefromscratch.com/godot-terrain3d-1-1-0-released",
-    "article_published_at": "2026-11-02T17:16:26Z",
-    "digest_date": "2026-11-03"
-  },
-  {
-    "id": "https://latent.space/p/ainews-llms-can-read-write-neural-network-weights-weight-space-programming-cuts-autoresearch-out-of",
-    "article_published_at": "2026-11-03T05:35:00Z",
-    "digest_date": "2026-11-03"
-  },
-  {
-    "id": "https://latent.space/p/building-ai-for-lawyers-jacob-lauritzen-cto-of-legora",
-    "article_published_at": "2026-11-02T23:01:02Z",
-    "digest_date": "2026-11-03"
-  },
-  {
-    "id": "https://latent.space/p/building_legal_agents_when_you_can_t_see_the_data_-_jacob_lauritzen_cto_of_legora",
-    "article_published_at": "2026-11-02T22:54:03Z",
-    "digest_date": "2026-11-03"
-  },
-  {
-    "id": "https://next.ink/265227/le-createur-de-rocky-linux-a-cree-un-noyau-compatible-linux-en-11-jours-avec-lia",
-    "article_published_at": "2026-11-02T14:25:38Z",
-    "digest_date": "2026-11-03"
-  },
-  {
-    "id": "https://next.ink/265307/anthropic-veut-empecher-claude-code-de-cloner-des-jeux-video",
-    "article_published_at": "2026-11-03T07:04:00Z",
-    "digest_date": "2026-11-03"
-  },
-  {
-    "id": "https://rikiyat.github.io/blog/weight-space-programming",
-    "article_published_at": "2026-11-02T19:24:33Z",
-    "digest_date": "2026-11-03"
-  },
-  {
-    "id": "https://simonwillison.net/2026/Nov/2/llm",
-    "article_published_at": "2026-11-02T23:49:30Z",
-    "digest_date": "2026-11-03"
-  },
-  {
-    "id": "https://blog.rust-lang.org/2026/11/03/Rustup-1.29.3",
-    "article_published_at": "2026-11-03T00:00:00Z",
-    "digest_date": "2026-11-04"
-  },
-  {
     "id": "https://gpuopen.com/learn/amd-directx12-agility-sdk-october-2026",
     "article_published_at": "2026-11-03T18:00:00Z",
     "digest_date": "2026-11-04"
@@ -92,11 +47,6 @@
   {
     "id": "https://gpuopen.com/learn/amd-fsr-upscaling-412-xbox",
     "article_published_at": "2026-11-04T12:00:00Z",
-    "digest_date": "2026-11-05"
-  },
-  {
-    "id": "https://next.ink/265207/marvell-veut-soffrir-lumentum-et-ses-puces-optiques-pour-115-milliards-de-dollars",
-    "article_published_at": "2026-11-02T16:42:55Z",
     "digest_date": "2026-11-05"
   },
   {
@@ -323,5 +273,55 @@
     "id": "https://simonwillison.net/2026/Nov/9/hn-50421091",
     "article_published_at": "2026-11-09T04:32:33Z",
     "digest_date": "2026-11-09"
+  },
+  {
+    "id": "https://deepmind.google/blog/introducing-alphaproof-code",
+    "article_published_at": "2026-11-10T12:02:28Z",
+    "digest_date": "2026-11-10"
+  },
+  {
+    "id": "https://gamefromscratch.com/grit-gdscript-to-c-compiler",
+    "article_published_at": "2026-11-09T16:20:00Z",
+    "digest_date": "2026-11-10"
+  },
+  {
+    "id": "https://latent.space/p/ainews-fable-5-2-retakes-world-1-llm-spot-as-ant-ipo-roadshow-begins",
+    "article_published_at": "2026-11-10T06:34:44Z",
+    "digest_date": "2026-11-10"
+  },
+  {
+    "id": "https://next.ink/266549/google-lance-deux-nouvelles-puces-ia-pour-proteger-les-donnees-et-accelerer-les-agents",
+    "article_published_at": "2026-11-10T09:45:02Z",
+    "digest_date": "2026-11-10"
+  },
+  {
+    "id": "https://next.ink/266555/anthropic-relance-la-course-avec-claude-fable-5-2-et-mythos-5-2",
+    "article_published_at": "2026-11-10T10:28:23Z",
+    "digest_date": "2026-11-10"
+  },
+  {
+    "id": "https://next.ink/brief-article/norvege-moratoire-sur-les-nouvelles-connexions-de-datacenters-au-reseau-electrique",
+    "article_published_at": "2026-11-10T09:12:06Z",
+    "digest_date": "2026-11-10"
+  },
+  {
+    "id": "https://simonwillison.net/2026/Nov/10/muse-ember",
+    "article_published_at": "2026-11-10T07:28:21Z",
+    "digest_date": "2026-11-10"
+  },
+  {
+    "id": "https://simonwillison.net/2026/Nov/10/prompting-claude-fable-52",
+    "article_published_at": "2026-11-10T05:34:14Z",
+    "digest_date": "2026-11-10"
+  },
+  {
+    "id": "https://simonwillison.net/2026/Nov/9/llm-anthropic",
+    "article_published_at": "2026-11-09T23:58:46Z",
+    "digest_date": "2026-11-10"
+  },
+  {
+    "id": "https://simonwillison.net/2026/Nov/9/mysterious-beeps",
+    "article_published_at": "2026-11-09T23:57:21Z",
+    "digest_date": "2026-11-10"
   }
 ]
