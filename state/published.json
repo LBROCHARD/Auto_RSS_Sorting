@@ -1,42 +1,7 @@
 [
   {
-    "id": "https://gpuopen.com/learn/amd-directx12-agility-sdk-october-2026",
-    "article_published_at": "2026-11-03T18:00:00Z",
-    "digest_date": "2026-11-04"
-  },
-  {
-    "id": "https://next.ink/265194/usa-des-objecteurs-de-conscience-obtiennent-le-droit-de-ne-pas-travailler-avec-lia",
-    "article_published_at": "2026-11-03T15:23:30Z",
-    "digest_date": "2026-11-04"
-  },
-  {
-    "id": "https://next.ink/265451/chatbots-ia-le-droit-europeen-interdirait-la-reprise-darticles-de-presse-sous-paywall",
-    "article_published_at": "2026-11-04T08:37:00Z",
-    "digest_date": "2026-11-04"
-  },
-  {
-    "id": "https://next.ink/265495/le-c26-refuse-a-liso-une-premiere-dans-lhistoire-du-langage",
-    "article_published_at": "2026-11-04T09:05:00Z",
-    "digest_date": "2026-11-04"
-  },
-  {
-    "id": "https://next.ink/265590/google-pas-de-recherche-sans-ia-dans-leducation-aux-etats-unis",
-    "article_published_at": "2026-11-04T08:08:43Z",
-    "digest_date": "2026-11-04"
-  },
-  {
     "id": "https://next.ink/265628/le-nytimes-attaque-brave-pour-ses-accords-avec-les-entreprises-dia-et-son-option-anti-paywall",
     "article_published_at": "2026-11-04T12:41:38Z",
-    "digest_date": "2026-11-04"
-  },
-  {
-    "id": "https://simonwillison.net/2026/Nov/3/qwen-can-interpret-model-weights",
-    "article_published_at": "2026-11-03T16:29:48Z",
-    "digest_date": "2026-11-04"
-  },
-  {
-    "id": "https://utcc.utoronto.ca/~cks/space/blog/linux/Ubuntu2604RustSudoNotCompatible",
-    "article_published_at": "2026-11-03T15:23:21Z",
     "digest_date": "2026-11-04"
   },
   {
@@ -45,23 +10,8 @@
     "digest_date": "2026-11-05"
   },
   {
-    "id": "https://gpuopen.com/learn/amd-fsr-upscaling-412-xbox",
-    "article_published_at": "2026-11-04T12:00:00Z",
-    "digest_date": "2026-11-05"
-  },
-  {
-    "id": "https://openai.com/index/introducing-images-2-6",
-    "article_published_at": "2026-11-04T00:00:00Z",
-    "digest_date": "2026-11-05"
-  },
-  {
     "id": "https://ruffle.rs/blog/2026/11/04/stable-releases-and-everything-else",
     "article_published_at": "2026-11-04T19:37:40Z",
-    "digest_date": "2026-11-05"
-  },
-  {
-    "id": "https://simonwillison.net/2026/Nov/3/datasette-agent",
-    "article_published_at": "2026-11-03T23:13:45Z",
     "digest_date": "2026-11-05"
   },
   {
@@ -112,16 +62,6 @@
   {
     "id": "https://openai.com/index/introducing-gpt-6-cyber",
     "article_published_at": "2026-11-05T09:00:00Z",
-    "digest_date": "2026-11-06"
-  },
-  {
-    "id": "https://simonwillison.net/2026/Nov/4/datasette-apps",
-    "article_published_at": "2026-11-04T00:29:36Z",
-    "digest_date": "2026-11-06"
-  },
-  {
-    "id": "https://this-week-in-rust.org/blog/2026/11/04/this-week-in-rust-676",
-    "article_published_at": "2026-11-04T05:00:00Z",
     "digest_date": "2026-11-06"
   },
   {
@@ -212,11 +152,6 @@
   {
     "id": "https://openai.com/index/partnering-with-hacktron",
     "article_published_at": "2026-11-06T08:00:00Z",
-    "digest_date": "2026-11-08"
-  },
-  {
-    "id": "https://simonwillison.net/2026/Nov/3/llm",
-    "article_published_at": "2026-11-03T21:41:42Z",
     "digest_date": "2026-11-08"
   },
   {
@@ -323,5 +258,55 @@
     "id": "https://simonwillison.net/2026/Nov/9/mysterious-beeps",
     "article_published_at": "2026-11-09T23:57:21Z",
     "digest_date": "2026-11-10"
+  },
+  {
+    "id": "https://forge-blog.github.io/posts/rust-std-memory-safety",
+    "article_published_at": "2026-11-10T19:44:50Z",
+    "digest_date": "2026-11-11"
+  },
+  {
+    "id": "https://gamefromscratch.com/unreal-engine-5-9-preview",
+    "article_published_at": "2026-11-10T16:43:09Z",
+    "digest_date": "2026-11-11"
+  },
+  {
+    "id": "https://latent.space/p/codex-work",
+    "article_published_at": "2026-11-11T04:49:48Z",
+    "digest_date": "2026-11-11"
+  },
+  {
+    "id": "https://latent.space/p/naiveai",
+    "article_published_at": "2026-11-10T18:56:32Z",
+    "digest_date": "2026-11-11"
+  },
+  {
+    "id": "https://latent.space/p/resend",
+    "article_published_at": "2026-11-10T20:05:17Z",
+    "digest_date": "2026-11-11"
+  },
+  {
+    "id": "https://next.ink/266473/ouf-enfin-nis2-arrive-a-lassemblee-le-chiffrement-deja-au-coeur-des-debats",
+    "article_published_at": "2026-11-10T16:28:26Z",
+    "digest_date": "2026-11-11"
+  },
+  {
+    "id": "https://next.ink/brief-article/datacenters-anthropic-recupere-des-generateurs-delectricite-au-gaz-pour-3-milliards-deuros",
+    "article_published_at": "2026-11-09T14:39:22Z",
+    "digest_date": "2026-11-11"
+  },
+  {
+    "id": "https://openai.com/index/cogent-security",
+    "article_published_at": "2026-11-10T00:00:00Z",
+    "digest_date": "2026-11-11"
+  },
+  {
+    "id": "https://simonwillison.net/2026/Nov/10/llm-gemini",
+    "article_published_at": "2026-11-10T20:09:44Z",
+    "digest_date": "2026-11-11"
+  },
+  {
+    "id": "https://simonwillison.net/2026/Nov/4/datasette-llm",
+    "article_published_at": "2026-11-04T15:26:02Z",
+    "digest_date": "2026-11-11"
   }
 ]
