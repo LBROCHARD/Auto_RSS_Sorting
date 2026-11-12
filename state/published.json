@@ -1,35 +1,5 @@
 [
   {
-    "id": "https://next.ink/265628/le-nytimes-attaque-brave-pour-ses-accords-avec-les-entreprises-dia-et-son-option-anti-paywall",
-    "article_published_at": "2026-11-04T12:41:38Z",
-    "digest_date": "2026-11-04"
-  },
-  {
-    "id": "https://gamefromscratch.com/the-future-of-unreal-engine-6",
-    "article_published_at": "2026-11-04T15:17:17Z",
-    "digest_date": "2026-11-05"
-  },
-  {
-    "id": "https://ruffle.rs/blog/2026/11/04/stable-releases-and-everything-else",
-    "article_published_at": "2026-11-04T19:37:40Z",
-    "digest_date": "2026-11-05"
-  },
-  {
-    "id": "https://wiredream.com/anagram-fun",
-    "article_published_at": "2026-11-05T07:37:35Z",
-    "digest_date": "2026-11-05"
-  },
-  {
-    "id": "https://www.cnil.fr/fr/rejeu-de-session-recommandation",
-    "article_published_at": "2026-11-05T12:00:00Z",
-    "digest_date": "2026-11-05"
-  },
-  {
-    "id": "https://www.theverge.com/news/1027379/discord-ditching-electron-web-app",
-    "article_published_at": "2026-11-05T12:51:09Z",
-    "digest_date": "2026-11-05"
-  },
-  {
     "id": "https://huggingface.co/blog/nvidia/cosmos-interactive-world-simulation",
     "article_published_at": "2026-11-05T19:35:16Z",
     "digest_date": "2026-11-06"
@@ -52,16 +22,6 @@
   {
     "id": "https://next.ink/266026/openai-debauche-une-responsable-de-claude-code-et-lorgne-du-cote-de-github",
     "article_published_at": "2026-11-06T07:18:00Z",
-    "digest_date": "2026-11-06"
-  },
-  {
-    "id": "https://nnethercote.github.io/2026/11/04/how-to-speed-up-the-rust-compiler-in-november-2026.html",
-    "article_published_at": "2026-11-04T14:05:16Z",
-    "digest_date": "2026-11-06"
-  },
-  {
-    "id": "https://openai.com/index/introducing-gpt-6-cyber",
-    "article_published_at": "2026-11-05T09:00:00Z",
     "digest_date": "2026-11-06"
   },
   {
@@ -305,8 +265,53 @@
     "digest_date": "2026-11-11"
   },
   {
-    "id": "https://simonwillison.net/2026/Nov/4/datasette-llm",
-    "article_published_at": "2026-11-04T15:26:02Z",
-    "digest_date": "2026-11-11"
+    "id": "https://latent.space/p/ainews-d-day-decision-models-day",
+    "article_published_at": "2026-11-12T05:26:54Z",
+    "digest_date": "2026-11-12"
+  },
+  {
+    "id": "https://latent.space/p/jev-revolution",
+    "article_published_at": "2026-11-12T05:08:20Z",
+    "digest_date": "2026-11-12"
+  },
+  {
+    "id": "https://next.ink/266650/lqdn-attaque-en-justice-les-echanges-entre-la-caf-et-la-police",
+    "article_published_at": "2026-11-12T10:00:00Z",
+    "digest_date": "2026-11-12"
+  },
+  {
+    "id": "https://next.ink/266856/abonnements-jeux-ia-leurope-veut-dejouer-les-arnaques-du-numerique-avec-le-dfa",
+    "article_published_at": "2026-11-12T07:32:00Z",
+    "digest_date": "2026-11-12"
+  },
+  {
+    "id": "https://openai.com/index/jiostar-vijay-seshadri",
+    "article_published_at": "2026-11-11T00:00:00Z",
+    "digest_date": "2026-11-12"
+  },
+  {
+    "id": "https://simonwillison.net/2026/Nov/11/anthropic-ipo-roadshow",
+    "article_published_at": "2026-11-11T15:11:59Z",
+    "digest_date": "2026-11-12"
+  },
+  {
+    "id": "https://simonwillison.net/2026/Nov/11/aws-emulator",
+    "article_published_at": "2026-11-11T21:18:30Z",
+    "digest_date": "2026-11-12"
+  },
+  {
+    "id": "https://simonwillison.net/2026/Nov/11/gemini-decisions-api",
+    "article_published_at": "2026-11-11T22:03:25Z",
+    "digest_date": "2026-11-12"
+  },
+  {
+    "id": "https://simonwillison.net/2026/Nov/11/tools-tags",
+    "article_published_at": "2026-11-11T18:42:50Z",
+    "digest_date": "2026-11-12"
+  },
+  {
+    "id": "https://theshiftproject.org/publications/former-ia-sans-renoncer-a-la-decarbonation",
+    "article_published_at": "2026-11-12T09:44:56Z",
+    "digest_date": "2026-11-12"
   }
 ]
