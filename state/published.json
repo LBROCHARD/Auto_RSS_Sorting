@@ -1,60 +1,5 @@
 [
   {
-    "id": "https://github.blog/ai-and-ml/github-copilot/beyond-code-generation-a-developers-guide-to-agentic-engineering",
-    "article_published_at": "2026-11-06T22:15:59Z",
-    "digest_date": "2026-11-07"
-  },
-  {
-    "id": "https://latent.space/p/ainews-anthropic-ipo-whither-now",
-    "article_published_at": "2026-11-07T03:04:53Z",
-    "digest_date": "2026-11-07"
-  },
-  {
-    "id": "https://next.ink/263676/google-dereference-9-des-plus-gros-sites-dinfos-generes-par-ia-qui-polluent-discover",
-    "article_published_at": "2026-11-06T15:01:30Z",
-    "digest_date": "2026-11-07"
-  },
-  {
-    "id": "https://next.ink/266199/lue-somme-tiktok-darreter-denfermer-ses-utilisateurs-dans-une-spirale-de-surutilisation",
-    "article_published_at": "2026-11-06T16:03:00Z",
-    "digest_date": "2026-11-07"
-  },
-  {
-    "id": "https://next.ink/266258/leurope-dedie-une-plateforme-et-525-millions-deuros-aux-concepteurs-de-puces",
-    "article_published_at": "2026-11-06T16:51:00Z",
-    "digest_date": "2026-11-07"
-  },
-  {
-    "id": "https://next.ink/266259/google-microsoft-anthropic-et-openai-veulent-changer-robots-txt-pour-refuser-les-ia",
-    "article_published_at": "2026-11-06T16:32:31Z",
-    "digest_date": "2026-11-07"
-  },
-  {
-    "id": "https://op.tngl.io/meridian",
-    "article_published_at": "2026-11-07T09:21:55Z",
-    "digest_date": "2026-11-07"
-  },
-  {
-    "id": "https://simonwillison.net/2026/Nov/6/nilay-patel",
-    "article_published_at": "2026-11-06T17:13:12Z",
-    "digest_date": "2026-11-07"
-  },
-  {
-    "id": "https://gamefromscratch.com/saudi-arabia-pif-silver-lake-looking-to-buy-unity",
-    "article_published_at": "2026-11-06T14:49:00Z",
-    "digest_date": "2026-11-08"
-  },
-  {
-    "id": "https://godotengine.org/article/godot-showcase-sovereign-tower",
-    "article_published_at": "2026-11-06T14:00:00Z",
-    "digest_date": "2026-11-08"
-  },
-  {
-    "id": "https://next.ink/266035/jeudi-noir-pour-lia-la-fin-de-linvestissement-sans-limite",
-    "article_published_at": "2026-11-06T13:37:46Z",
-    "digest_date": "2026-11-08"
-  },
-  {
     "id": "https://tomclancy.info/joshua-judges-ruth.html",
     "article_published_at": "2026-11-07T19:34:01Z",
     "digest_date": "2026-11-08"
@@ -298,5 +243,55 @@
     "id": "https://www.jendrikillner.com/post/graphics-programming-weekly-issue-462",
     "article_published_at": "2026-11-08T04:00:00Z",
     "digest_date": "2026-11-13"
+  },
+  {
+    "id": "https://alexwang.ai/posts/associative-memory",
+    "article_published_at": "2026-11-14T04:49:47Z",
+    "digest_date": "2026-11-14"
+  },
+  {
+    "id": "https://gamefromscratch.com/xogot-3d-modeler-level-tool-for-godot",
+    "article_published_at": "2026-11-12T18:21:42Z",
+    "digest_date": "2026-11-14"
+  },
+  {
+    "id": "https://huggingface.co/blog/ggml-org/llama-cpp-v1",
+    "article_published_at": "2026-11-13T14:05:22Z",
+    "digest_date": "2026-11-14"
+  },
+  {
+    "id": "https://next.ink/266667/nos-vulnerabilites-face-a-lia-generative-ce-que-contient-le-rapport-remis-a-lelysee",
+    "article_published_at": "2026-11-10T16:43:00Z",
+    "digest_date": "2026-11-14"
+  },
+  {
+    "id": "https://next.ink/267012/amd-lance-ses-epyc-de-6e-generation-jusqua-256-coeurs-zen-6c-en-2-nm-quoi-de-neuf",
+    "article_published_at": "2026-11-12T12:37:00Z",
+    "digest_date": "2026-11-14"
+  },
+  {
+    "id": "https://openai.com/business/customer-stories/shield",
+    "article_published_at": "2026-11-13T08:00:00Z",
+    "digest_date": "2026-11-14"
+  },
+  {
+    "id": "https://openai.com/index/coderabbit-codex-daybreak",
+    "article_published_at": "2026-11-09T08:00:00Z",
+    "digest_date": "2026-11-14"
+  },
+  {
+    "id": "https://openai.com/index/introducing-chatgpt-wallet",
+    "article_published_at": "2026-11-13T15:00:00Z",
+    "digest_date": "2026-11-14"
+  },
+  {
+    "id": "https://sofiabelen.github.io/projects/pointer-provenance-in-rust-vs-cpp",
+    "article_published_at": "2026-11-13T18:37:30Z",
+    "digest_date": "2026-11-14"
+  },
+  {
+    "id": "https://this-week-in-rust.org/blog/2026/11/11/this-week-in-rust-677",
+    "article_published_at": "2026-11-11T05:00:00Z",
+    "digest_date": "2026-11-14"
   }
 ]
