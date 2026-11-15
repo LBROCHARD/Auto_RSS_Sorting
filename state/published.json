@@ -1,10 +1,5 @@
 [
   {
-    "id": "https://tomclancy.info/joshua-judges-ruth.html",
-    "article_published_at": "2026-11-07T19:34:01Z",
-    "digest_date": "2026-11-08"
-  },
-  {
     "id": "https://amutable.com/blog/systemd-loves-rust",
     "article_published_at": "2026-11-08T12:55:05Z",
     "digest_date": "2026-11-09"
@@ -240,11 +235,6 @@
     "digest_date": "2026-11-13"
   },
   {
-    "id": "https://www.jendrikillner.com/post/graphics-programming-weekly-issue-462",
-    "article_published_at": "2026-11-08T04:00:00Z",
-    "digest_date": "2026-11-13"
-  },
-  {
     "id": "https://alexwang.ai/posts/associative-memory",
     "article_published_at": "2026-11-14T04:49:47Z",
     "digest_date": "2026-11-14"
@@ -293,5 +283,55 @@
     "id": "https://this-week-in-rust.org/blog/2026/11/11/this-week-in-rust-677",
     "article_published_at": "2026-11-11T05:00:00Z",
     "digest_date": "2026-11-14"
+  },
+  {
+    "id": "https://godotengine.org/article/dev-snapshot-godot-4-8-beta-3",
+    "article_published_at": "2026-11-09T12:00:00Z",
+    "digest_date": "2026-11-15"
+  },
+  {
+    "id": "https://magazine.sebastianraschka.com/p/understanding-positional-embeddings",
+    "article_published_at": "2026-11-15T12:10:37Z",
+    "digest_date": "2026-11-15"
+  },
+  {
+    "id": "https://next.ink/266973/sites-dinfos-generes-par-ia-wikimedia-et-next-sallient-pour-proteger-lencyclopedie",
+    "article_published_at": "2026-11-12T08:40:53Z",
+    "digest_date": "2026-11-15"
+  },
+  {
+    "id": "https://next.ink/267253/united-airlines-ferme-ses-reservations-aux-agents-ia",
+    "article_published_at": "2026-11-12T15:50:39Z",
+    "digest_date": "2026-11-15"
+  },
+  {
+    "id": "https://openai.com/index/kuken",
+    "article_published_at": "2026-11-09T08:00:00Z",
+    "digest_date": "2026-11-15"
+  },
+  {
+    "id": "https://simonwillison.net/2026/Nov/10/yonkers-rises",
+    "article_published_at": "2026-11-10T03:53:04Z",
+    "digest_date": "2026-11-15"
+  },
+  {
+    "id": "https://simonwillison.net/2026/Nov/11/llm",
+    "article_published_at": "2026-11-11T17:19:52Z",
+    "digest_date": "2026-11-15"
+  },
+  {
+    "id": "https://simonwillison.net/2026/Nov/13/datasette-leaflet",
+    "article_published_at": "2026-11-13T22:30:54Z",
+    "digest_date": "2026-11-15"
+  },
+  {
+    "id": "https://simonwillison.net/2026/Nov/14/datasette-llm",
+    "article_published_at": "2026-11-14T23:59:28Z",
+    "digest_date": "2026-11-15"
+  },
+  {
+    "id": "https://simonwillison.net/2026/Nov/14/datasette-vega",
+    "article_published_at": "2026-11-14T17:09:09Z",
+    "digest_date": "2026-11-15"
   }
 ]
