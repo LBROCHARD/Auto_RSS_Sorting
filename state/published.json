@@ -1,50 +1,5 @@
 [
   {
-    "id": "https://amutable.com/blog/systemd-loves-rust",
-    "article_published_at": "2026-11-08T12:55:05Z",
-    "digest_date": "2026-11-09"
-  },
-  {
-    "id": "https://blog.zortax.de/posts/a-critique-of-gpui",
-    "article_published_at": "2026-11-09T11:48:19Z",
-    "digest_date": "2026-11-09"
-  },
-  {
-    "id": "https://latent.space/p/cs146s",
-    "article_published_at": "2026-11-08T21:41:44Z",
-    "digest_date": "2026-11-09"
-  },
-  {
-    "id": "https://latent.space/p/one_million_ai_engineer_special_how_stanford_teaches_ai-native_engineering_mihail_eric_monaco",
-    "article_published_at": "2026-11-08T21:23:29Z",
-    "digest_date": "2026-11-09"
-  },
-  {
-    "id": "https://lobste.rs/s/umsitb/what_can_i_realistically_do_with_local_ai",
-    "article_published_at": "2026-11-08T17:07:51Z",
-    "digest_date": "2026-11-09"
-  },
-  {
-    "id": "https://next.ink/266327/ia-et-droit-dauteur-mistral-et-les-industriels-du-numerique-accentuent-le-lobbying",
-    "article_published_at": "2026-11-09T11:13:23Z",
-    "digest_date": "2026-11-09"
-  },
-  {
-    "id": "https://simonwillison.net/2026/Nov/8/sqlite-parse-number-c-vs-rust",
-    "article_published_at": "2026-11-08T22:26:00Z",
-    "digest_date": "2026-11-09"
-  },
-  {
-    "id": "https://simonwillison.net/2026/Nov/9/details-summary",
-    "article_published_at": "2026-11-09T04:25:05Z",
-    "digest_date": "2026-11-09"
-  },
-  {
-    "id": "https://simonwillison.net/2026/Nov/9/hn-50421091",
-    "article_published_at": "2026-11-09T04:32:33Z",
-    "digest_date": "2026-11-09"
-  },
-  {
     "id": "https://deepmind.google/blog/introducing-alphaproof-code",
     "article_published_at": "2026-11-10T12:02:28Z",
     "digest_date": "2026-11-10"
@@ -265,11 +220,6 @@
     "digest_date": "2026-11-14"
   },
   {
-    "id": "https://openai.com/index/coderabbit-codex-daybreak",
-    "article_published_at": "2026-11-09T08:00:00Z",
-    "digest_date": "2026-11-14"
-  },
-  {
     "id": "https://openai.com/index/introducing-chatgpt-wallet",
     "article_published_at": "2026-11-13T15:00:00Z",
     "digest_date": "2026-11-14"
@@ -285,11 +235,6 @@
     "digest_date": "2026-11-14"
   },
   {
-    "id": "https://godotengine.org/article/dev-snapshot-godot-4-8-beta-3",
-    "article_published_at": "2026-11-09T12:00:00Z",
-    "digest_date": "2026-11-15"
-  },
-  {
     "id": "https://magazine.sebastianraschka.com/p/understanding-positional-embeddings",
     "article_published_at": "2026-11-15T12:10:37Z",
     "digest_date": "2026-11-15"
@@ -302,11 +247,6 @@
   {
     "id": "https://next.ink/267253/united-airlines-ferme-ses-reservations-aux-agents-ia",
     "article_published_at": "2026-11-12T15:50:39Z",
-    "digest_date": "2026-11-15"
-  },
-  {
-    "id": "https://openai.com/index/kuken",
-    "article_published_at": "2026-11-09T08:00:00Z",
     "digest_date": "2026-11-15"
   },
   {
@@ -333,5 +273,55 @@
     "id": "https://simonwillison.net/2026/Nov/14/datasette-vega",
     "article_published_at": "2026-11-14T17:09:09Z",
     "digest_date": "2026-11-15"
+  },
+  {
+    "id": "https://burntsushi.net/jiff",
+    "article_published_at": "2026-11-15T22:39:34Z",
+    "digest_date": "2026-11-16"
+  },
+  {
+    "id": "https://latent.space/p/handshake",
+    "article_published_at": "2026-11-09T17:15:53Z",
+    "digest_date": "2026-11-16"
+  },
+  {
+    "id": "https://linuxfr.org/news/revue-de-presse-novembre-2026",
+    "article_published_at": "2026-11-16T09:35:56Z",
+    "digest_date": "2026-11-16"
+  },
+  {
+    "id": "https://sigseis.dev/articles/2026/11/10",
+    "article_published_at": "2026-11-15T19:40:13Z",
+    "digest_date": "2026-11-16"
+  },
+  {
+    "id": "https://simonwillison.net/2026/Nov/15/datasette",
+    "article_published_at": "2026-11-15T23:20:27Z",
+    "digest_date": "2026-11-16"
+  },
+  {
+    "id": "https://simonwillison.net/2026/Nov/15/datasette-2",
+    "article_published_at": "2026-11-15T23:18:17Z",
+    "digest_date": "2026-11-16"
+  },
+  {
+    "id": "https://simonwillison.net/2026/Nov/15/datasette-agent",
+    "article_published_at": "2026-11-15T03:49:47Z",
+    "digest_date": "2026-11-16"
+  },
+  {
+    "id": "https://simonwillison.net/2026/Nov/15/datasette-apps",
+    "article_published_at": "2026-11-15T04:02:45Z",
+    "digest_date": "2026-11-16"
+  },
+  {
+    "id": "https://simonwillison.net/2026/Nov/15/datasette-maplibre",
+    "article_published_at": "2026-11-15T23:58:36Z",
+    "digest_date": "2026-11-16"
+  },
+  {
+    "id": "https://sunshowers.io/posts/nextest-install-scripts",
+    "article_published_at": "2026-11-16T00:14:56Z",
+    "digest_date": "2026-11-16"
   }
 ]
