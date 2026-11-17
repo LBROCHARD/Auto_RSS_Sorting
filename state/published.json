@@ -1,55 +1,5 @@
 [
   {
-    "id": "https://deepmind.google/blog/introducing-alphaproof-code",
-    "article_published_at": "2026-11-10T12:02:28Z",
-    "digest_date": "2026-11-10"
-  },
-  {
-    "id": "https://gamefromscratch.com/grit-gdscript-to-c-compiler",
-    "article_published_at": "2026-11-09T16:20:00Z",
-    "digest_date": "2026-11-10"
-  },
-  {
-    "id": "https://latent.space/p/ainews-fable-5-2-retakes-world-1-llm-spot-as-ant-ipo-roadshow-begins",
-    "article_published_at": "2026-11-10T06:34:44Z",
-    "digest_date": "2026-11-10"
-  },
-  {
-    "id": "https://next.ink/266549/google-lance-deux-nouvelles-puces-ia-pour-proteger-les-donnees-et-accelerer-les-agents",
-    "article_published_at": "2026-11-10T09:45:02Z",
-    "digest_date": "2026-11-10"
-  },
-  {
-    "id": "https://next.ink/266555/anthropic-relance-la-course-avec-claude-fable-5-2-et-mythos-5-2",
-    "article_published_at": "2026-11-10T10:28:23Z",
-    "digest_date": "2026-11-10"
-  },
-  {
-    "id": "https://next.ink/brief-article/norvege-moratoire-sur-les-nouvelles-connexions-de-datacenters-au-reseau-electrique",
-    "article_published_at": "2026-11-10T09:12:06Z",
-    "digest_date": "2026-11-10"
-  },
-  {
-    "id": "https://simonwillison.net/2026/Nov/10/muse-ember",
-    "article_published_at": "2026-11-10T07:28:21Z",
-    "digest_date": "2026-11-10"
-  },
-  {
-    "id": "https://simonwillison.net/2026/Nov/10/prompting-claude-fable-52",
-    "article_published_at": "2026-11-10T05:34:14Z",
-    "digest_date": "2026-11-10"
-  },
-  {
-    "id": "https://simonwillison.net/2026/Nov/9/llm-anthropic",
-    "article_published_at": "2026-11-09T23:58:46Z",
-    "digest_date": "2026-11-10"
-  },
-  {
-    "id": "https://simonwillison.net/2026/Nov/9/mysterious-beeps",
-    "article_published_at": "2026-11-09T23:57:21Z",
-    "digest_date": "2026-11-10"
-  },
-  {
     "id": "https://forge-blog.github.io/posts/rust-std-memory-safety",
     "article_published_at": "2026-11-10T19:44:50Z",
     "digest_date": "2026-11-11"
@@ -77,16 +27,6 @@
   {
     "id": "https://next.ink/266473/ouf-enfin-nis2-arrive-a-lassemblee-le-chiffrement-deja-au-coeur-des-debats",
     "article_published_at": "2026-11-10T16:28:26Z",
-    "digest_date": "2026-11-11"
-  },
-  {
-    "id": "https://next.ink/brief-article/datacenters-anthropic-recupere-des-generateurs-delectricite-au-gaz-pour-3-milliards-deuros",
-    "article_published_at": "2026-11-09T14:39:22Z",
-    "digest_date": "2026-11-11"
-  },
-  {
-    "id": "https://openai.com/index/cogent-security",
-    "article_published_at": "2026-11-10T00:00:00Z",
     "digest_date": "2026-11-11"
   },
   {
@@ -250,11 +190,6 @@
     "digest_date": "2026-11-15"
   },
   {
-    "id": "https://simonwillison.net/2026/Nov/10/yonkers-rises",
-    "article_published_at": "2026-11-10T03:53:04Z",
-    "digest_date": "2026-11-15"
-  },
-  {
     "id": "https://simonwillison.net/2026/Nov/11/llm",
     "article_published_at": "2026-11-11T17:19:52Z",
     "digest_date": "2026-11-15"
@@ -277,11 +212,6 @@
   {
     "id": "https://burntsushi.net/jiff",
     "article_published_at": "2026-11-15T22:39:34Z",
-    "digest_date": "2026-11-16"
-  },
-  {
-    "id": "https://latent.space/p/handshake",
-    "article_published_at": "2026-11-09T17:15:53Z",
     "digest_date": "2026-11-16"
   },
   {
@@ -323,5 +253,55 @@
     "id": "https://sunshowers.io/posts/nextest-install-scripts",
     "article_published_at": "2026-11-16T00:14:56Z",
     "digest_date": "2026-11-16"
+  },
+  {
+    "id": "https://blog.rust-lang.org/2026/11/16/enabling-parallel-frontend-on-nightly",
+    "article_published_at": "2026-11-16T00:00:00Z",
+    "digest_date": "2026-11-17"
+  },
+  {
+    "id": "https://daniel.haxx.se/blog/2026/11/17/actual-curl-rewrites-in-rust",
+    "article_published_at": "2026-11-17T13:37:05Z",
+    "digest_date": "2026-11-17"
+  },
+  {
+    "id": "https://gamefromscratch.com/pixijs-moves-into-3d-pixijs-3d",
+    "article_published_at": "2026-11-16T16:06:16Z",
+    "digest_date": "2026-11-17"
+  },
+  {
+    "id": "https://latent.space/p/ainews-perplexity-hits-a-1b-revenue-run-rate-up-4x-in-2026",
+    "article_published_at": "2026-11-17T09:24:56Z",
+    "digest_date": "2026-11-17"
+  },
+  {
+    "id": "https://next.ink/267802/alibaba-qwen4-max-2-400-milliards-de-parametres-et-une-table-n-gram-de-328-milliards",
+    "article_published_at": "2026-11-17T07:43:00Z",
+    "digest_date": "2026-11-17"
+  },
+  {
+    "id": "https://next.ink/267861/avec-chatgpt-wallet-openai-donne-une-carte-bancaire-a-ses-agents-dots",
+    "article_published_at": "2026-11-17T06:41:00Z",
+    "digest_date": "2026-11-17"
+  },
+  {
+    "id": "https://next.ink/267864/presidentielle-2027-desinformation-profonde-et-reseaux-sociaux-le-trio-de-la-peur",
+    "article_published_at": "2026-11-17T09:09:12Z",
+    "digest_date": "2026-11-17"
+  },
+  {
+    "id": "https://next.ink/267996/ovhcloud-donne-un-avant-gout-de-son-premier-modele-olala",
+    "article_published_at": "2026-11-17T10:01:00Z",
+    "digest_date": "2026-11-17"
+  },
+  {
+    "id": "https://www.cnil.fr/fr/38-sanctions-simplifiees",
+    "article_published_at": "2026-11-17T12:00:00Z",
+    "digest_date": "2026-11-17"
+  },
+  {
+    "id": "https://www.prux.org/posts/goodbye-swift-hello-rust",
+    "article_published_at": "2026-11-16T17:56:45Z",
+    "digest_date": "2026-11-17"
   }
 ]
