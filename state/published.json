@@ -1,40 +1,5 @@
 [
   {
-    "id": "https://forge-blog.github.io/posts/rust-std-memory-safety",
-    "article_published_at": "2026-11-10T19:44:50Z",
-    "digest_date": "2026-11-11"
-  },
-  {
-    "id": "https://gamefromscratch.com/unreal-engine-5-9-preview",
-    "article_published_at": "2026-11-10T16:43:09Z",
-    "digest_date": "2026-11-11"
-  },
-  {
-    "id": "https://latent.space/p/codex-work",
-    "article_published_at": "2026-11-11T04:49:48Z",
-    "digest_date": "2026-11-11"
-  },
-  {
-    "id": "https://latent.space/p/naiveai",
-    "article_published_at": "2026-11-10T18:56:32Z",
-    "digest_date": "2026-11-11"
-  },
-  {
-    "id": "https://latent.space/p/resend",
-    "article_published_at": "2026-11-10T20:05:17Z",
-    "digest_date": "2026-11-11"
-  },
-  {
-    "id": "https://next.ink/266473/ouf-enfin-nis2-arrive-a-lassemblee-le-chiffrement-deja-au-coeur-des-debats",
-    "article_published_at": "2026-11-10T16:28:26Z",
-    "digest_date": "2026-11-11"
-  },
-  {
-    "id": "https://simonwillison.net/2026/Nov/10/llm-gemini",
-    "article_published_at": "2026-11-10T20:09:44Z",
-    "digest_date": "2026-11-11"
-  },
-  {
     "id": "https://latent.space/p/ainews-d-day-decision-models-day",
     "article_published_at": "2026-11-12T05:26:54Z",
     "digest_date": "2026-11-12"
@@ -52,11 +17,6 @@
   {
     "id": "https://next.ink/266856/abonnements-jeux-ia-leurope-veut-dejouer-les-arnaques-du-numerique-avec-le-dfa",
     "article_published_at": "2026-11-12T07:32:00Z",
-    "digest_date": "2026-11-12"
-  },
-  {
-    "id": "https://openai.com/index/jiostar-vijay-seshadri",
-    "article_published_at": "2026-11-11T00:00:00Z",
     "digest_date": "2026-11-12"
   },
   {
@@ -145,11 +105,6 @@
     "digest_date": "2026-11-14"
   },
   {
-    "id": "https://next.ink/266667/nos-vulnerabilites-face-a-lia-generative-ce-que-contient-le-rapport-remis-a-lelysee",
-    "article_published_at": "2026-11-10T16:43:00Z",
-    "digest_date": "2026-11-14"
-  },
-  {
     "id": "https://next.ink/267012/amd-lance-ses-epyc-de-6e-generation-jusqua-256-coeurs-zen-6c-en-2-nm-quoi-de-neuf",
     "article_published_at": "2026-11-12T12:37:00Z",
     "digest_date": "2026-11-14"
@@ -167,11 +122,6 @@
   {
     "id": "https://sofiabelen.github.io/projects/pointer-provenance-in-rust-vs-cpp",
     "article_published_at": "2026-11-13T18:37:30Z",
-    "digest_date": "2026-11-14"
-  },
-  {
-    "id": "https://this-week-in-rust.org/blog/2026/11/11/this-week-in-rust-677",
-    "article_published_at": "2026-11-11T05:00:00Z",
     "digest_date": "2026-11-14"
   },
   {
@@ -303,5 +253,55 @@
     "id": "https://www.prux.org/posts/goodbye-swift-hello-rust",
     "article_published_at": "2026-11-16T17:56:45Z",
     "digest_date": "2026-11-17"
+  },
+  {
+    "id": "https://blog.startifact.com/posts/how-rust-changed-me",
+    "article_published_at": "2026-11-16T18:17:29Z",
+    "digest_date": "2026-11-18"
+  },
+  {
+    "id": "https://edvong.com/bypass-orphan-rule",
+    "article_published_at": "2026-11-17T15:35:36Z",
+    "digest_date": "2026-11-18"
+  },
+  {
+    "id": "https://greensoftware.foundation/articles/measuring-media-s-energy-footprintmeet-benjamin-schwarz-of-greening-of-streaming",
+    "article_published_at": "2026-11-17T00:00:00Z",
+    "digest_date": "2026-11-18"
+  },
+  {
+    "id": "https://latent.space/p/ainews-gpt-6-2-astra-the-2-frontier-model-is-better-and-20-600-cheaper-but-has-mixed-reviews-6-2-sol",
+    "article_published_at": "2026-11-18T10:19:04Z",
+    "digest_date": "2026-11-18"
+  },
+  {
+    "id": "https://next.ink/267866/lia-fait-une-belle-jambe-a-leconomie-mondiale",
+    "article_published_at": "2026-11-17T08:25:00Z",
+    "digest_date": "2026-11-18"
+  },
+  {
+    "id": "https://next.ink/268034/securite-google-et-anthropic-vont-devoiler-les-details-des-failles-apres-30-jours",
+    "article_published_at": "2026-11-17T16:23:00Z",
+    "digest_date": "2026-11-18"
+  },
+  {
+    "id": "https://openai.com/index/introducing-gpt-6-2-astra-sol",
+    "article_published_at": "2026-11-17T17:45:00Z",
+    "digest_date": "2026-11-18"
+  },
+  {
+    "id": "https://simonwillison.net/2026/Nov/17/datasette-lite",
+    "article_published_at": "2026-11-17T16:48:33Z",
+    "digest_date": "2026-11-18"
+  },
+  {
+    "id": "https://simonwillison.net/2026/Nov/17/external-sandboxes-for-coding-agents",
+    "article_published_at": "2026-11-17T22:52:29Z",
+    "digest_date": "2026-11-18"
+  },
+  {
+    "id": "https://simonwillison.net/2026/Nov/17/gpt62-astra-and-sol",
+    "article_published_at": "2026-11-17T22:38:52Z",
+    "digest_date": "2026-11-18"
   }
 ]
