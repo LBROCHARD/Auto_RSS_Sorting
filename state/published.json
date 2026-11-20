@@ -1,57 +1,12 @@
 [
   {
-    "id": "https://github.blog/ai-and-ml/github-copilot/build-once-run-on-any-agent-a-practical-guide-to-agent-skills",
-    "article_published_at": "2026-11-12T22:54:52Z",
-    "digest_date": "2026-11-13"
-  },
-  {
-    "id": "https://huggingface.co/blog/ibm-granite/llmon-an-llm-native-markup-language-now-in-granite",
-    "article_published_at": "2026-11-12T19:07:35Z",
-    "digest_date": "2026-11-13"
-  },
-  {
-    "id": "https://latent.space/p/artcraft",
-    "article_published_at": "2026-11-13T04:17:25Z",
-    "digest_date": "2026-11-13"
-  },
-  {
-    "id": "https://linebender.org/blog/jit-bitmap-text",
-    "article_published_at": "2026-11-13T00:16:10Z",
-    "digest_date": "2026-11-13"
-  },
-  {
-    "id": "https://next.ink/260033/tuto-agents-ia-installer-le-harnais-pi-dev-ou-sa-version-dopee-aux-hormones-oh-my-pi",
-    "article_published_at": "2026-11-13T11:09:08Z",
-    "digest_date": "2026-11-13"
-  },
-  {
-    "id": "https://openai.com/business/customer-stories/amplitude",
-    "article_published_at": "2026-11-12T20:00:00Z",
-    "digest_date": "2026-11-13"
-  },
-  {
-    "id": "https://simonwillison.net/2026/Nov/12/llm-gemini",
-    "article_published_at": "2026-11-12T22:55:19Z",
-    "digest_date": "2026-11-13"
-  },
-  {
     "id": "https://alexwang.ai/posts/associative-memory",
     "article_published_at": "2026-11-14T04:49:47Z",
     "digest_date": "2026-11-14"
   },
   {
-    "id": "https://gamefromscratch.com/xogot-3d-modeler-level-tool-for-godot",
-    "article_published_at": "2026-11-12T18:21:42Z",
-    "digest_date": "2026-11-14"
-  },
-  {
     "id": "https://huggingface.co/blog/ggml-org/llama-cpp-v1",
     "article_published_at": "2026-11-13T14:05:22Z",
-    "digest_date": "2026-11-14"
-  },
-  {
-    "id": "https://openai.com/business/customer-stories/shield",
-    "article_published_at": "2026-11-13T08:00:00Z",
     "digest_date": "2026-11-14"
   },
   {
@@ -67,11 +22,6 @@
   {
     "id": "https://magazine.sebastianraschka.com/p/understanding-positional-embeddings",
     "article_published_at": "2026-11-15T12:10:37Z",
-    "digest_date": "2026-11-15"
-  },
-  {
-    "id": "https://next.ink/267253/united-airlines-ferme-ses-reservations-aux-agents-ia",
-    "article_published_at": "2026-11-12T15:50:39Z",
     "digest_date": "2026-11-15"
   },
   {
@@ -280,8 +230,53 @@
     "digest_date": "2026-11-19"
   },
   {
-    "id": "https://theshiftproject.org/publications/former-ia-sans-renoncer-a-la-decarbonation",
-    "article_published_at": "2026-11-13T09:44:56Z",
-    "digest_date": "2026-11-19"
+    "id": "https://contextgeneric.dev/blog/v0.8.0-release",
+    "article_published_at": "2026-11-18T16:08:03Z",
+    "digest_date": "2026-11-20"
+  },
+  {
+    "id": "https://linuxfr.org/news/un-nabaztag-une-medecin-et-une-ia-histoire-d-une-resurrection",
+    "article_published_at": "2026-11-20T08:27:21Z",
+    "digest_date": "2026-11-20"
+  },
+  {
+    "id": "https://next.ink/266327/ia-et-droit-dauteur-mistral-et-les-industriels-du-numerique-accentuent-le-lobbying",
+    "article_published_at": "2026-11-20T10:12:00Z",
+    "digest_date": "2026-11-20"
+  },
+  {
+    "id": "https://next.ink/268373/vous-payez-je-prends-votre-chaleur-le-casse-tete-des-datacenters",
+    "article_published_at": "2026-11-20T13:16:36Z",
+    "digest_date": "2026-11-20"
+  },
+  {
+    "id": "https://next.ink/268532/cyberattaque-a-la-commission-europeenne-une-plateforme-agentique-de-pentest-mise-en-cause",
+    "article_published_at": "2026-11-19T16:06:59Z",
+    "digest_date": "2026-11-20"
+  },
+  {
+    "id": "https://openai.com/index/advancing-chip-design-with-our-models",
+    "article_published_at": "2026-11-18T00:00:00Z",
+    "digest_date": "2026-11-20"
+  },
+  {
+    "id": "https://research.google/blog/the-sleep-framework-a-new-way-for-llms-to-retain-knowledge-in-continual-learning",
+    "article_published_at": "2026-11-18T21:53:43Z",
+    "digest_date": "2026-11-20"
+  },
+  {
+    "id": "https://rust-glancer.github.io/blog/persistent-incrementality-in-rust",
+    "article_published_at": "2026-11-20T04:16:34Z",
+    "digest_date": "2026-11-20"
+  },
+  {
+    "id": "https://this-week-in-rust.org/blog/2026/11/18/this-week-in-rust-678",
+    "article_published_at": "2026-11-18T05:00:00Z",
+    "digest_date": "2026-11-20"
+  },
+  {
+    "id": "https://www.jendrikillner.com/post/graphics-programming-weekly-issue-463",
+    "article_published_at": "2026-11-15T04:00:00Z",
+    "digest_date": "2026-11-20"
   }
 ]
