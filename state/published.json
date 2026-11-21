@@ -1,32 +1,7 @@
 [
   {
-    "id": "https://alexwang.ai/posts/associative-memory",
-    "article_published_at": "2026-11-14T04:49:47Z",
-    "digest_date": "2026-11-14"
-  },
-  {
-    "id": "https://huggingface.co/blog/ggml-org/llama-cpp-v1",
-    "article_published_at": "2026-11-13T14:05:22Z",
-    "digest_date": "2026-11-14"
-  },
-  {
-    "id": "https://openai.com/index/introducing-chatgpt-wallet",
-    "article_published_at": "2026-11-13T15:00:00Z",
-    "digest_date": "2026-11-14"
-  },
-  {
-    "id": "https://sofiabelen.github.io/projects/pointer-provenance-in-rust-vs-cpp",
-    "article_published_at": "2026-11-13T18:37:30Z",
-    "digest_date": "2026-11-14"
-  },
-  {
     "id": "https://magazine.sebastianraschka.com/p/understanding-positional-embeddings",
     "article_published_at": "2026-11-15T12:10:37Z",
-    "digest_date": "2026-11-15"
-  },
-  {
-    "id": "https://simonwillison.net/2026/Nov/13/datasette-leaflet",
-    "article_published_at": "2026-11-13T22:30:54Z",
     "digest_date": "2026-11-15"
   },
   {
@@ -278,5 +253,55 @@
     "id": "https://www.jendrikillner.com/post/graphics-programming-weekly-issue-463",
     "article_published_at": "2026-11-15T04:00:00Z",
     "digest_date": "2026-11-20"
+  },
+  {
+    "id": "https://latent.space/p/formal-verification",
+    "article_published_at": "2026-11-20T21:18:41Z",
+    "digest_date": "2026-11-21"
+  },
+  {
+    "id": "https://next.ink/268119/ovhcloud-des-modeles-et-une-infrastructure-ia-souverains-avec-qwant-shadow-et-staan",
+    "article_published_at": "2026-11-19T06:00:00Z",
+    "digest_date": "2026-11-21"
+  },
+  {
+    "id": "https://next.ink/268257/la-vulnapocalypse-annoncee-par-anthropic-avec-mythos-na-pas-encore-eu-lieu",
+    "article_published_at": "2026-11-19T11:00:25Z",
+    "digest_date": "2026-11-21"
+  },
+  {
+    "id": "https://next.ink/268738/anthropic-reussit-son-entree-en-bourse-alors-que-les-marches-flanchent-face-aux-doutes-sur-lia",
+    "article_published_at": "2026-11-20T13:51:33Z",
+    "digest_date": "2026-11-21"
+  },
+  {
+    "id": "https://openai.com/index/combatting-adversarial-distillation",
+    "article_published_at": "2026-11-20T10:00:00Z",
+    "digest_date": "2026-11-21"
+  },
+  {
+    "id": "https://simonwillison.net/2026/Nov/20/levent-alpoge",
+    "article_published_at": "2026-11-20T16:30:48Z",
+    "digest_date": "2026-11-21"
+  },
+  {
+    "id": "https://spritely.institute/news/lisp-game-jam-devlog-polydraw.html",
+    "article_published_at": "2026-11-20T11:18:47Z",
+    "digest_date": "2026-11-21"
+  },
+  {
+    "id": "https://www.cnil.fr/fr/48e-gpa",
+    "article_published_at": "2026-11-20T12:00:00Z",
+    "digest_date": "2026-11-21"
+  },
+  {
+    "id": "https://www.cnil.fr/fr/gpa-ia-education",
+    "article_published_at": "2026-11-20T12:00:00Z",
+    "digest_date": "2026-11-21"
+  },
+  {
+    "id": "https://www.cnil.fr/fr/recommandation-pixels-retour-dexperience",
+    "article_published_at": "2026-11-20T12:00:00Z",
+    "digest_date": "2026-11-21"
   }
 ]
