@@ -1,20 +1,5 @@
 [
   {
-    "id": "https://magazine.sebastianraschka.com/p/understanding-positional-embeddings",
-    "article_published_at": "2026-11-15T12:10:37Z",
-    "digest_date": "2026-11-15"
-  },
-  {
-    "id": "https://simonwillison.net/2026/Nov/14/datasette-llm",
-    "article_published_at": "2026-11-14T23:59:28Z",
-    "digest_date": "2026-11-15"
-  },
-  {
-    "id": "https://simonwillison.net/2026/Nov/14/datasette-vega",
-    "article_published_at": "2026-11-14T17:09:09Z",
-    "digest_date": "2026-11-15"
-  },
-  {
     "id": "https://burntsushi.net/jiff",
     "article_published_at": "2026-11-15T22:39:34Z",
     "digest_date": "2026-11-16"
@@ -37,16 +22,6 @@
   {
     "id": "https://simonwillison.net/2026/Nov/15/datasette-2",
     "article_published_at": "2026-11-15T23:18:17Z",
-    "digest_date": "2026-11-16"
-  },
-  {
-    "id": "https://simonwillison.net/2026/Nov/15/datasette-agent",
-    "article_published_at": "2026-11-15T03:49:47Z",
-    "digest_date": "2026-11-16"
-  },
-  {
-    "id": "https://simonwillison.net/2026/Nov/15/datasette-apps",
-    "article_published_at": "2026-11-15T04:02:45Z",
     "digest_date": "2026-11-16"
   },
   {
@@ -250,11 +225,6 @@
     "digest_date": "2026-11-20"
   },
   {
-    "id": "https://www.jendrikillner.com/post/graphics-programming-weekly-issue-463",
-    "article_published_at": "2026-11-15T04:00:00Z",
-    "digest_date": "2026-11-20"
-  },
-  {
     "id": "https://latent.space/p/formal-verification",
     "article_published_at": "2026-11-20T21:18:41Z",
     "digest_date": "2026-11-21"
@@ -303,5 +273,55 @@
     "id": "https://www.cnil.fr/fr/recommandation-pixels-retour-dexperience",
     "article_published_at": "2026-11-20T12:00:00Z",
     "digest_date": "2026-11-21"
+  },
+  {
+    "id": "https://arstechnica.com/security/2026/11/a-leaky-ai-supply-chain-is-exposing-secret-user-data-at-an-alarming-rate",
+    "article_published_at": "2026-11-22T02:03:46Z",
+    "digest_date": "2026-11-22"
+  },
+  {
+    "id": "https://gamefromscratch.com/mesh2motion-adds-props-weight-painting-and-more",
+    "article_published_at": "2026-11-21T16:27:05Z",
+    "digest_date": "2026-11-22"
+  },
+  {
+    "id": "https://huggingface.co/blog/harness-adapters-at-scale",
+    "article_published_at": "2026-11-20T00:00:00Z",
+    "digest_date": "2026-11-22"
+  },
+  {
+    "id": "https://latent.space/p/ainews-anthropic-successfully-completes-largest-ipo-in-history-valued-at-1-5t",
+    "article_published_at": "2026-11-20T07:12:24Z",
+    "digest_date": "2026-11-22"
+  },
+  {
+    "id": "https://linebender.org/blog/next-100-guis",
+    "article_published_at": "2026-11-21T23:10:07Z",
+    "digest_date": "2026-11-22"
+  },
+  {
+    "id": "https://next.ink/268739/ce-que-la-future-baseline-protection-de-windows-11-signifie-pour-les-applications",
+    "article_published_at": "2026-11-20T10:37:00Z",
+    "digest_date": "2026-11-22"
+  },
+  {
+    "id": "https://openai.com/business/customer-stories/hebbia",
+    "article_published_at": "2026-11-20T00:00:00Z",
+    "digest_date": "2026-11-22"
+  },
+  {
+    "id": "https://openai.com/index/managing-frontier-ai-risk",
+    "article_published_at": "2026-11-18T06:00:00Z",
+    "digest_date": "2026-11-22"
+  },
+  {
+    "id": "https://simonwillison.net/2026/Nov/20/token-fraud-is-here-and-its-bad",
+    "article_published_at": "2026-11-20T02:49:57Z",
+    "digest_date": "2026-11-22"
+  },
+  {
+    "id": "https://simonwillison.net/2026/Nov/21/muru",
+    "article_published_at": "2026-11-21T23:56:28Z",
+    "digest_date": "2026-11-22"
   }
 ]
