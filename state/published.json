@@ -1,45 +1,5 @@
 [
   {
-    "id": "https://burntsushi.net/jiff",
-    "article_published_at": "2026-11-15T22:39:34Z",
-    "digest_date": "2026-11-16"
-  },
-  {
-    "id": "https://linuxfr.org/news/revue-de-presse-novembre-2026",
-    "article_published_at": "2026-11-16T09:35:56Z",
-    "digest_date": "2026-11-16"
-  },
-  {
-    "id": "https://sigseis.dev/articles/2026/11/10",
-    "article_published_at": "2026-11-15T19:40:13Z",
-    "digest_date": "2026-11-16"
-  },
-  {
-    "id": "https://simonwillison.net/2026/Nov/15/datasette",
-    "article_published_at": "2026-11-15T23:20:27Z",
-    "digest_date": "2026-11-16"
-  },
-  {
-    "id": "https://simonwillison.net/2026/Nov/15/datasette-2",
-    "article_published_at": "2026-11-15T23:18:17Z",
-    "digest_date": "2026-11-16"
-  },
-  {
-    "id": "https://simonwillison.net/2026/Nov/15/datasette-maplibre",
-    "article_published_at": "2026-11-15T23:58:36Z",
-    "digest_date": "2026-11-16"
-  },
-  {
-    "id": "https://sunshowers.io/posts/nextest-install-scripts",
-    "article_published_at": "2026-11-16T00:14:56Z",
-    "digest_date": "2026-11-16"
-  },
-  {
-    "id": "https://blog.rust-lang.org/2026/11/16/enabling-parallel-frontend-on-nightly",
-    "article_published_at": "2026-11-16T00:00:00Z",
-    "digest_date": "2026-11-17"
-  },
-  {
     "id": "https://daniel.haxx.se/blog/2026/11/17/actual-curl-rewrites-in-rust",
     "article_published_at": "2026-11-17T13:37:05Z",
     "digest_date": "2026-11-17"
@@ -323,5 +283,55 @@
     "id": "https://simonwillison.net/2026/Nov/21/muru",
     "article_published_at": "2026-11-21T23:56:28Z",
     "digest_date": "2026-11-22"
+  },
+  {
+    "id": "https://huggingface.co/blog/agentic-evals",
+    "article_published_at": "2026-11-23T00:00:00Z",
+    "digest_date": "2026-11-23"
+  },
+  {
+    "id": "https://linuxfr.org/news/luneos-en-2026",
+    "article_published_at": "2026-11-22T14:03:55Z",
+    "digest_date": "2026-11-23"
+  },
+  {
+    "id": "https://next.ink/268395/pres-dun-francais-sur-deux-habite-a-moins-de-10-km-dun-datacenter",
+    "article_published_at": "2026-11-23T06:58:00Z",
+    "digest_date": "2026-11-23"
+  },
+  {
+    "id": "https://next.ink/269118/hypothese-de-riemann-une-preuve-generee-par-ia-est-elle-utile-aux-mathematiciens",
+    "article_published_at": "2026-11-23T13:22:36Z",
+    "digest_date": "2026-11-23"
+  },
+  {
+    "id": "https://next.ink/brief-article/apple-limite-lusage-de-son-ia-et-vend-des-quotas-plus-eleves-avec-icloud",
+    "article_published_at": "2026-11-23T15:22:00Z",
+    "digest_date": "2026-11-23"
+  },
+  {
+    "id": "https://openai.com/index/introducing-medchembench",
+    "article_published_at": "2026-11-20T00:00:00Z",
+    "digest_date": "2026-11-23"
+  },
+  {
+    "id": "https://openai.com/index/perplexity-and-intelligence",
+    "article_published_at": "2026-11-22T00:00:00Z",
+    "digest_date": "2026-11-23"
+  },
+  {
+    "id": "https://simonwillison.net/2026/Nov/18/llm-gemini",
+    "article_published_at": "2026-11-18T23:59:20Z",
+    "digest_date": "2026-11-23"
+  },
+  {
+    "id": "https://simonwillison.net/2026/Nov/20/llm-gemini",
+    "article_published_at": "2026-11-20T03:01:57Z",
+    "digest_date": "2026-11-23"
+  },
+  {
+    "id": "https://wuemeli.com/blog/reversing-hitster-game",
+    "article_published_at": "2026-11-23T15:01:37Z",
+    "digest_date": "2026-11-23"
   }
 ]
