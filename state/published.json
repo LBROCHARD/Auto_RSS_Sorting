@@ -1,72 +1,12 @@
 [
   {
-    "id": "https://daniel.haxx.se/blog/2026/11/17/actual-curl-rewrites-in-rust",
-    "article_published_at": "2026-11-17T13:37:05Z",
-    "digest_date": "2026-11-17"
-  },
-  {
-    "id": "https://gamefromscratch.com/pixijs-moves-into-3d-pixijs-3d",
-    "article_published_at": "2026-11-16T16:06:16Z",
-    "digest_date": "2026-11-17"
-  },
-  {
-    "id": "https://latent.space/p/ainews-perplexity-hits-a-1b-revenue-run-rate-up-4x-in-2026",
-    "article_published_at": "2026-11-17T09:24:56Z",
-    "digest_date": "2026-11-17"
-  },
-  {
-    "id": "https://next.ink/267802/alibaba-qwen4-max-2-400-milliards-de-parametres-et-une-table-n-gram-de-328-milliards",
-    "article_published_at": "2026-11-17T07:43:00Z",
-    "digest_date": "2026-11-17"
-  },
-  {
-    "id": "https://next.ink/267861/avec-chatgpt-wallet-openai-donne-une-carte-bancaire-a-ses-agents-dots",
-    "article_published_at": "2026-11-17T06:41:00Z",
-    "digest_date": "2026-11-17"
-  },
-  {
-    "id": "https://next.ink/267864/presidentielle-2027-desinformation-profonde-et-reseaux-sociaux-le-trio-de-la-peur",
-    "article_published_at": "2026-11-17T09:09:12Z",
-    "digest_date": "2026-11-17"
-  },
-  {
-    "id": "https://next.ink/267996/ovhcloud-donne-un-avant-gout-de-son-premier-modele-olala",
-    "article_published_at": "2026-11-17T10:01:00Z",
-    "digest_date": "2026-11-17"
-  },
-  {
-    "id": "https://www.cnil.fr/fr/38-sanctions-simplifiees",
-    "article_published_at": "2026-11-17T12:00:00Z",
-    "digest_date": "2026-11-17"
-  },
-  {
-    "id": "https://www.prux.org/posts/goodbye-swift-hello-rust",
-    "article_published_at": "2026-11-16T17:56:45Z",
-    "digest_date": "2026-11-17"
-  },
-  {
-    "id": "https://blog.startifact.com/posts/how-rust-changed-me",
-    "article_published_at": "2026-11-16T18:17:29Z",
-    "digest_date": "2026-11-18"
-  },
-  {
     "id": "https://edvong.com/bypass-orphan-rule",
     "article_published_at": "2026-11-17T15:35:36Z",
     "digest_date": "2026-11-18"
   },
   {
-    "id": "https://greensoftware.foundation/articles/measuring-media-s-energy-footprintmeet-benjamin-schwarz-of-greening-of-streaming",
-    "article_published_at": "2026-11-17T00:00:00Z",
-    "digest_date": "2026-11-18"
-  },
-  {
     "id": "https://latent.space/p/ainews-gpt-6-2-astra-the-2-frontier-model-is-better-and-20-600-cheaper-but-has-mixed-reviews-6-2-sol",
     "article_published_at": "2026-11-18T10:19:04Z",
-    "digest_date": "2026-11-18"
-  },
-  {
-    "id": "https://next.ink/267866/lia-fait-une-belle-jambe-a-leconomie-mondiale",
-    "article_published_at": "2026-11-17T08:25:00Z",
     "digest_date": "2026-11-18"
   },
   {
@@ -333,5 +273,55 @@
     "id": "https://wuemeli.com/blog/reversing-hitster-game",
     "article_published_at": "2026-11-23T15:01:37Z",
     "digest_date": "2026-11-23"
+  },
+  {
+    "id": "https://community.nlnetlabs.nl/t/release-roto-v0-14-0/3511",
+    "article_published_at": "2026-11-23T21:32:07Z",
+    "digest_date": "2026-11-24"
+  },
+  {
+    "id": "https://deepmind.google/blog/finding-faster-quantum-algorithms-with-agents-and-formal-verification",
+    "article_published_at": "2026-11-23T16:59:40Z",
+    "digest_date": "2026-11-24"
+  },
+  {
+    "id": "https://gamefromscratch.com/o3de-26-10-released",
+    "article_published_at": "2026-11-23T15:37:10Z",
+    "digest_date": "2026-11-24"
+  },
+  {
+    "id": "https://latent.space/p/ainews-jensen-is-back-and-openai-shows-its-pretraining-curve-joined-by-microsoft",
+    "article_published_at": "2026-11-24T04:14:16Z",
+    "digest_date": "2026-11-24"
+  },
+  {
+    "id": "https://next.ink/268967/olala-on-a-disseque-le-modele-dovh-avec-trois-tetes-folles",
+    "article_published_at": "2026-11-23T16:07:00Z",
+    "digest_date": "2026-11-24"
+  },
+  {
+    "id": "https://openai.com/index/introducing-shirudo",
+    "article_published_at": "2026-11-23T21:20:00Z",
+    "digest_date": "2026-11-24"
+  },
+  {
+    "id": "https://simonwillison.net/2026/Nov/23/datasette-charts",
+    "article_published_at": "2026-11-23T00:37:20Z",
+    "digest_date": "2026-11-24"
+  },
+  {
+    "id": "https://simonwillison.net/2026/Nov/23/glm-54",
+    "article_published_at": "2026-11-23T23:40:49Z",
+    "digest_date": "2026-11-24"
+  },
+  {
+    "id": "https://simonwillison.net/2026/Nov/24/datasette-charts",
+    "article_published_at": "2026-11-24T04:24:29Z",
+    "digest_date": "2026-11-24"
+  },
+  {
+    "id": "https://www.cnil.fr/fr/controles-de-la-cnil-une-charte-pour-tout-comprendre",
+    "article_published_at": "2026-11-23T12:00:00Z",
+    "digest_date": "2026-11-24"
   }
 ]
