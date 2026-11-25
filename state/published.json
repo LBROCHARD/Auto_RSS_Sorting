@@ -1,50 +1,5 @@
 [
   {
-    "id": "https://edvong.com/bypass-orphan-rule",
-    "article_published_at": "2026-11-17T15:35:36Z",
-    "digest_date": "2026-11-18"
-  },
-  {
-    "id": "https://latent.space/p/ainews-gpt-6-2-astra-the-2-frontier-model-is-better-and-20-600-cheaper-but-has-mixed-reviews-6-2-sol",
-    "article_published_at": "2026-11-18T10:19:04Z",
-    "digest_date": "2026-11-18"
-  },
-  {
-    "id": "https://next.ink/268034/securite-google-et-anthropic-vont-devoiler-les-details-des-failles-apres-30-jours",
-    "article_published_at": "2026-11-17T16:23:00Z",
-    "digest_date": "2026-11-18"
-  },
-  {
-    "id": "https://openai.com/index/introducing-gpt-6-2-astra-sol",
-    "article_published_at": "2026-11-17T17:45:00Z",
-    "digest_date": "2026-11-18"
-  },
-  {
-    "id": "https://simonwillison.net/2026/Nov/17/datasette-lite",
-    "article_published_at": "2026-11-17T16:48:33Z",
-    "digest_date": "2026-11-18"
-  },
-  {
-    "id": "https://simonwillison.net/2026/Nov/17/external-sandboxes-for-coding-agents",
-    "article_published_at": "2026-11-17T22:52:29Z",
-    "digest_date": "2026-11-18"
-  },
-  {
-    "id": "https://simonwillison.net/2026/Nov/17/gpt62-astra-and-sol",
-    "article_published_at": "2026-11-17T22:38:52Z",
-    "digest_date": "2026-11-18"
-  },
-  {
-    "id": "https://energy-based-reasoners.github.io",
-    "article_published_at": "2026-11-18T14:45:20Z",
-    "digest_date": "2026-11-19"
-  },
-  {
-    "id": "https://godotengine.org/article/dev-snapshot-godot-4-8-beta-4",
-    "article_published_at": "2026-11-18T12:00:00Z",
-    "digest_date": "2026-11-19"
-  },
-  {
     "id": "https://kapteko.com/15-million-webservers",
     "article_published_at": "2026-11-19T13:38:19Z",
     "digest_date": "2026-11-19"
@@ -57,16 +12,6 @@
   {
     "id": "https://next.ink/brief-article/les-entreprises-us-utilisant-lia-chinoise-pourraient-etre-obligees-de-le-declarer",
     "article_published_at": "2026-11-18T16:30:24Z",
-    "digest_date": "2026-11-19"
-  },
-  {
-    "id": "https://next.ink/brief-article/proton-decline-son-ia-lumo-sous-forme-dapplications-et-la-dote-de-connecteurs",
-    "article_published_at": "2026-11-18T14:33:08Z",
-    "digest_date": "2026-11-19"
-  },
-  {
-    "id": "https://openai.com/index/research-acceleration-jagged-frontier",
-    "article_published_at": "2026-11-18T08:00:00Z",
     "digest_date": "2026-11-19"
   },
   {
@@ -105,11 +50,6 @@
     "digest_date": "2026-11-20"
   },
   {
-    "id": "https://openai.com/index/advancing-chip-design-with-our-models",
-    "article_published_at": "2026-11-18T00:00:00Z",
-    "digest_date": "2026-11-20"
-  },
-  {
     "id": "https://research.google/blog/the-sleep-framework-a-new-way-for-llms-to-retain-knowledge-in-continual-learning",
     "article_published_at": "2026-11-18T21:53:43Z",
     "digest_date": "2026-11-20"
@@ -117,11 +57,6 @@
   {
     "id": "https://rust-glancer.github.io/blog/persistent-incrementality-in-rust",
     "article_published_at": "2026-11-20T04:16:34Z",
-    "digest_date": "2026-11-20"
-  },
-  {
-    "id": "https://this-week-in-rust.org/blog/2026/11/18/this-week-in-rust-678",
-    "article_published_at": "2026-11-18T05:00:00Z",
     "digest_date": "2026-11-20"
   },
   {
@@ -207,11 +142,6 @@
   {
     "id": "https://openai.com/business/customer-stories/hebbia",
     "article_published_at": "2026-11-20T00:00:00Z",
-    "digest_date": "2026-11-22"
-  },
-  {
-    "id": "https://openai.com/index/managing-frontier-ai-risk",
-    "article_published_at": "2026-11-18T06:00:00Z",
     "digest_date": "2026-11-22"
   },
   {
@@ -323,5 +253,55 @@
     "id": "https://www.cnil.fr/fr/controles-de-la-cnil-une-charte-pour-tout-comprendre",
     "article_published_at": "2026-11-23T12:00:00Z",
     "digest_date": "2026-11-24"
+  },
+  {
+    "id": "https://donsz.nl/blog/optimizing-rustcs-next-trait-solver",
+    "article_published_at": "2026-11-25T13:09:22Z",
+    "digest_date": "2026-11-25"
+  },
+  {
+    "id": "https://gpuopen.com/learn/amd-rt-mlas-vulkan",
+    "article_published_at": "2026-11-24T18:00:00Z",
+    "digest_date": "2026-11-25"
+  },
+  {
+    "id": "https://huggingface.co/blog/nvidia/microduck-obstacle-avoidance",
+    "article_published_at": "2026-11-24T16:34:13Z",
+    "digest_date": "2026-11-25"
+  },
+  {
+    "id": "https://latent.space/p/ainews-gemini-4-neon-marks-gdm-s-full-return-as-a-frontier-lab",
+    "article_published_at": "2026-11-25T04:29:07Z",
+    "digest_date": "2026-11-25"
+  },
+  {
+    "id": "https://lucumr.pocoo.org/2026/11/25/poisoning",
+    "article_published_at": "2026-11-25T05:10:37Z",
+    "digest_date": "2026-11-25"
+  },
+  {
+    "id": "https://next.ink/269700/avec-shirudo-openai-et-cisco-veulent-proteger-linux-en-attendant-les-correctifs",
+    "article_published_at": "2026-11-25T08:19:00Z",
+    "digest_date": "2026-11-25"
+  },
+  {
+    "id": "https://openai.com/business/customer-stories/ifood",
+    "article_published_at": "2026-11-24T00:00:00Z",
+    "digest_date": "2026-11-25"
+  },
+  {
+    "id": "https://simonwillison.net/2026/Nov/24/datasette-agent",
+    "article_published_at": "2026-11-24T03:45:57Z",
+    "digest_date": "2026-11-25"
+  },
+  {
+    "id": "https://simonwillison.net/2026/Nov/24/llm-inflection-points",
+    "article_published_at": "2026-11-24T23:02:07Z",
+    "digest_date": "2026-11-25"
+  },
+  {
+    "id": "https://www.jendrikillner.com/post/graphics-programming-weekly-issue-464",
+    "article_published_at": "2026-11-23T04:00:00Z",
+    "digest_date": "2026-11-25"
   }
 ]
