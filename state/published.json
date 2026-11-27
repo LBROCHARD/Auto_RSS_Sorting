@@ -1,67 +1,12 @@
 [
   {
-    "id": "https://linuxfr.org/news/un-nabaztag-une-medecin-et-une-ia-histoire-d-une-resurrection",
-    "article_published_at": "2026-11-20T08:27:21Z",
-    "digest_date": "2026-11-20"
-  },
-  {
-    "id": "https://next.ink/266327/ia-et-droit-dauteur-mistral-et-les-industriels-du-numerique-accentuent-le-lobbying",
-    "article_published_at": "2026-11-20T10:12:00Z",
-    "digest_date": "2026-11-20"
-  },
-  {
-    "id": "https://next.ink/268373/vous-payez-je-prends-votre-chaleur-le-casse-tete-des-datacenters",
-    "article_published_at": "2026-11-20T13:16:36Z",
-    "digest_date": "2026-11-20"
-  },
-  {
-    "id": "https://next.ink/268532/cyberattaque-a-la-commission-europeenne-une-plateforme-agentique-de-pentest-mise-en-cause",
-    "article_published_at": "2026-11-19T16:06:59Z",
-    "digest_date": "2026-11-20"
-  },
-  {
-    "id": "https://rust-glancer.github.io/blog/persistent-incrementality-in-rust",
-    "article_published_at": "2026-11-20T04:16:34Z",
-    "digest_date": "2026-11-20"
-  },
-  {
     "id": "https://latent.space/p/formal-verification",
     "article_published_at": "2026-11-20T21:18:41Z",
     "digest_date": "2026-11-21"
   },
   {
-    "id": "https://next.ink/268738/anthropic-reussit-son-entree-en-bourse-alors-que-les-marches-flanchent-face-aux-doutes-sur-lia",
-    "article_published_at": "2026-11-20T13:51:33Z",
-    "digest_date": "2026-11-21"
-  },
-  {
-    "id": "https://openai.com/index/combatting-adversarial-distillation",
-    "article_published_at": "2026-11-20T10:00:00Z",
-    "digest_date": "2026-11-21"
-  },
-  {
     "id": "https://simonwillison.net/2026/Nov/20/levent-alpoge",
     "article_published_at": "2026-11-20T16:30:48Z",
-    "digest_date": "2026-11-21"
-  },
-  {
-    "id": "https://spritely.institute/news/lisp-game-jam-devlog-polydraw.html",
-    "article_published_at": "2026-11-20T11:18:47Z",
-    "digest_date": "2026-11-21"
-  },
-  {
-    "id": "https://www.cnil.fr/fr/48e-gpa",
-    "article_published_at": "2026-11-20T12:00:00Z",
-    "digest_date": "2026-11-21"
-  },
-  {
-    "id": "https://www.cnil.fr/fr/gpa-ia-education",
-    "article_published_at": "2026-11-20T12:00:00Z",
-    "digest_date": "2026-11-21"
-  },
-  {
-    "id": "https://www.cnil.fr/fr/recommandation-pixels-retour-dexperience",
-    "article_published_at": "2026-11-20T12:00:00Z",
     "digest_date": "2026-11-21"
   },
   {
@@ -75,33 +20,8 @@
     "digest_date": "2026-11-22"
   },
   {
-    "id": "https://huggingface.co/blog/harness-adapters-at-scale",
-    "article_published_at": "2026-11-20T00:00:00Z",
-    "digest_date": "2026-11-22"
-  },
-  {
-    "id": "https://latent.space/p/ainews-anthropic-successfully-completes-largest-ipo-in-history-valued-at-1-5t",
-    "article_published_at": "2026-11-20T07:12:24Z",
-    "digest_date": "2026-11-22"
-  },
-  {
     "id": "https://linebender.org/blog/next-100-guis",
     "article_published_at": "2026-11-21T23:10:07Z",
-    "digest_date": "2026-11-22"
-  },
-  {
-    "id": "https://next.ink/268739/ce-que-la-future-baseline-protection-de-windows-11-signifie-pour-les-applications",
-    "article_published_at": "2026-11-20T10:37:00Z",
-    "digest_date": "2026-11-22"
-  },
-  {
-    "id": "https://openai.com/business/customer-stories/hebbia",
-    "article_published_at": "2026-11-20T00:00:00Z",
-    "digest_date": "2026-11-22"
-  },
-  {
-    "id": "https://simonwillison.net/2026/Nov/20/token-fraud-is-here-and-its-bad",
-    "article_published_at": "2026-11-20T02:49:57Z",
     "digest_date": "2026-11-22"
   },
   {
@@ -135,18 +55,8 @@
     "digest_date": "2026-11-23"
   },
   {
-    "id": "https://openai.com/index/introducing-medchembench",
-    "article_published_at": "2026-11-20T00:00:00Z",
-    "digest_date": "2026-11-23"
-  },
-  {
     "id": "https://openai.com/index/perplexity-and-intelligence",
     "article_published_at": "2026-11-22T00:00:00Z",
-    "digest_date": "2026-11-23"
-  },
-  {
-    "id": "https://simonwillison.net/2026/Nov/20/llm-gemini",
-    "article_published_at": "2026-11-20T03:01:57Z",
     "digest_date": "2026-11-23"
   },
   {
@@ -303,5 +213,55 @@
     "id": "https://next.ink/270124/claude-sait-maintenant-produire-des-applications-a-partir-dartefacts",
     "article_published_at": "2026-11-26T08:20:00Z",
     "digest_date": "2026-11-26"
+  },
+  {
+    "id": "https://janlukas.blog/posts/ai-self-hosting",
+    "article_published_at": "2026-11-27T01:50:42Z",
+    "digest_date": "2026-11-27"
+  },
+  {
+    "id": "https://latent.space/p/how-clay-builds-gtm-agents-jeff-barg-head-of-ai",
+    "article_published_at": "2026-11-26T23:02:48Z",
+    "digest_date": "2026-11-27"
+  },
+  {
+    "id": "https://latent.space/p/the_revolution_vs_the_renaissance_thariq_shihipar_openai",
+    "article_published_at": "2026-11-25T22:28:01Z",
+    "digest_date": "2026-11-27"
+  },
+  {
+    "id": "https://next.ink/268574/olala-on-a-teste-des-ia-generatives-sur-cpu-avec-5-machines-et-plus-de-1-000-prompts",
+    "article_published_at": "2026-11-27T10:34:49Z",
+    "digest_date": "2026-11-27"
+  },
+  {
+    "id": "https://next.ink/269175/avec-olala-ovh-vise-un-mythos-europeen-et-un-modele-a-3-000-milliards-de-parametres",
+    "article_published_at": "2026-11-24T08:09:00Z",
+    "digest_date": "2026-11-27"
+  },
+  {
+    "id": "https://next.ink/270519/ariane-succede-officiellement-a-la-dinum-et-pourra-imposer-ses-outils-aux-ministeres",
+    "article_published_at": "2026-11-27T14:07:51Z",
+    "digest_date": "2026-11-27"
+  },
+  {
+    "id": "https://simonwillison.net/2026/Nov/23/ladybird",
+    "article_published_at": "2026-11-23T21:46:35Z",
+    "digest_date": "2026-11-27"
+  },
+  {
+    "id": "https://sunshowers.io/posts/on-poisoning",
+    "article_published_at": "2026-11-26T11:51:23Z",
+    "digest_date": "2026-11-27"
+  },
+  {
+    "id": "https://this-week-in-rust.org/blog/2026/11/25/this-week-in-rust-679",
+    "article_published_at": "2026-11-25T05:00:00Z",
+    "digest_date": "2026-11-27"
+  },
+  {
+    "id": "https://www.cnil.fr/fr/ia-en-soins-guide-has-cnil",
+    "article_published_at": "2026-11-27T12:00:00Z",
+    "digest_date": "2026-11-27"
   }
 ]
